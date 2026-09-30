@@ -185,6 +185,27 @@ def check_gpu():
         subprocess.call(["nvidia-smi"])
 
 
+def ensure_dropbox_tools():
+    """
+    Nhiều module trong repo nạp tools.py từ ~/Dropbox (đường dẫn có sẵn trên máy
+    local nhưng không có trên Colab). Tạo symlink trỏ tới bản mock trong out/ để
+    không phải sửa từng module.
+    """
+    dropbox_dir = Path(os.path.expanduser("~/Dropbox"))
+    dropbox_dir.mkdir(parents=True, exist_ok=True)
+    dropbox_tools = dropbox_dir / "tools.py"
+    if dropbox_tools.exists():
+        return
+    try:
+        dropbox_tools.symlink_to(OUT_DIR / "tools.py")
+        print(f"Linked {dropbox_tools} -> {OUT_DIR / 'tools.py'}")
+    except (OSError, NotImplementedError) as e:
+        # Một số hệ thống file không hỗ trợ symlink → copy thay thế
+        import shutil
+        shutil.copyfile(OUT_DIR / "tools.py", dropbox_tools)
+        print(f"Copied {OUT_DIR / 'tools.py'} -> {dropbox_tools} ({e})")
+
+
 def wait_for_vllm_ready(process, timeout: int = 600):
     """Wait for vLLM server to be ready."""
     print("=" * 60)
@@ -347,8 +368,9 @@ def main():
     print("GRID Pipeline on Google Colab")
     print("=" * 60)
     
-    # Step 0: Check GPU
+    # Step 0: Check GPU + chuẩn bị tools.py
     check_gpu()
+    ensure_dropbox_tools()
 
     # Step 1: Install dependencies
     install_dependencies()
