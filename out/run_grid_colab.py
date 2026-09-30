@@ -34,6 +34,10 @@ VLLM_HOST = "0.0.0.0"
 MAX_MODEL_LEN = 16384
 GPU_MEMORY_UTILIZATION = 0.92
 
+# Khi serve từ local path, vLLM đăng ký tên model là đường dẫn đầy đủ.
+# --served-model-name để API nhận đúng tên mà tools.py gửi lên.
+SERVED_MODEL_NAME = MODEL_NAME.split("/")[-1]
+
 # Add out directory to path for tools.py
 OUT_DIR = Path(__file__).parent
 sys.path.insert(0, str(OUT_DIR))
@@ -109,6 +113,7 @@ def start_vllm_server(model_path: str):
         "--dtype", "auto",
         "--max-model-len", str(MAX_MODEL_LEN),
         "--gpu-memory-utilization", str(GPU_MEMORY_UTILIZATION),
+        "--served-model-name", SERVED_MODEL_NAME,
     ]
     
     print(f"Starting vLLM: {' '.join(cmd)}")
@@ -297,17 +302,31 @@ def run_grid(input_text: str):
     # Set environment variables for tools.py
     os.environ["VLLM_URL"] = f"http://localhost:{VLLM_PORT}/v1"
     os.environ["VLLM_API_KEY"] = "EMPTY"
-    os.environ["VLLM_MODEL_NAME"] = MODEL_NAME.split("/")[-1]
-    
+    os.environ["VLLM_MODEL_NAME"] = SERVED_MODEL_NAME
+
     # Import GRID
     from GRID_Ours import GRIDOursMethod
-    
+    from shared_eval_backend import build_default_shared_backend
+
+    # Dùng chính server vLLM đã khởi động ở Step 3. Phải bật enabled=True để
+    # VLLMServerMethod không tự deploy thêm một server riêng (xem
+    # single_pass_template.py: _shared_backend_enabled).
+    shared_backend = build_default_shared_backend(
+        model_path=SERVED_MODEL_NAME,
+        servers=("local",),
+    )
+
+    # max_tokens phải nhỏ hơn max_model_len, nếu không vLLM trả lỗi 400
+    # ("maximum context length is ..."). Input ~500 token + prompt mẫu vài nghìn
+    # token → 8192 chỗ sinh là dư.
+    max_new_tokens = min(64 * 1024, MAX_MODEL_LEN // 2)
+
     # Initialize method
     method = GRIDOursMethod(
-        llm_backend="dedicated_vllm",
+        llm_backend="shared_vllm",
         model="local",
-        model_path=MODEL_NAME,
-        token=64 * 1024,
+        shared_llm_backend=shared_backend,
+        token=max_new_tokens,
         temp=0.7,
         think=2,
         check_cache=False,
