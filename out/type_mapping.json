@@ -1,6 +1,6 @@
 {
   "meta": {
-    "generated_at": "2026-09-30T17:14:34",
+    "generated_at": "2026-09-30T18:47:06",
     "source": "src/grid/GRID_backbone.py (ENTITY_TYPES, REL_TYPES)",
     "entity_type_count": 33,
     "rel_type_count": 44,

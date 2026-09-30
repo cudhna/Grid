@@ -469,14 +469,17 @@ def find_evidence(text: str, sub: str, obj: str, aliases: list) -> dict:
 # ===========================================================================
 def load_grid_runs(grid_raw: Path, include_aggregate: bool) -> tuple:
     """
-    Doc out/grid_raw/. Tra ve (runs, procedure_map).
-    `runs` = danh sach thu muc co entities.json + relation.json.
+    Đọc out/grid_raw/. Trả về (runs, procedure_map).
+    `runs` = danh sách thư mục có entities.json + triplets.json.
+
+    Tên file: `triplets.json` là tên chuẩn. `relation.json` (tên do lần chạy cũ
+    ghi ra) vẫn được chấp nhận để không phải chạy lại trên Colab.
     """
     pm_path = grid_raw / "procedure_map.json"
     if not pm_path.exists():
         raise FileNotFoundError(
-            f"Khong tim thay {pm_path}. Can chay `python out/run_grid_colab.py` tren "
-            "Colab truoc, roi tai thu muc out/grid_raw/ ve may nay."
+            f"Không tìm thấy {pm_path}. Cần chạy `python out/run_grid_colab.py` trên "
+            "Colab trước, rồi tải thư mục out/grid_raw/ về máy này."
         )
     pm = json.loads(pm_path.read_text(encoding="utf-8"))
     by_dir = {}
@@ -490,7 +493,10 @@ def load_grid_runs(grid_raw: Path, include_aggregate: bool) -> tuple:
         if name.startswith("template_debug"):
             continue
         ent_f = grid_raw / name / "entities.json"
-        rel_f = grid_raw / name / "relation.json"
+        # ưu tiên triplets.json, chấp nhận cả relation.json của lần chạy cũ
+        tri_f = grid_raw / name / "triplets.json"
+        if not tri_f.exists():
+            tri_f = grid_raw / name / "relation.json"
         if not ent_f.exists():
             continue
         kind = "aggregate" if name == "aggregate" else "procedure"
@@ -508,7 +514,7 @@ def load_grid_runs(grid_raw: Path, include_aggregate: bool) -> tuple:
             "text": (grid_raw / name / "input.txt").read_text(encoding="utf-8")
                     if (grid_raw / name / "input.txt").exists() else item.get("procedure", ""),
             "entities": json.loads(ent_f.read_text(encoding="utf-8")),
-            "relations": json.loads(rel_f.read_text(encoding="utf-8")),
+            "relations": json.loads(tri_f.read_text(encoding="utf-8")),
             "technique_codes_in_text": item.get("technique_codes_in_text", []),
         })
     return runs, pm
@@ -895,9 +901,47 @@ def write_report(path: Path, tm: dict, kg: dict | None, grid_raw: Path,
     if not runs:
         A("**CHƯA CHẠY.** Không có `out/grid_raw/` trên máy này.")
         A("")
-        A("Cần chạy trên Colab (có GPU T4):")
+        A("### Lần chạy Colab đầu tiên — thất bại, nguyên nhân: runtime không có GPU")
+        A("")
+        A("Log thật cho thấy 2 việc, **không phải lỗi model**:")
+        A("")
+        A("| # | Hiện tượng | Nguyên nhân thật |")
+        A("|---|---|---|")
+        A("| 1 | `WARNING: No GPU detected!` → `libcuda.so.1: cannot open shared object "
+          "file` → `RuntimeError: Failed to infer device type` | Runtime Colab đang để "
+          "**Hardware accelerator = None** (CPU). Script cảnh báo nhưng vẫn chạy tiếp, "
+          "tải vLLM 3 GB + model 8 GB rồi mới chết. |")
+        A("| 2 | Probe A1 in `parser_broken`, cả 6/6 mẫu bằng 0 | Probe chạy **trước** "
+          "`install_dependencies()` nên `json_repair` chưa có. Lỗi thứ tự trong script, "
+          "**không phải** lỗi parser. |")
+        A("")
+        A("Đã sửa cả 2, đều kiểm chứng offline:")
+        A("")
+        A("| Sửa | File | Cách kiểm chứng | Kết quả |")
+        A("|---|---|---|---|")
+        A("| `check_gpu()` **dừng** (exit 2) trước khi tải bất cứ thứ gì, kèm hướng dẫn "
+          "4 bước; escape `GRID_ALLOW_NO_GPU=1` | `out/run_grid_colab.py` | mock "
+          "`torch.cuda.is_available()=False`, gọi `check_gpu()` | `SystemExit(2)`, in "
+          "đúng hướng dẫn; escape hatch trả về `True` |")
+        A("| Bắt `FileNotFoundError` quanh `nvidia-smi` | `out/run_grid_colab.py` | cùng "
+          "test trên (máy không có driver NVIDIA) | trước: crash; sau: in "
+          "`(không có lệnh nvidia-smi...)` rồi dừng |")
+        A("| Cài `json-repair` **trước** khi probe A1 | `out/run_grid_colab.py` | chạy "
+          "thật `probe_parser()` khi đã cài | `verdict=parser_ok`, 6/6 mẫu đúng |")
+        A("| Tách verdict `missing_json_repair` khỏi `parser_broken` | "
+          "`out/grid_diagnose.py` | chặn `import json_repair` rồi chạy `probe_parser()` "
+          "| `verdict=missing_json_repair`, đúng thông điệp |")
+        A("| Thứ tự mới: A2 → **GPU check** → cài json-repair → probe A1 → deps → model | "
+          "`out/run_grid_colab.py` | đọc lại `main()` | đúng |")
+        A("")
+        A("> **Bài học:** `except Exception: pass` quanh `import` biến \"thiếu dependency\"")
+        A("> thành \"kết quả rỗng\". Lần chạy này suýt khiến ta đi sửa nhầm code parser")
+        A("> trong khi thực ra chỉ thiếu 1 package 51 kB.")
+        A("")
+        A("Cần chạy lại trên Colab (sau khi **bật T4 GPU**):")
         A("")
         A("```bash")
+        A("!nvidia-smi                        # phải in ra tên GPU")
         A("!git clone https://github.com/cudhna/Grid.git")
         A("%cd Grid")
         A("!git pull")

@@ -1,0 +1,1 @@
+{"call_index": 1, "timestamp": "2026-09-30T20:12:08", "seconds": 857.4, "prompt_tokens": 2528, "completion_tokens": 1740, "max_tokens": 8192, "temperature": 0.0, "chars": 7100, "finish_reason": "stop", "truncated": false, "prompt_chars": 12147, "error": null}

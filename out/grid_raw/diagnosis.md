@@ -1,6 +1,6 @@
 # A1 - Chẩn đoán: tại sao entities/relations của GRID rỗng
 
-Sinh lúc: 2026-09-30T17:12:31
+Sinh lúc: 2026-09-30T19:55:28
 
 ## 0. Cảnh báo quan trọng về file `raw_output.txt`
 
@@ -24,7 +24,6 @@ ra 0 thì parser ổn và vấn đề nằm ở model hoặc input.
 
 - Nạp được `article_io_cache_parser`: True
 - `json_repair` import được: **True**
-- Dùng `tools.py` stub (máy chạy probe không cần cài `requests`)
 - Dùng `vllm_environment_setup` stub (tránh phụ thuộc `~/Dropbox/tools.py`)
 
 | mẫu | entities (thực) | relations (thực) | entities (mong đợi) | relations (mong đợi) | khớp? |
@@ -77,4 +76,6 @@ Không có file `step1_raw.txt` / `step2_raw.txt` trên đĩa (đã bị xoá kh
 
 ## 6. Thông tin phiên chạy
 
+- **stage**: trước khi chạy model
+- **mode**: external
 

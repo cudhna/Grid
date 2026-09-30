@@ -1,0 +1,87 @@
+{
+  "source_report": "report_1.json",
+  "note": "Mỗi procedure được GRID chạy RIENG. `grid_dir` trỏ tới thư mục trong out/grid_raw/ chứa input + output thô + entities/relations của lần chạy đó.",
+  "technique_header_included": false,
+  "count": 7,
+  "procedures": [
+    {
+      "procedure_id": "proc_01",
+      "chunk": 0,
+      "tactic": "Impact",
+      "technique_id": "T1486",
+      "technique_name": "Data Encrypted for Impact",
+      "procedure": "CyberLock ransomware uses Data Encrypted for Impact by encrypting specific files on the victim's system. It was developed using PowerShell.",
+      "procedure_chars": 139,
+      "technique_codes_in_text": [],
+      "grid_dir": null
+    },
+    {
+      "procedure_id": "proc_02",
+      "chunk": 8,
+      "tactic": "Impact",
+      "technique_id": "T1486",
+      "technique_name": "Data Encrypted for Impact",
+      "procedure": "The CyberLock threat actor uses Data Encrypted for Impact by encrypting confidential databases, demanding a hefty ransom in exchange for decryption keys.",
+      "procedure_chars": 153,
+      "technique_codes_in_text": [],
+      "grid_dir": null
+    },
+    {
+      "procedure_id": "proc_03",
+      "chunk": 9,
+      "tactic": "Defense Evasion",
+      "technique_id": "T1027.009",
+      "technique_name": "Embedded Payloads",
+      "procedure": "CyberLock ransomware uses embedded payloads, specifically CSharp code, which is delivered to victims as an embedded component.",
+      "procedure_chars": 126,
+      "technique_codes_in_text": [],
+      "grid_dir": null
+    },
+    {
+      "procedure_id": "proc_04",
+      "chunk": 15,
+      "tactic": "Impact",
+      "technique_id": "T1486",
+      "technique_name": "Data Encrypted for Impact",
+      "procedure": "CyberLock uses Data Encrypted for Impact by encrypting the targeted files on the victim machine.",
+      "procedure_chars": 96,
+      "technique_codes_in_text": [],
+      "grid_dir": null
+    },
+    {
+      "procedure_id": "proc_05",
+      "chunk": 16,
+      "tactic": "Defense Evasion",
+      "technique_id": "T1112",
+      "technique_name": "Modify Registry",
+      "procedure": "CyberLock uses Modify Registry (T1112) to configure the 'Wallpaper' registry key to the path of the downloaded image.",
+      "procedure_chars": 117,
+      "technique_codes_in_text": [
+        "T1112"
+      ],
+      "grid_dir": null
+    },
+    {
+      "procedure_id": "proc_06",
+      "chunk": 18,
+      "tactic": "Defense Evasion",
+      "technique_id": "T1070.004",
+      "technique_name": "File Deletion",
+      "procedure": "Threat actors use file deletion to eliminate their malicious footprints or permanently delete files from victim machines.\nA Russian APT utilized file deletion in their attacks to eliminate malicious footprints or permanently delete files from victim machines.",
+      "procedure_chars": 259,
+      "technique_codes_in_text": [],
+      "grid_dir": null
+    },
+    {
+      "procedure_id": "proc_07",
+      "chunk": 20,
+      "tactic": "Defense Evasion",
+      "technique_id": "T1036.001",
+      "technique_name": "Masquerading",
+      "procedure": "Lucky_Gh0$t ransomware, a Yashma ransomware variant, uses Masquerading by being included with legitimate tools in the SFX archive, delivered as a malicious SFX installer file, to evade anti-malware file scanner detections and appear as a legitimate package.",
+      "procedure_chars": 257,
+      "technique_codes_in_text": [],
+      "grid_dir": null
+    }
+  ]
+}

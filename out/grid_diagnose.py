@@ -279,12 +279,29 @@ def probe_parser(verbose: bool = True) -> dict:
 
     required = [c for c in report["cases"].values() if not c["informative"]]
     passed = required and all(c["matches_expected"] for c in required)
-    report["verdict"] = "parser_ok" if passed else "parser_broken"
     if passed:
+        report["verdict"] = "parser_ok"
         salvaged = report["cases"].get("truncated", {}).get("entities", 0)
         report["note"] = (
             f"Parser đúng. Mẫu 'truncated' cứu được {salvaged} entity -> cắt output "
             "KHÔNG phải nguyên nhân gây rỗng, chỉ gây thiếu."
+        )
+    elif not report.get("json_repair", True):
+        # KHÔNG phải parser hỏng: `_robust_json_parse` nuốt ImportError của
+        # `import json_repair` trong `except Exception: pass`, nên thiếu package
+        # biểu hiện giống hệt parser hỏng (mọi mẫu ra 0). Tách verdict riêng để
+        # không ai đi tìm lỗi trong code parser trong khi chỉ thiếu 1 package.
+        report["verdict"] = "missing_json_repair"
+        report["note"] = (
+            "Thiếu package `json-repair` (khoảng 51 kB). `_robust_json_parse` nuốt "
+            "ImportError nên parse hỏng ÂM THẦM. Cài rồi chạy lại: "
+            "pip install json-repair"
+        )
+    else:
+        report["verdict"] = "parser_broken"
+        report["note"] = (
+            "json-repair đã có nhưng parser vẫn trả sai -> lỗi nằm trong chính "
+            "`_robust_json_parse`, cần đọc mã nguồn."
         )
     return report
 
@@ -428,6 +445,10 @@ def inspect_existing_outputs(grid_output: Path) -> dict:
 VERDICT_VI = {
     "parser_ok": "Parser đọc đúng mọi mẫu chuẩn -> lỗi KHÔNG nằm ở parser.",
     "parser_broken": "Parser/môi trường HỎNG -> đây là nguyên nhân gốc.",
+    "missing_json_repair": (
+        "Chưa cài `json-repair` (51 kB) -> KHÔNG phải lỗi code. "
+        "Parser nuốt ImportError nên ra rỗng. Cài: `pip install json-repair`."
+    ),
     "empty_response": "Model không trả về gì (timeout / lỗi mạng / request lỗi).",
     "model_emitted_empty_list": "Model trả kèm marker đúng nhưng tự sinh list RỖNG "
                                 "-> lỗi tuân thủ chỉ dẫn của model, không phải lỗi code.",

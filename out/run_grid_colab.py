@@ -9,7 +9,7 @@ Phạm vi (theo yêu cầu A1-A4):
   A3  Chạy riêng cho TỪNG procedure không rỗng, bỏ dòng tiêu đề "[Chunk n] Tactic - Txxxx",
       temperature = 0, retry tối đa 2 lần nếu rỗng và ghi log.
   A4  Xuất out/grid_raw/<run>/: input.txt, prompt_*.json, step1_raw.txt, step2_raw.txt,
-      raw_output.txt, entities.json, relation.json, attempts.json
+      raw_output.txt, entities.json, triplets.json, attempts.json
       + out/grid_raw/procedure_map.json + run.log + manifest.json
 
 Usage on Colab:
@@ -60,6 +60,37 @@ CHECKPOINTS = {
 
 VLLM_PORT = 8000
 VLLM_HOST = "0.0.0.0"
+
+# ---------------------------------------------------------------------------
+# Chế độ chạy: tự khởi động vLLM (cần GPU) hay dùng endpoint có sẵn
+# ---------------------------------------------------------------------------
+# GRID_MODE:
+#   "colab"    (mặc định) - tự tải model + tự bật vLLM. CẦN GPU.
+#   "external"            - KHÔNG tải model, KHÔNG bật server. Chỉ cần một
+#                           endpoint OpenAI-compatible đã chạy sẵn, set qua env:
+#                             VLLM_URL        ví dụ http://localhost:11434/v1
+#                                             (Ollama) hoặc http://localhost:8080/v1
+#                                             (llama.cpp server)
+#                             VLLM_API_KEY    mặc định "EMPTY"
+#                             VLLM_MODEL_NAME tên model server đang phục vụ
+# Dùng "external" để chạy trên máy KHÔNG có GPU (Ollama / llama.cpp chạy CPU),
+# vì vLLM không có nhánh CPU — nó chết ngay ở `libcuda.so.1` chứ không chậm.
+GRID_MODE = os.environ.get("GRID_MODE", "colab").strip().lower()
+EXTERNAL_MODE = GRID_MODE == "external"
+
+# Tên model khi không có env: ở chế độ colab là model vừa tải, ở chế độ external
+# người dùng BẮT BUỘC phải tự set VLLM_MODEL_NAME.
+SERVED_MODEL_NAME_FALLBACK = MODEL_NAME.split("/")[-1]
+
+
+# Endpoint dùng cho GRID (có hiệu lực ở cả 2 chế độ: colab tự bật thì trỏ về
+# localhost:VLLM_PORT, external thì đọc từ env).
+def active_endpoint() -> tuple:
+    url = os.environ.get("VLLM_URL", f"http://localhost:{VLLM_PORT}/v1")
+    key = os.environ.get("VLLM_API_KEY", "EMPTY")
+    name = os.environ.get("VLLM_MODEL_NAME", SERVED_MODEL_NAME_FALLBACK)
+    return url, key, name
+
 
 # T4 chỉ có 16GB: model fp16 chiếm ~8GB, còn ~5GB cho KV cache.
 # Input của GRID rất nhỏ: prompt Step 1 đo được ~9.6K ký tự (~2.7K token) + input
@@ -147,15 +178,24 @@ def install_dependencies():
         # ĐÃ ĐO (out/grid_diagnose.py): thiếu json_repair thì cả 6 mẫu chuẩn đều ra 0.
         "json-repair>=0.30.0",
         "requests>=2.31.0",
-        # Colab dùng Python 3.13 -> cần vLLM >= 0.11. Pin 0.11.0: hỗ trợ
-        # Python 3.13 + sm_75 (T4) + torch 2.8/cu128, chạy ổn định trên Colab free.
-        "vllm==0.11.0",
-        # transformers 5.x đã bỏ `all_special_tokens_extended` mà vLLM 0.11.0
-        # dùng -> AttributeError lúc khởi động. Giới hạn <5 (>=4.55.2 theo yêu cầu vLLM).
-        "transformers>=4.55.2,<5.0.0",
-        "accelerate>=0.34.0",
-        "safetensors>=0.4.3",
     ]
+
+    if not EXTERNAL_MODE:
+        # Chỉ chế độ colab mới cần vLLM. Endpoint ngoài (Ollama / llama.cpp /
+        # API trả phí) đã tự lo trọng số -> cài vLLM ở đây chỉ tốn ~4 GB và
+        # ép cài CUDA, vô ích trên máy không GPU.
+        packages += [
+            # Colab dùng Python 3.13 -> cần vLLM >= 0.11. Pin 0.11.0: hỗ trợ
+            # Python 3.13 + sm_75 (T4) + torch 2.8/cu128, chạy ổn định trên Colab free.
+            "vllm==0.11.0",
+            # transformers 5.x đã bỏ `all_special_tokens_extended` mà vLLM 0.11.0
+            # dùng -> AttributeError lúc khởi động. Giới hạn <5 (>=4.55.2 theo yêu cầu vLLM).
+            "transformers>=4.55.2,<5.0.0",
+            "accelerate>=0.34.0",
+            "safetensors>=0.4.3",
+        ]
+    else:
+        print("Chế độ external: bỏ qua vLLM/transformers/accelerate/safetensors.")
 
     for pkg in packages:
         print(f"Installing {pkg}...")
@@ -190,6 +230,63 @@ def download_model(model_id: str) -> str:
     local_path = snapshot_download(repo_id=model_id)
     print(f"Model downloaded to: {local_path}")
     return local_path
+
+
+def preflight_endpoint() -> dict:
+    """
+    Kiểm tra endpoint OpenAI-compatible đã chạy sẵn TRƯỚC khi gọi GRID.
+
+    Bắt buộc, không phải cho xem: `out/tools.py` bọc `except Exception` và trả về
+    `""` khi request hỏng. Nếu endpoint chết mà không kiểm tra trước, cả 8 lần chạy
+    sẽ ra `entities: 0` / `relations: 0` — trông giống hệt "model không tìm được thứ
+    gì", tức là mất hàng giờ compute mà không biết lý do.
+    """
+    url, key, name = active_endpoint()
+    print("=" * 60)
+    print("Step 0b: Kiểm tra endpoint OpenAI-compatible...")
+    print("=" * 60)
+    print(f"  VLLM_URL        = {url}")
+    print(f"  VLLM_MODEL_NAME = {name}")
+
+    import requests
+    try:
+        resp = requests.get(f"{url.rstrip('/')}/models",
+                            headers={"Authorization": f"Bearer {key}"},
+                            timeout=30)
+        resp.raise_for_status()
+        data = resp.json()
+    except Exception as exc:
+        print()
+        print("=" * 68)
+        print("DỪNG: không gọi được endpoint.")
+        print("=" * 68)
+        print(f"  Lỗi: {type(exc).__name__}: {exc}")
+        print()
+        print("Cách sửa — endpoint phải CHẠY SẴN trước khi chạy script này:")
+        print("  Ollama:      ollama serve        -> http://localhost:11434/v1")
+        print("  llama.cpp:   llama-server -m <file.gguf> -c 16384 --port 8080")
+        print()
+        print("Chạy nền trên Windows (giữ cửa sổ đó mở):")
+        print("  Start-Process ollama -WindowStyle Hidden")
+        print()
+        sys.exit(3)
+
+    served = [m.get("id") for m in (data.get("data") or [])]
+    print(f"  endpoint sống, đang phục vụ: {served}")
+    if name not in served:
+        print()
+        print("=" * 68)
+        print("DỪNG: tên model trong VLLM_MODEL_NAME không khớp endpoint.")
+        print("=" * 68)
+        print(f"  đang cấu hình : {name}")
+        print(f"  endpoint có   : {served}")
+        print()
+        print("Sửa lệnh chạy, ví dụ:")
+        first = served[0] if served else "<tên model>"
+        print(f"  $env:VLLM_MODEL_NAME = '{first}'")
+        sys.exit(3)
+    print(f"  OK: '{name}' sẵn sàng.")
+    return {"url": url, "model": name, "served": served}
 
 
 def start_vllm_server(model_path: str):
@@ -256,20 +353,92 @@ def print_log_tail(lines: int = 20):
     print("----- end of log -----")
 
 
+def bootstrap_parser_dep():
+    """
+    Cài `json-repair` TRƯỚC khi chạy probe A1.
+
+    Lý do: probe A1 dùng chính `_robust_json_parse` của repo để kết luận nguyên nhân,
+    nhưng hàm đó nuốt `ImportError` trong `except Exception: pass`. Nếu probe chạy lúc
+    `json_repair` chưa có thì CẢ 6 mẫu đều ra 0 -> báo nhầm `parser_broken`.
+
+    json-repair rất nhỏ (~51 kB) nên cài trước không tốn gì. Sau probe, probe sẽ tự
+    kiểm tra lại bằng `importlib` và in verdict trung thực.
+    """
+    try:
+        import json_repair  # noqa: F401
+        print("A1: json-repair đã có sẵn.")
+        return True
+    except ImportError:
+        pass
+
+    print("A1: đang cài json-repair (~51 kB) trước khi probe...")
+    rc = subprocess.call([sys.executable, "-m", "pip", "install", "-q",
+                          "json-repair>=0.30.0"])
+    if rc != 0:
+        print("A1: KHÔNG cài được json-repair — probe sẽ cho kết quả KHÔNG ĐÁNG TIN.")
+        return False
+    try:
+        import json_repair  # noqa: F401
+        print("A1: json-repair đã cài xong.")
+        return True
+    except ImportError:
+        print("A1: cài xong nhưng import vẫn lỗi.")
+        return False
+
+
 def check_gpu():
+    """
+    Kiểm tra GPU. Trả về True nếu dùng được.
+    Nếu không có GPU thì DỪNG NGAY — không tải vLLM (~3 GB) + model (~8 GB) rồi mới
+    chết ở `libcuda.so.1: cannot open shared object file`. Bỏ qua bằng
+    `GRID_ALLOW_NO_GPU=1` (chỉ hữu ích để chẩn đoán, không chạy được model).
+    """
     print("=" * 60)
     print("Step 0: Checking GPU...")
     print("=" * 60)
+    ok = False
     try:
         import torch
         if torch.cuda.is_available():
             print(f"GPU detected: {torch.cuda.get_device_name(0)}")
             print(f"CUDA version: {torch.version.cuda}")
+            free, total = torch.cuda.mem_get_info()
+            print(f"VRAM: {free / 1e9:.1f} GB free / {total / 1e9:.1f} GB")
+            if free < 9e9:
+                print(f"CẢNH BÁO: VRAM còn {free / 1e9:.1f} GB, model fp16 cần ~8 GB "
+                      "trừ KV cache. Cân nhắc --runtime t4 hoặc giảm GPU_MEMORY_UTILIZATION.")
+            ok = True
         else:
-            print("WARNING: No GPU detected!")
-            print("On Colab, enable GPU first: Runtime -> Change runtime type -> GPU")
-    except Exception:
-        subprocess.call(["nvidia-smi"])
+            print("KHÔNG phát hiện GPU.")
+    except Exception as exc:
+        print(f"Không import được torch: {type(exc).__name__}: {exc}")
+
+    if not ok:
+        # `nvidia-smi` không tồn tại thì subprocess.call ném FileNotFoundError và
+        # làm sập chính dòng thông báo cần đọc -> phải bắt lỗi.
+        try:
+            subprocess.call(["nvidia-smi"])
+        except (FileNotFoundError, OSError):
+            print("(không có lệnh `nvidia-smi` — máy này không cài driver NVIDIA)")
+        print()
+        print("=" * 68)
+        print("DỪNG: runtime này không có GPU, KHÔNG chạy được model.")
+        print("=" * 68)
+        print("Cách sửa trên Colab:")
+        print("  1. Menu: Runtime -> Change runtime type")
+        print("  2. Hardware accelerator: chọn 'T4 GPU'")
+        print("  3. Bấm OK, rồi Runtime -> Restart session")
+        print("  4. Chạy lại: !python out/run_grid_colab.py")
+        print()
+        print("Kiểm tra nhanh trước khi chạy lại:")
+        print("  !nvidia-smi")
+        print()
+        if os.environ.get("GRID_ALLOW_NO_GPU") == "1":
+            print("GRID_ALLOW_NO_GPU=1 -> vẫn tiếp tục (dành cho chẩn đoán).")
+            return True
+        print("Đặt GRID_ALLOW_NO_GPU=1 nếu thực sự muốn bỏ qua bước này.")
+        sys.exit(2)
+    return True
 
 
 def ensure_dropbox_tools():
@@ -410,10 +579,14 @@ def build_aggregate_text(procedures: list) -> str:
 # A3/A4 - chạy GRID
 # ===========================================================================
 def make_method():
-    """Tạo GRIDOursMethod với temperature 0 (A3) và dùng chính server đã bật."""
-    os.environ["VLLM_URL"] = f"http://localhost:{VLLM_PORT}/v1"
-    os.environ["VLLM_API_KEY"] = "EMPTY"
-    os.environ["VLLM_MODEL_NAME"] = SERVED_MODEL_NAME
+    """Tạo GRIDOursMethod với temperature 0 (A3) và trỏ về endpoint đang chạy."""
+    if not EXTERNAL_MODE:
+        # Chế độ colab: script tự bật vLLM nên endpoint là của chính nó.
+        os.environ["VLLM_URL"] = f"http://localhost:{VLLM_PORT}/v1"
+        os.environ["VLLM_API_KEY"] = "EMPTY"
+        os.environ["VLLM_MODEL_NAME"] = SERVED_MODEL_NAME
+    # Chế độ external: giữ nguyên VLLM_URL / VLLM_API_KEY / VLLM_MODEL_NAME do
+    # người dùng set từ dòng lệnh (Ollama, llama.cpp, hay API trả phí).
 
     from GRID_Ours import GRIDOursMethod
     from shared_eval_backend import build_default_shared_backend
@@ -529,9 +702,12 @@ def run_one(method, label: str, text: str, out_dir: Path,
     relations = result.get("relations") or []
     (out_dir / "entities.json").write_text(
         json.dumps(entities, ensure_ascii=False, indent=2), encoding="utf-8")
-    # GRID gọi khoá là "relations"; A4 yêu cầu tên relation.json
-    (out_dir / "relation.json").write_text(
-        json.dumps(relations, ensure_ascii=False, indent=2), encoding="utf-8")
+    # GRID trả về khoá "relations"; ta ghi ra `triplets.json` cho khớp với
+    # thuật ngữ "triple" dùng ở Phần B. `relation.json` (tên cũ) cũng được
+    # ghi lại để dữ liệu tải về từ lần chạy trước vẫn dùng được.
+    payload = json.dumps(relations, ensure_ascii=False, indent=2)
+    (out_dir / "triplets.json").write_text(payload, encoding="utf-8")
+    (out_dir / "relation.json").write_text(payload, encoding="utf-8")
     (out_dir / "step1_raw.txt").write_text(
         result.get("step1_raw_output") or "", encoding="utf-8")
     (out_dir / "step2_raw.txt").write_text(
@@ -607,34 +783,53 @@ def main():
 
     GRID_RAW_DIR.mkdir(parents=True, exist_ok=True)
 
+    print("=" * 60)
+    print(f"GRID Pipeline · chế độ: {GRID_MODE.upper()}")
+    print("=" * 60)
+
     # ---- A2: chọn checkpoint (không tải gì ngoài base trừ khi đổi cờ) ----
     model_id = print_checkpoint_table()
 
-    # ---- A1: probe parser TRƯỚC khi tải model / gọi model ----
+    # ---- Step 0. Chế độ external: KHÔNG cần GPU, KHÔNG tải model, KHÔNG bật
+    #      vLLM. Chế độ colab: bắt buộc có GPU, dừng sớm trước khi tải 11 GB.
+    if EXTERNAL_MODE:
+        print("Chế độ external: dùng endpoint có sẵn, bỏ qua GPU + tải model + vLLM.")
+    else:
+        check_gpu()
+
+    # ---- A1: probe parser. Phải có json_repair TRƯỚC, nếu không probe sẽ ra
+    #      0/0 ở cả 6 mẫu và kết luận sai (xem bootstrap_parser_dep). ----
     print("=" * 60)
     print("A1. Chẩn đoán parser (không cần model, chạy trước để biết nguyên nhân)")
     print("=" * 60)
-    early = run_diagnosis({"stage": "trước khi chạy model"})
+    bootstrap_parser_dep()
+    early = run_diagnosis({"stage": "trước khi chạy model", "mode": GRID_MODE})
 
-    # Step 0: GPU + tools.py
-    check_gpu()
     ensure_dropbox_tools()
 
     # Step 1: dependencies
     install_dependencies()
 
-    # Step 2: model
-    model_path = download_model(model_id)
+    # Step 2-4. Ở chế độ external bỏ qua hết: endpoint đã chạy sẵn ở máy ngoài.
+    endpoint_info = None
+    vllm_process = None
+    if EXTERNAL_MODE:
+        endpoint_info = preflight_endpoint()
+    else:
+        model_path = download_model(model_id)
+        vllm_process = start_vllm_server(model_path)
 
-    # Step 3-4: vLLM
-    vllm_process = start_vllm_server(model_path)
+    _url, _key, _name = active_endpoint()
     manifest = {
         "started_at": time.strftime("%Y-%m-%d %H:%M:%S"),
+        "mode": GRID_MODE,
         "model_id": model_id,
-        "served_model_name": SERVED_MODEL_NAME,
-        "dtype": DTYPE,
-        "max_model_len": MAX_MODEL_LEN,
-        "gpu_memory_utilization": GPU_MEMORY_UTILIZATION,
+        "served_model_name": _name,
+        "endpoint_url": _url,
+        "endpoint_preflight": endpoint_info,
+        "dtype": None if EXTERNAL_MODE else DTYPE,
+        "max_model_len": None if EXTERNAL_MODE else MAX_MODEL_LEN,
+        "gpu_memory_utilization": None if EXTERNAL_MODE else GPU_MEMORY_UTILIZATION,
         "max_new_tokens": MAX_NEW_TOKENS,
         "temperature": GRID_TEMP,
         "max_retries": MAX_RETRIES,
@@ -643,7 +838,7 @@ def main():
     }
 
     try:
-        if not wait_for_vllm_ready(vllm_process, timeout=600):
+        if not EXTERNAL_MODE and not wait_for_vllm_ready(vllm_process, timeout=600):
             log("ERROR: vLLM server failed to start")
             print("ERROR: vLLM server failed to start")
             return
@@ -671,7 +866,8 @@ def main():
                                ("step1_raw.txt", "step1_raw.txt"),
                                ("step2_raw.txt", "step2_raw.txt"),
                                ("entities.json", "entities.json"),
-                               ("relations.json", "relation.json")):
+                               ("triplets.json", "triplets.json"),
+                               ("relations.json", "triplets.json")):
                 (legacy / fname).write_text(
                     (GRID_RAW_DIR / "aggregate" / src).read_text(encoding="utf-8"),
                     encoding="utf-8")
@@ -726,16 +922,21 @@ def main():
         log("DONE")
 
     finally:
-        print("Stopping vLLM server...")
-        try:
-            if os.name != "nt":
-                os.killpg(os.getpgid(vllm_process.pid), signal.SIGTERM)
-            else:
-                vllm_process.terminate()
-            vllm_process.wait()
-        except (ProcessLookupError, OSError):
-            print("vLLM process already stopped.")
-        print("vLLM server stopped.")
+        # Chế độ external: endpoint do người dùng tự bật, KHÔNG được tắt hộ —
+        # có thể là Ollama dùng chung, hoặc API trả phí.
+        if EXTERNAL_MODE:
+            print("Chế độ external: giữ nguyên endpoint (không tắt server).")
+        else:
+            print("Stopping vLLM server...")
+            try:
+                if os.name != "nt":
+                    os.killpg(os.getpgid(vllm_process.pid), signal.SIGTERM)
+                else:
+                    vllm_process.terminate()
+                vllm_process.wait()
+            except (ProcessLookupError, OSError):
+                print("vLLM process already stopped.")
+            print("vLLM server stopped.")
 
 
 if __name__ == "__main__":

@@ -1,0 +1,14 @@
+CyberLock ransomware uses Data Encrypted for Impact by encrypting specific files on the victim's system. It was developed using PowerShell.
+
+The CyberLock threat actor uses Data Encrypted for Impact by encrypting confidential databases, demanding a hefty ransom in exchange for decryption keys.
+
+CyberLock ransomware uses embedded payloads, specifically CSharp code, which is delivered to victims as an embedded component.
+
+CyberLock uses Data Encrypted for Impact by encrypting the targeted files on the victim machine.
+
+CyberLock uses Modify Registry (T1112) to configure the 'Wallpaper' registry key to the path of the downloaded image.
+
+Threat actors use file deletion to eliminate their malicious footprints or permanently delete files from victim machines.
+A Russian APT utilized file deletion in their attacks to eliminate malicious footprints or permanently delete files from victim machines.
+
+Lucky_Gh0$t ransomware, a Yashma ransomware variant, uses Masquerading by being included with legitimate tools in the SFX archive, delivered as a malicious SFX installer file, to evade anti-malware file scanner detections and appear as a legitimate package.

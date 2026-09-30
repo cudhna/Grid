@@ -1,6 +1,6 @@
 # KG 3 tầng: ATT&CK + technique từ báo cáo + triple GRID
 
-Sinh lúc: 2026-09-30T17:14:34
+Sinh lúc: 2026-09-30T18:47:07
 
 > **Lưu ý về số liệu:** mọi con số dưới đây lấy từ lần chạy thật trên máy này.
 > Những phần phụ thuộc kết quả GRID sẽ ghi rõ là **CHƯA CHẠY** nếu `out/grid_raw/`
@@ -61,9 +61,33 @@ Chi tiết đầy đủ (bảng từng lần gọi model, prompt/output thô) n�
 
 **CHƯA CHẠY.** Không có `out/grid_raw/` trên máy này.
 
-Cần chạy trên Colab (có GPU T4):
+### Lần chạy Colab đầu tiên — thất bại, nguyên nhân: runtime không có GPU
+
+Log thật cho thấy 2 việc, **không phải lỗi model**:
+
+| # | Hiện tượng | Nguyên nhân thật |
+|---|---|---|
+| 1 | `WARNING: No GPU detected!` → `libcuda.so.1: cannot open shared object file` → `RuntimeError: Failed to infer device type` | Runtime Colab đang để **Hardware accelerator = None** (CPU). Script cảnh báo nhưng vẫn chạy tiếp, tải vLLM 3 GB + model 8 GB rồi mới chết. |
+| 2 | Probe A1 in `parser_broken`, cả 6/6 mẫu bằng 0 | Probe chạy **trước** `install_dependencies()` nên `json_repair` chưa có. Lỗi thứ tự trong script, **không phải** lỗi parser. |
+
+Đã sửa cả 2, đều kiểm chứng offline:
+
+| Sửa | File | Cách kiểm chứng | Kết quả |
+|---|---|---|---|
+| `check_gpu()` **dừng** (exit 2) trước khi tải bất cứ thứ gì, kèm hướng dẫn 4 bước; escape `GRID_ALLOW_NO_GPU=1` | `out/run_grid_colab.py` | mock `torch.cuda.is_available()=False`, gọi `check_gpu()` | `SystemExit(2)`, in đúng hướng dẫn; escape hatch trả về `True` |
+| Bắt `FileNotFoundError` quanh `nvidia-smi` | `out/run_grid_colab.py` | cùng test trên (máy không có driver NVIDIA) | trước: crash; sau: in `(không có lệnh nvidia-smi...)` rồi dừng |
+| Cài `json-repair` **trước** khi probe A1 | `out/run_grid_colab.py` | chạy thật `probe_parser()` khi đã cài | `verdict=parser_ok`, 6/6 mẫu đúng |
+| Tách verdict `missing_json_repair` khỏi `parser_broken` | `out/grid_diagnose.py` | chặn `import json_repair` rồi chạy `probe_parser()` | `verdict=missing_json_repair`, đúng thông điệp |
+| Thứ tự mới: A2 → **GPU check** → cài json-repair → probe A1 → deps → model | `out/run_grid_colab.py` | đọc lại `main()` | đúng |
+
+> **Bài học:** `except Exception: pass` quanh `import` biến "thiếu dependency"
+> thành "kết quả rỗng". Lần chạy này suýt khiến ta đi sửa nhầm code parser
+> trong khi thực ra chỉ thiếu 1 package 51 kB.
+
+Cần chạy lại trên Colab (sau khi **bật T4 GPU**):
 
 ```bash
+!nvidia-smi                        # phải in ra tên GPU
 !git clone https://github.com/cudhna/Grid.git
 %cd Grid
 !git pull

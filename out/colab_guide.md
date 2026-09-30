@@ -4,8 +4,25 @@ Script duy nhất: **`out/run_grid_colab.py`** — tự làm hết A1, A2, A3, A
 Chạy một lần, xong thì tải thư mục `out/grid_raw/` về máy local để chạy Phần B.
 
 ## Yêu cầu
+
 - Tài khoản Google (miễn phí)
-- **Runtime → Change runtime type → Hardware accelerator → GPU** (Colab miễn phí cấp T4, 16 GB VRAM)
+- **BẮT BUỘC: bật GPU trước khi chạy.** Runtime → Change runtime type →
+  Hardware accelerator → **T4 GPU** → OK → Runtime → Restart session.
+
+Kiểm tra bằng:
+
+```python
+!nvidia-smi
+```
+
+Phải in ra tên GPU (ví dụ `Tesla T4`). Nếu báo
+`NVIDIA-SMI has failed because it couldn't communicate with the NVIDIA driver`
+thì runtime vẫn đang ở chế độ CPU — vLLM sẽ chết với
+`libcuda.so.1: cannot open shared object file`.
+
+> Script đã tự dừng sớm (exit code 2) nếu không thấy GPU, **trước khi** tải vLLM và
+> model — để không mất 6 phút tải rồi mới biết là vô ích. Muốn bỏ qua kiểm tra:
+> `os.environ["GRID_ALLOW_NO_GPU"]="1"` (chỉ để chẩn đoán, không chạy được model).
 
 ---
 
@@ -32,14 +49,24 @@ Trình tự script tự làm:
 | bước | việc | thời gian |
 |---|---|---|
 | A2 | in bảng kích thước checkpoint, chọn `base_model` (8.05 GB) | vài giây |
-| A1 | probe parser `_robust_json_parse` (6 mẫu) → `out/grid_raw/diagnosis.md` | vài giây |
+| — | **kiểm tra GPU** — không có thì dừng ngay | vài giây |
+| A1 | cài `json-repair` (51 kB) rồi probe parser `_robust_json_parse` (6 mẫu) → `out/grid_raw/diagnosis.md` | vài giây |
 | — | cài dependency, tải model, khởi động vLLM | 5–15 phút |
 | A3 | chạy GRID: 1 lần gộp + 7 lần riêng từng procedure, mỗi lần tối đa 3 attempt | 5–20 phút |
 | A1 | chẩn đoán lại (lần này có đủ dữ liệu `_TemplateDebug/*.jsonl`) | vài giây |
 
-**Kiểm tra A1 trước khi đọc tiếp:** nếu dòng probe in ra `parser_broken` thì dừng,
-chạy `!pip install json-repair` rồi chạy lại script. Nguyên nhân này đã được đo và
-tái hiện (thiếu `json_repair` → cả 6 mẫu chuẩn đều ra danh sách rỗng).
+**Đọc verdict của probe A1:**
+
+| verdict | nghĩa là | làm gì |
+|---|---|---|
+| `parser_ok` | Parser đọc đúng cả 6 mẫu | Không cần làm gì, chạy tiếp |
+| `missing_json_repair` | Chưa có `json_repair` | Script tự cài trước probe; nếu vẫn thấy, chạy `!pip install json-repair` rồi chạy lại |
+| `parser_broken` | `json_repair` đã có mà parser vẫn sai | Lỗi nằm trong `_robust_json_parse`, cần đọc mã nguồn |
+
+> `missing_json_repair` là verdict **không phải lỗi code** — `_robust_json_parse` nuốt
+> `ImportError` trong `except Exception: pass`, nên thiếu package biểu hiện giống hệt
+> parser hỏng (mọi mẫu ra `0`). Script cài `json-repair` **trước** khi probe để không
+> bao giờ rơi vào tình huống này nữa.
 
 ## 3. Cấu trúc kết quả `out/grid_raw/`
 
@@ -65,12 +92,15 @@ Mỗi thư mục lần chạy có 11 file:
 | `step1_raw.txt` / `step2_raw.txt` | **output thô** của model từng bước |
 | `raw_output.txt` | output GRID dựng lại (xem cảnh báo bên dưới) |
 | `raw_output.NOTE.txt` | giải thích `raw_output.txt` khác output thô ở đâu |
-| `entities.json` / `relation.json` | kết quả đã parse — đây là dữ liệu Phần B dùng |
+| `entities.json` / `triplets.json` | kết quả đã parse — đây là dữ liệu Phần B dùng |
 | `attempts.json` | từng lần thử: số entity/relation, `step1_chars`/`step2_chars`, `step1_verdict`/`step2_verdict`, lỗi nếu có |
 
 > **Cảnh báo quan trọng về `raw_output.txt`:** nó **không phải** output thô của model.
 > `GRID_backbone._build_final_split_output()` dựng lại từ `final_entities` / `final_relations`
 > sau khi đã parse. Muốn xem model thực sự sinh ra gì thì đọc `step1_raw.txt` / `step2_raw.txt`.
+
+> `relation.json` (tên ở lần chạy cũ) vẫn được ghi lại cho tương thích, và Phần B vẫn đọc được
+> cả hai tên — nên không cần chạy lại nếu bạn đã tải `grid_raw/` từ lần trước.
 
 ## 4. Tải `out/grid_raw/` về máy local
 
@@ -109,11 +139,25 @@ Bỏ `--dry-run` để nạp thật. Lớp nền **không thay đổi**.
 
 ## Xử lý lỗi
 
+### `DỪNG: runtime này không có GPU` (exit code 2)
+- **Không phải lỗi code.** Runtime Colab đang ở chế độ CPU.
+- Runtime → Change runtime type → Hardware accelerator → **T4 GPU** → OK
+  → Runtime → Restart session → chạy lại.
+- Kiểm tra: `!nvidia-smi`.
+- Nếu không muốn script dừng: `import os; os.environ["GRID_ALLOW_NO_GPU"]="1"`
+  rồi chạy tiếp (chỉ hữu ích để chẩn đoán, **không** chạy được model).
+
+### `libcuda.so.1: cannot open shared object file` / `Failed to infer device type`
+- Cùng nguyên nhân: không có GPU. Xem mục ngay trên.
+
 ### `json_repair` / parser trả danh sách rỗng
-- `!pip install json-repair` rồi chạy lại script.
+- Script đã tự cài `json-repair` **trước** khi probe, nên probe phải ra
+  `parser_ok`. Nếu thấy `missing_json_repair` thì `!pip install json-repair`.
 - `out/grid_raw/diagnosis.md` mục probe ghi rõ kết luận.
-- Nguyên nhân: `article_io_cache_parser._robust_json_parse()` có 3 chỗ
-  `except Exception: pass` nuốt luôn `ImportError` của `json_repair` → parse fail âm thầm.
+- Nguyên nhân gốc: `article_io_cache_parser._robust_json_parse()` có 3 chỗ
+  `except Exception: pass` nuốt luôn `ImportError` của `json_repair` → parse fail âm thầm,
+  biểu hiện y hệt "parser hỏng". Vì vậy đã tách verdict `missing_json_repair`
+  khỏi `parser_broken`.
 
 ### "CUDA out of memory"
 - **Runtime → Restart runtime**, chạy lại script.
