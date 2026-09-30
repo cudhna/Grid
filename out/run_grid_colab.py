@@ -16,6 +16,7 @@ Usage on Colab:
 import os
 import sys
 import json
+import re
 import time
 import subprocess
 import signal
@@ -26,6 +27,12 @@ MODEL_NAME = "Qwen/Qwen3-4B-Instruct-2507"  # or "anonymousauthorname/ProjectGRI
 USE_BASE_MODEL = True  # Set to False to use task_bank_reward
 VLLM_PORT = 8000
 VLLM_HOST = "0.0.0.0"
+
+# T4 chỉ có 16GB: model bf16 chiếm ~8GB, còn ~4GB cho KV cache.
+# 32768 token cần 4.5GB KV → không đủ ("EngineCore failed to start").
+# Input của GRID rất nhỏ (~9KB ≈ 2.5K token) nên 16384 là rất dư.
+MAX_MODEL_LEN = 16384
+GPU_MEMORY_UTILIZATION = 0.92
 
 # Add out directory to path for tools.py
 OUT_DIR = Path(__file__).parent
@@ -96,7 +103,8 @@ def start_vllm_server(model_path: str):
         "--port", str(VLLM_PORT),
         "--trust-remote-code",
         "--dtype", "auto",
-        "--max-model-len", "32768",
+        "--max-model-len", str(MAX_MODEL_LEN),
+        "--gpu-memory-utilization", str(GPU_MEMORY_UTILIZATION),
     ]
     
     print(f"Starting vLLM: {' '.join(cmd)}")
@@ -116,8 +124,8 @@ def start_vllm_server(model_path: str):
     return process
 
 
-def print_log_tail(lines: int = 50):
-    """In cuối file log vLLM để debug khi server không lên."""
+def print_log_tail(lines: int = 20):
+    """In log vLLM: quanh lỗi gốc (root cause) + phần cuối file."""
     log_path = OUT_DIR / "vllm_server.log"
     if not log_path.exists():
         print(f"(log file not found: {log_path})")
@@ -125,11 +133,35 @@ def print_log_tail(lines: int = 50):
     try:
         with open(log_path, "r", encoding="utf-8", errors="replace") as f:
             content = f.readlines()
-        print(f"----- vLLM log (last {lines} lines) -----")
-        print("".join(content[-lines:]))
-        print("----- end of log -----")
     except Exception as e:
         print(f"Could not read log: {e}")
+        return
+
+    # Lỗi gốc nằm TRƯỚC traceback cuối của API server, nên tìm dòng lỗi đầu tiên
+    fatal = re.compile(
+        r"(fatal error|Error:|ValueError|RuntimeError|AssertionError|"
+        r"NotImplementedError|ImportError|ModuleNotFoundError|KeyError|"
+        r"TypeError|OSError|out of memory|no kernel image|"
+        r"EngineCore.*(failed|error))",
+        re.IGNORECASE,
+    )
+    # Bỏ qua dòng nằm trong traceback của chính API server
+    traceback_end = next(
+        (i for i, ln in enumerate(content) if "api_server.py" in ln and "build_async" in ln),
+        len(content),
+    )
+    hit = next((i for i, ln in enumerate(content[:traceback_end]) if fatal.search(ln)), None)
+
+    if hit is not None:
+        lo, hi = max(0, hit - 8), min(len(content), hit + 15)
+        print(f"----- vLLM log: lỗi gốc (dòng {hit + 1}/{len(content)}) -----")
+        print("".join(content[lo:hi]))
+    else:
+        print("----- (không tìm thấy lỗi gốc trong log) -----")
+
+    print(f"----- vLLM log: {lines} dòng cuối -----")
+    print("".join(content[-lines:]))
+    print("----- end of log -----")
 
 
 def check_gpu():

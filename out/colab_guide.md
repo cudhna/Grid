@@ -51,6 +51,8 @@ Sau khi chạy xong, kết quả được lưu trong `out/grid_output/`:
 - Kiểm tra log: `!cat out/vllm_server.log`
 - Đảm bảo đã chọn GPU ở bước 2
 - Script đã pin `vllm==0.11.0` (hỗ trợ Python 3.13 + T4/CUDA 12) và `transformers<5` (transformers 5.x bỏ `all_special_tokens_extended` mà vLLM 0.11.0 dùng → `AttributeError` khi khởi động server). Lưu ý: vLLM 0.8.x–0.10.x không cài được trên Python 3.13; bản mới nhất (0.30.x, torch 2.13/cu130) không chạy được trên T4
+- Lỗi `EngineCore failed to start ... larger than the available KV cache memory`: T4 16GB không đủ KV cache cho context dài. Script đã giải hạn `--max-model-len 16384` và `--gpu-memory-utilization 0.92` (đổi ở đầu file nếu cần)
+- Lưu ý: T4 không hỗ trợ FlashAttention 2 (cần compute capability ≥ 8) nên vLLM dùng **FlexAttention** → khởi động chậm ~2-3 phút (torch.compile lần đầu). Bình thường, không phải lỗi
 - Nếu vLLM cũ treo từ lần chạy trước: `!pkill -f vllm` hoặc **Runtime → Restart runtime**
 
 ### Lỗi "No module named 'xxx'"
