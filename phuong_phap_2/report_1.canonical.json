@@ -1,0 +1,381 @@
+[
+  [
+    {
+      "id": "TA0002",
+      "name": "Execution",
+      "techniques": [
+        {
+          "id": "T1059.001",
+          "name": "PowerShell",
+          "procedure": ""
+        }
+      ],
+      "report_name": "Execution"
+    },
+    {
+      "id": "TA0040",
+      "name": "Impact",
+      "techniques": [
+        {
+          "id": "T1486",
+          "name": "Data Encrypted for Impact",
+          "procedure": "CyberLock ransomware uses Data Encrypted for Impact by encrypting specific files on the victim's system. It was developed using PowerShell."
+        }
+      ],
+      "report_name": "Impact"
+    }
+  ],
+  [
+    {
+      "id": "TA0040",
+      "name": "Impact",
+      "techniques": [
+        {
+          "id": "T1491",
+          "name": "Defacement",
+          "procedure": ""
+        }
+      ],
+      "report_name": "Impact"
+    }
+  ],
+  [],
+  [
+    {
+      "id": "TA0001",
+      "name": "Initial Access",
+      "techniques": [
+        {
+          "id": "T1583.008",
+          "name": "Malvertising",
+          "procedure": ""
+        }
+      ],
+      "report_name": "Initial Access"
+    }
+  ],
+  [],
+  [
+    {
+      "id": "TA0042",
+      "name": "Resource Development",
+      "techniques": [
+        {
+          "id": "T1583.001",
+          "name": "Domains",
+          "procedure": ""
+        }
+      ],
+      "report_name": "Resource Development"
+    }
+  ],
+  [],
+  [
+    {
+      "id": "TA0002",
+      "name": "Execution",
+      "techniques": [
+        {
+          "id": "T1059.001",
+          "name": "PowerShell",
+          "procedure": ""
+        }
+      ],
+      "report_name": "Execution"
+    }
+  ],
+  [
+    {
+      "id": "TA0040",
+      "name": "Impact",
+      "techniques": [
+        {
+          "id": "T1486",
+          "name": "Data Encrypted for Impact",
+          "procedure": "The CyberLock threat actor uses Data Encrypted for Impact by encrypting confidential databases, demanding a hefty ransom in exchange for decryption keys."
+        }
+      ],
+      "report_name": "Impact"
+    },
+    {
+      "id": "TA0011",
+      "name": "Command and Control",
+      "techniques": [
+        {
+          "id": "T1071.003",
+          "name": "Mail Protocols",
+          "procedure": ""
+        }
+      ],
+      "report_name": "Command and Control"
+    }
+  ],
+  [
+    {
+      "id": "TA0005",
+      "name": "Stealth",
+      "techniques": [
+        {
+          "id": "T1027.009",
+          "name": "Embedded Payloads",
+          "procedure": "CyberLock ransomware uses embedded payloads, specifically CSharp code, which is delivered to victims as an embedded component."
+        }
+      ],
+      "report_name": "Defense Evasion"
+    }
+  ],
+  [
+    {
+      "id": "TA0002",
+      "name": "Execution",
+      "techniques": [
+        {
+          "id": "T1059.001",
+          "original_id": "T1086",
+          "canonicalized": true,
+          "name": "PowerShell",
+          "procedure": ""
+        }
+      ],
+      "report_name": "Execution"
+    }
+  ],
+  [],
+  [],
+  [
+    {
+      "id": "TA0005",
+      "name": "Stealth",
+      "techniques": [
+        {
+          "id": "T1027",
+          "name": "Obfuscated Files or Information",
+          "procedure": ""
+        }
+      ],
+      "report_name": "Defense Evasion"
+    },
+    {
+      "id": "TA0002",
+      "name": "Execution",
+      "techniques": [
+        {
+          "id": "T1059",
+          "name": "Command and Scripting Interpreter",
+          "procedure": ""
+        }
+      ],
+      "report_name": "Execution"
+    }
+  ],
+  [
+    {
+      "id": "TA0009",
+      "name": "Collection",
+      "techniques": [
+        {
+          "id": "T1005",
+          "name": "Data from Local System",
+          "procedure": ""
+        }
+      ],
+      "report_name": "Collection"
+    }
+  ],
+  [
+    {
+      "id": "TA0040",
+      "name": "Impact",
+      "techniques": [
+        {
+          "id": "T1486",
+          "name": "Data Encrypted for Impact",
+          "procedure": "CyberLock uses Data Encrypted for Impact by encrypting the targeted files on the victim machine."
+        },
+        {
+          "id": "T1491",
+          "name": "Defacement",
+          "procedure": ""
+        }
+      ],
+      "report_name": "Impact"
+    }
+  ],
+  [
+    {
+      "id": "TA0005",
+      "name": "Stealth",
+      "techniques": [
+        {
+          "id": "T1112",
+          "name": "Modify Registry",
+          "procedure": "CyberLock uses Modify Registry (T1112) to configure the 'Wallpaper' registry key to the path of the downloaded image."
+        }
+      ],
+      "report_name": "Defense Evasion"
+    }
+  ],
+  [
+    {
+      "id": "TA0040",
+      "name": "Impact",
+      "techniques": [
+        {
+          "id": "T1561",
+          "name": "Disk Wipe",
+          "procedure": ""
+        }
+      ],
+      "report_name": "Impact"
+    }
+  ],
+  [
+    {
+      "id": "TA0005",
+      "name": "Stealth",
+      "techniques": [
+        {
+          "id": "T1070.004",
+          "name": "File Deletion",
+          "procedure": "Threat actors use file deletion to eliminate their malicious footprints or permanently delete files from victim machines.\nA Russian APT utilized file deletion in their attacks to eliminate malicious footprints or permanently delete files from victim machines."
+        }
+      ],
+      "report_name": "Defense Evasion"
+    },
+    {
+      "id": "TA0040",
+      "name": "Impact",
+      "techniques": [
+        {
+          "id": "T1485",
+          "name": "Data Destruction",
+          "procedure": ""
+        }
+      ],
+      "report_name": "Impact"
+    }
+  ],
+  [
+    {
+      "id": "TA0005",
+      "name": "Stealth",
+      "techniques": [
+        {
+          "id": "T1036.001",
+          "name": "Masquerading",
+          "procedure": ""
+        }
+      ],
+      "report_name": "Defense Evasion"
+    }
+  ],
+  [
+    {
+      "id": "TA0005",
+      "name": "Stealth",
+      "techniques": [
+        {
+          "id": "T1036.001",
+          "name": "Masquerading",
+          "procedure": "Lucky_Gh0$t ransomware, a Yashma ransomware variant, uses Masquerading by being included with legitimate tools in the SFX archive, delivered as a malicious SFX installer file, to evade anti-malware file scanner detections and appear as a legitimate package."
+        }
+      ],
+      "report_name": "Defense Evasion"
+    },
+    {
+      "id": "TA0002",
+      "name": "Execution",
+      "techniques": [
+        {
+          "id": "T1204",
+          "name": "User Execution",
+          "procedure": ""
+        }
+      ],
+      "report_name": "Execution"
+    }
+  ],
+  [
+    {
+      "id": "TA0040",
+      "name": "Impact",
+      "techniques": [
+        {
+          "id": "T1490",
+          "name": "Inhibit System Recovery",
+          "procedure": ""
+        },
+        {
+          "id": "T1486",
+          "name": "Data Encrypted for Impact",
+          "procedure": ""
+        }
+      ],
+      "report_name": "Impact"
+    }
+  ],
+  [
+    {
+      "id": "TA0040",
+      "name": "Impact",
+      "techniques": [
+        {
+          "id": "T1486",
+          "name": "Data Encrypted for Impact",
+          "procedure": ""
+        }
+      ],
+      "report_name": "Impact"
+    }
+  ],
+  [],
+  [],
+  [
+    {
+      "id": "TA0002",
+      "name": "Execution",
+      "techniques": [
+        {
+          "id": "T1059.003",
+          "name": "Windows Command Shell",
+          "procedure": ""
+        }
+      ],
+      "report_name": "Execution"
+    }
+  ],
+  [
+    {
+      "id": "TA0002",
+      "name": "Execution",
+      "techniques": [
+        {
+          "id": "T1059",
+          "name": "Command and Scripting Interpreter",
+          "procedure": ""
+        }
+      ],
+      "report_name": "Execution"
+    }
+  ],
+  [],
+  [],
+  [
+    {
+      "id": "TA0001",
+      "name": "Initial Access",
+      "techniques": [
+        {
+          "id": "T1566.001",
+          "name": "Spearphishing Attachment",
+          "procedure": ""
+        }
+      ],
+      "report_name": "Initial Access"
+    }
+  ],
+  [],
+  [],
+  [],
+  []
+]

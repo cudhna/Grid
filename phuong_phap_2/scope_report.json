@@ -1,0 +1,2300 @@
+{
+  "scope": "malware-loader",
+  "generated_at": "2026-09-30T16:01:42",
+  "loader_tactics": [
+    "initial-access",
+    "execution",
+    "persistence",
+    "stealth",
+    "defense-impairment",
+    "discovery",
+    "command-and-control",
+    "resource-development"
+  ],
+  "rules": {
+    "attack-evidence": "R1: ATT&CK ghi nhan phan mem loader/dropper/stager su dung",
+    "core-loader": "R2: nam trong danh sach loi cua malware loader",
+    "report": "R3: co trong bao cao CTI",
+    "parent-closure": "R4: la technique cha cua mot sub-technique da giu",
+    "tactic-scope": "L0: thuoc 8 tactic cua vong doi loader",
+    "tactic-report": "L1: tactic xuat hien trong bao cao"
+  },
+  "rule_counts": {
+    "R1_attack_evidence": 102,
+    "R2_core_loader": 121,
+    "R3_report": 19,
+    "R4_parent_closure": 5
+  },
+  "stats": {
+    "kept_nodes": 179,
+    "kept_edges": 283,
+    "kept_tactics": 8,
+    "kept_techniques": 171,
+    "in_loader_scope": 171,
+    "report_only_not_in_base": 7
+  },
+  "base_layer": {
+    "tactics": [
+      {
+        "id": "TA0001",
+        "name": "Initial Access",
+        "keep_reason": [
+          "tactic-report",
+          "tactic-scope"
+        ]
+      },
+      {
+        "id": "TA0002",
+        "name": "Execution",
+        "keep_reason": [
+          "tactic-report",
+          "tactic-scope"
+        ]
+      },
+      {
+        "id": "TA0003",
+        "name": "Persistence",
+        "keep_reason": [
+          "tactic-report",
+          "tactic-scope"
+        ]
+      },
+      {
+        "id": "TA0005",
+        "name": "Stealth",
+        "keep_reason": [
+          "tactic-report",
+          "tactic-scope"
+        ]
+      },
+      {
+        "id": "TA0007",
+        "name": "Discovery",
+        "keep_reason": [
+          "tactic-scope"
+        ]
+      },
+      {
+        "id": "TA0011",
+        "name": "Command and Control",
+        "keep_reason": [
+          "tactic-report",
+          "tactic-scope"
+        ]
+      },
+      {
+        "id": "TA0042",
+        "name": "Resource Development",
+        "keep_reason": [
+          "tactic-report",
+          "tactic-scope"
+        ]
+      },
+      {
+        "id": "TA0112",
+        "name": "Defense Impairment",
+        "keep_reason": [
+          "tactic-report",
+          "tactic-scope"
+        ]
+      }
+    ],
+    "techniques": [
+      {
+        "id": "T1008",
+        "name": "Fallback Channels",
+        "keep_reason": [
+          "attack-evidence"
+        ],
+        "tactics": [
+          "command-and-control"
+        ]
+      },
+      {
+        "id": "T1012",
+        "name": "Query Registry",
+        "keep_reason": [
+          "attack-evidence",
+          "core-loader"
+        ],
+        "tactics": [
+          "discovery"
+        ]
+      },
+      {
+        "id": "T1016",
+        "name": "System Network Configuration Discovery",
+        "keep_reason": [
+          "attack-evidence",
+          "core-loader"
+        ],
+        "tactics": [
+          "discovery"
+        ]
+      },
+      {
+        "id": "T1016.001",
+        "name": "Internet Connection Discovery",
+        "keep_reason": [
+          "attack-evidence"
+        ],
+        "tactics": [
+          "discovery"
+        ]
+      },
+      {
+        "id": "T1018",
+        "name": "Remote System Discovery",
+        "keep_reason": [
+          "attack-evidence",
+          "core-loader"
+        ],
+        "tactics": [
+          "discovery"
+        ]
+      },
+      {
+        "id": "T1027",
+        "name": "Obfuscated Files or Information",
+        "keep_reason": [
+          "attack-evidence",
+          "core-loader",
+          "report"
+        ],
+        "tactics": [
+          "stealth"
+        ]
+      },
+      {
+        "id": "T1027.001",
+        "name": "Binary Padding",
+        "keep_reason": [
+          "attack-evidence"
+        ],
+        "tactics": [
+          "stealth"
+        ]
+      },
+      {
+        "id": "T1027.002",
+        "name": "Software Packing",
+        "keep_reason": [
+          "attack-evidence"
+        ],
+        "tactics": [
+          "stealth"
+        ]
+      },
+      {
+        "id": "T1027.004",
+        "name": "Compile After Delivery",
+        "keep_reason": [
+          "core-loader"
+        ],
+        "tactics": [
+          "stealth"
+        ]
+      },
+      {
+        "id": "T1027.007",
+        "name": "Dynamic API Resolution",
+        "keep_reason": [
+          "attack-evidence"
+        ],
+        "tactics": [
+          "stealth"
+        ]
+      },
+      {
+        "id": "T1027.008",
+        "name": "Stripped Payloads",
+        "keep_reason": [
+          "core-loader"
+        ],
+        "tactics": [
+          "stealth"
+        ]
+      },
+      {
+        "id": "T1027.009",
+        "name": "Embedded Payloads",
+        "keep_reason": [
+          "core-loader",
+          "report"
+        ],
+        "tactics": [
+          "stealth"
+        ]
+      },
+      {
+        "id": "T1027.010",
+        "name": "Command Obfuscation",
+        "keep_reason": [
+          "attack-evidence"
+        ],
+        "tactics": [
+          "stealth"
+        ]
+      },
+      {
+        "id": "T1027.013",
+        "name": "Encrypted/Encoded File",
+        "keep_reason": [
+          "attack-evidence"
+        ],
+        "tactics": [
+          "stealth"
+        ]
+      },
+      {
+        "id": "T1033",
+        "name": "System Owner/User Discovery",
+        "keep_reason": [
+          "attack-evidence"
+        ],
+        "tactics": [
+          "discovery"
+        ]
+      },
+      {
+        "id": "T1036",
+        "name": "Masquerading",
+        "keep_reason": [
+          "core-loader"
+        ],
+        "tactics": [
+          "stealth"
+        ]
+      },
+      {
+        "id": "T1036.001",
+        "name": "Invalid Code Signature",
+        "keep_reason": [
+          "core-loader",
+          "report"
+        ],
+        "tactics": [
+          "stealth"
+        ]
+      },
+      {
+        "id": "T1036.002",
+        "name": "Right-to-Left Override",
+        "keep_reason": [
+          "core-loader"
+        ],
+        "tactics": [
+          "stealth"
+        ]
+      },
+      {
+        "id": "T1036.003",
+        "name": "Rename Legitimate Utilities",
+        "keep_reason": [
+          "core-loader"
+        ],
+        "tactics": [
+          "stealth"
+        ]
+      },
+      {
+        "id": "T1036.004",
+        "name": "Masquerade Task or Service",
+        "keep_reason": [
+          "attack-evidence",
+          "core-loader"
+        ],
+        "tactics": [
+          "stealth"
+        ]
+      },
+      {
+        "id": "T1036.005",
+        "name": "Match Legitimate Resource Name or Location",
+        "keep_reason": [
+          "attack-evidence",
+          "core-loader"
+        ],
+        "tactics": [
+          "stealth"
+        ]
+      },
+      {
+        "id": "T1036.006",
+        "name": "Space after Filename",
+        "keep_reason": [
+          "core-loader"
+        ],
+        "tactics": [
+          "stealth"
+        ]
+      },
+      {
+        "id": "T1036.007",
+        "name": "Double File Extension",
+        "keep_reason": [
+          "attack-evidence",
+          "core-loader"
+        ],
+        "tactics": [
+          "stealth"
+        ]
+      },
+      {
+        "id": "T1037",
+        "name": "Boot or Logon Initialization Scripts",
+        "keep_reason": [
+          "parent-closure"
+        ],
+        "tactics": [
+          "persistence",
+          "privilege-escalation"
+        ]
+      },
+      {
+        "id": "T1037.001",
+        "name": "Logon Script (Windows)",
+        "keep_reason": [
+          "attack-evidence"
+        ],
+        "tactics": [
+          "persistence",
+          "privilege-escalation"
+        ]
+      },
+      {
+        "id": "T1037.004",
+        "name": "RC Scripts",
+        "keep_reason": [
+          "attack-evidence"
+        ],
+        "tactics": [
+          "persistence",
+          "privilege-escalation"
+        ]
+      },
+      {
+        "id": "T1047",
+        "name": "Windows Management Instrumentation",
+        "keep_reason": [
+          "attack-evidence"
+        ],
+        "tactics": [
+          "execution"
+        ]
+      },
+      {
+        "id": "T1049",
+        "name": "System Network Connections Discovery",
+        "keep_reason": [
+          "attack-evidence",
+          "core-loader"
+        ],
+        "tactics": [
+          "discovery"
+        ]
+      },
+      {
+        "id": "T1053",
+        "name": "Scheduled Task/Job",
+        "keep_reason": [
+          "parent-closure"
+        ],
+        "tactics": [
+          "execution",
+          "persistence",
+          "privilege-escalation"
+        ]
+      },
+      {
+        "id": "T1053.005",
+        "name": "Scheduled Task",
+        "keep_reason": [
+          "attack-evidence"
+        ],
+        "tactics": [
+          "execution",
+          "persistence",
+          "privilege-escalation"
+        ]
+      },
+      {
+        "id": "T1055",
+        "name": "Process Injection",
+        "keep_reason": [
+          "attack-evidence",
+          "core-loader"
+        ],
+        "tactics": [
+          "privilege-escalation",
+          "stealth"
+        ]
+      },
+      {
+        "id": "T1055.001",
+        "name": "Dynamic-link Library Injection",
+        "keep_reason": [
+          "attack-evidence",
+          "core-loader"
+        ],
+        "tactics": [
+          "privilege-escalation",
+          "stealth"
+        ]
+      },
+      {
+        "id": "T1055.002",
+        "name": "Portable Executable Injection",
+        "keep_reason": [
+          "attack-evidence",
+          "core-loader"
+        ],
+        "tactics": [
+          "privilege-escalation",
+          "stealth"
+        ]
+      },
+      {
+        "id": "T1055.003",
+        "name": "Thread Execution Hijacking",
+        "keep_reason": [
+          "core-loader"
+        ],
+        "tactics": [
+          "privilege-escalation",
+          "stealth"
+        ]
+      },
+      {
+        "id": "T1055.004",
+        "name": "Asynchronous Procedure Call",
+        "keep_reason": [
+          "attack-evidence",
+          "core-loader"
+        ],
+        "tactics": [
+          "privilege-escalation",
+          "stealth"
+        ]
+      },
+      {
+        "id": "T1055.005",
+        "name": "Thread Local Storage",
+        "keep_reason": [
+          "attack-evidence"
+        ],
+        "tactics": [
+          "privilege-escalation",
+          "stealth"
+        ]
+      },
+      {
+        "id": "T1055.011",
+        "name": "Extra Window Memory Injection",
+        "keep_reason": [
+          "attack-evidence"
+        ],
+        "tactics": [
+          "privilege-escalation",
+          "stealth"
+        ]
+      },
+      {
+        "id": "T1055.012",
+        "name": "Process Hollowing",
+        "keep_reason": [
+          "attack-evidence"
+        ],
+        "tactics": [
+          "privilege-escalation",
+          "stealth"
+        ]
+      },
+      {
+        "id": "T1055.013",
+        "name": "Process Doppelgänging",
+        "keep_reason": [
+          "attack-evidence"
+        ],
+        "tactics": [
+          "privilege-escalation",
+          "stealth"
+        ]
+      },
+      {
+        "id": "T1057",
+        "name": "Process Discovery",
+        "keep_reason": [
+          "attack-evidence",
+          "core-loader"
+        ],
+        "tactics": [
+          "discovery"
+        ]
+      },
+      {
+        "id": "T1059",
+        "name": "Command and Scripting Interpreter",
+        "keep_reason": [
+          "core-loader",
+          "report"
+        ],
+        "tactics": [
+          "execution"
+        ]
+      },
+      {
+        "id": "T1059.001",
+        "name": "PowerShell",
+        "keep_reason": [
+          "attack-evidence",
+          "core-loader",
+          "report"
+        ],
+        "tactics": [
+          "execution"
+        ]
+      },
+      {
+        "id": "T1059.003",
+        "name": "Windows Command Shell",
+        "keep_reason": [
+          "attack-evidence",
+          "core-loader",
+          "report"
+        ],
+        "tactics": [
+          "execution"
+        ]
+      },
+      {
+        "id": "T1059.005",
+        "name": "Visual Basic",
+        "keep_reason": [
+          "attack-evidence",
+          "core-loader"
+        ],
+        "tactics": [
+          "execution"
+        ]
+      },
+      {
+        "id": "T1059.006",
+        "name": "Python",
+        "keep_reason": [
+          "attack-evidence",
+          "core-loader"
+        ],
+        "tactics": [
+          "execution"
+        ]
+      },
+      {
+        "id": "T1059.007",
+        "name": "JavaScript",
+        "keep_reason": [
+          "attack-evidence",
+          "core-loader"
+        ],
+        "tactics": [
+          "execution"
+        ]
+      },
+      {
+        "id": "T1059.009",
+        "name": "Cloud API",
+        "keep_reason": [
+          "core-loader"
+        ],
+        "tactics": [
+          "execution"
+        ]
+      },
+      {
+        "id": "T1059.010",
+        "name": "AutoHotKey & AutoIT",
+        "keep_reason": [
+          "attack-evidence"
+        ],
+        "tactics": [
+          "execution"
+        ]
+      },
+      {
+        "id": "T1069",
+        "name": "Permission Groups Discovery",
+        "keep_reason": [
+          "parent-closure"
+        ],
+        "tactics": [
+          "discovery"
+        ]
+      },
+      {
+        "id": "T1069.002",
+        "name": "Domain Groups",
+        "keep_reason": [
+          "attack-evidence"
+        ],
+        "tactics": [
+          "discovery"
+        ]
+      },
+      {
+        "id": "T1070",
+        "name": "Indicator Removal",
+        "keep_reason": [
+          "attack-evidence",
+          "core-loader"
+        ],
+        "tactics": [
+          "stealth"
+        ]
+      },
+      {
+        "id": "T1070.004",
+        "name": "File Deletion",
+        "keep_reason": [
+          "attack-evidence",
+          "report"
+        ],
+        "tactics": [
+          "stealth"
+        ]
+      },
+      {
+        "id": "T1070.006",
+        "name": "Timestomp",
+        "keep_reason": [
+          "core-loader"
+        ],
+        "tactics": [
+          "stealth"
+        ]
+      },
+      {
+        "id": "T1070.009",
+        "name": "Clear Persistence",
+        "keep_reason": [
+          "attack-evidence"
+        ],
+        "tactics": [
+          "stealth"
+        ]
+      },
+      {
+        "id": "T1071",
+        "name": "Application Layer Protocol",
+        "keep_reason": [
+          "core-loader"
+        ],
+        "tactics": [
+          "command-and-control"
+        ]
+      },
+      {
+        "id": "T1071.001",
+        "name": "Web Protocols",
+        "keep_reason": [
+          "attack-evidence",
+          "core-loader"
+        ],
+        "tactics": [
+          "command-and-control"
+        ]
+      },
+      {
+        "id": "T1071.003",
+        "name": "Mail Protocols",
+        "keep_reason": [
+          "attack-evidence",
+          "report"
+        ],
+        "tactics": [
+          "command-and-control"
+        ]
+      },
+      {
+        "id": "T1071.004",
+        "name": "DNS",
+        "keep_reason": [
+          "attack-evidence",
+          "core-loader"
+        ],
+        "tactics": [
+          "command-and-control"
+        ]
+      },
+      {
+        "id": "T1082",
+        "name": "System Information Discovery",
+        "keep_reason": [
+          "attack-evidence",
+          "core-loader"
+        ],
+        "tactics": [
+          "discovery"
+        ]
+      },
+      {
+        "id": "T1083",
+        "name": "File and Directory Discovery",
+        "keep_reason": [
+          "attack-evidence",
+          "core-loader"
+        ],
+        "tactics": [
+          "discovery"
+        ]
+      },
+      {
+        "id": "T1087",
+        "name": "Account Discovery",
+        "keep_reason": [
+          "parent-closure"
+        ],
+        "tactics": [
+          "discovery"
+        ]
+      },
+      {
+        "id": "T1087.001",
+        "name": "Local Account",
+        "keep_reason": [
+          "attack-evidence"
+        ],
+        "tactics": [
+          "discovery"
+        ]
+      },
+      {
+        "id": "T1087.002",
+        "name": "Domain Account",
+        "keep_reason": [
+          "attack-evidence"
+        ],
+        "tactics": [
+          "discovery"
+        ]
+      },
+      {
+        "id": "T1087.003",
+        "name": "Email Account",
+        "keep_reason": [
+          "attack-evidence"
+        ],
+        "tactics": [
+          "discovery"
+        ]
+      },
+      {
+        "id": "T1090",
+        "name": "Proxy",
+        "keep_reason": [
+          "core-loader"
+        ],
+        "tactics": [
+          "command-and-control"
+        ]
+      },
+      {
+        "id": "T1090.002",
+        "name": "External Proxy",
+        "keep_reason": [
+          "core-loader"
+        ],
+        "tactics": [
+          "command-and-control"
+        ]
+      },
+      {
+        "id": "T1090.003",
+        "name": "Multi-hop Proxy",
+        "keep_reason": [
+          "core-loader"
+        ],
+        "tactics": [
+          "command-and-control"
+        ]
+      },
+      {
+        "id": "T1095",
+        "name": "Non-Application Layer Protocol",
+        "keep_reason": [
+          "attack-evidence",
+          "core-loader"
+        ],
+        "tactics": [
+          "command-and-control"
+        ]
+      },
+      {
+        "id": "T1102",
+        "name": "Web Service",
+        "keep_reason": [
+          "attack-evidence",
+          "core-loader"
+        ],
+        "tactics": [
+          "command-and-control"
+        ]
+      },
+      {
+        "id": "T1104",
+        "name": "Multi-Stage Channels",
+        "keep_reason": [
+          "attack-evidence"
+        ],
+        "tactics": [
+          "command-and-control"
+        ]
+      },
+      {
+        "id": "T1105",
+        "name": "Ingress Tool Transfer",
+        "keep_reason": [
+          "attack-evidence",
+          "core-loader"
+        ],
+        "tactics": [
+          "command-and-control"
+        ]
+      },
+      {
+        "id": "T1106",
+        "name": "Native API",
+        "keep_reason": [
+          "attack-evidence",
+          "core-loader"
+        ],
+        "tactics": [
+          "execution"
+        ]
+      },
+      {
+        "id": "T1112",
+        "name": "Modify Registry",
+        "keep_reason": [
+          "attack-evidence",
+          "report"
+        ],
+        "tactics": [
+          "defense-impairment",
+          "persistence"
+        ]
+      },
+      {
+        "id": "T1124",
+        "name": "System Time Discovery",
+        "keep_reason": [
+          "attack-evidence"
+        ],
+        "tactics": [
+          "discovery"
+        ]
+      },
+      {
+        "id": "T1129",
+        "name": "Shared Modules",
+        "keep_reason": [
+          "core-loader"
+        ],
+        "tactics": [
+          "execution"
+        ]
+      },
+      {
+        "id": "T1132",
+        "name": "Data Encoding",
+        "keep_reason": [
+          "core-loader"
+        ],
+        "tactics": [
+          "command-and-control"
+        ]
+      },
+      {
+        "id": "T1132.001",
+        "name": "Standard Encoding",
+        "keep_reason": [
+          "attack-evidence"
+        ],
+        "tactics": [
+          "command-and-control"
+        ]
+      },
+      {
+        "id": "T1132.002",
+        "name": "Non-Standard Encoding",
+        "keep_reason": [
+          "attack-evidence"
+        ],
+        "tactics": [
+          "command-and-control"
+        ]
+      },
+      {
+        "id": "T1134",
+        "name": "Access Token Manipulation",
+        "keep_reason": [
+          "core-loader"
+        ],
+        "tactics": [
+          "privilege-escalation",
+          "stealth"
+        ]
+      },
+      {
+        "id": "T1134.001",
+        "name": "Token Impersonation/Theft",
+        "keep_reason": [
+          "core-loader"
+        ],
+        "tactics": [
+          "privilege-escalation",
+          "stealth"
+        ]
+      },
+      {
+        "id": "T1135",
+        "name": "Network Share Discovery",
+        "keep_reason": [
+          "attack-evidence"
+        ],
+        "tactics": [
+          "discovery"
+        ]
+      },
+      {
+        "id": "T1136",
+        "name": "Create Account",
+        "keep_reason": [
+          "core-loader"
+        ],
+        "tactics": [
+          "persistence"
+        ]
+      },
+      {
+        "id": "T1136.001",
+        "name": "Local Account",
+        "keep_reason": [
+          "core-loader"
+        ],
+        "tactics": [
+          "persistence"
+        ]
+      },
+      {
+        "id": "T1137",
+        "name": "Office Application Startup",
+        "keep_reason": [
+          "parent-closure"
+        ],
+        "tactics": [
+          "persistence"
+        ]
+      },
+      {
+        "id": "T1137.006",
+        "name": "Add-ins",
+        "keep_reason": [
+          "attack-evidence"
+        ],
+        "tactics": [
+          "persistence"
+        ]
+      },
+      {
+        "id": "T1140",
+        "name": "Deobfuscate/Decode Files or Information",
+        "keep_reason": [
+          "attack-evidence",
+          "core-loader"
+        ],
+        "tactics": [
+          "stealth"
+        ]
+      },
+      {
+        "id": "T1189",
+        "name": "Drive-by Compromise",
+        "keep_reason": [
+          "core-loader"
+        ],
+        "tactics": [
+          "initial-access"
+        ]
+      },
+      {
+        "id": "T1190",
+        "name": "Exploit Public-Facing Application",
+        "keep_reason": [
+          "core-loader"
+        ],
+        "tactics": [
+          "initial-access"
+        ]
+      },
+      {
+        "id": "T1195",
+        "name": "Supply Chain Compromise",
+        "keep_reason": [
+          "core-loader"
+        ],
+        "tactics": [
+          "initial-access"
+        ]
+      },
+      {
+        "id": "T1195.002",
+        "name": "Compromise Software Supply Chain",
+        "keep_reason": [
+          "core-loader"
+        ],
+        "tactics": [
+          "initial-access"
+        ]
+      },
+      {
+        "id": "T1197",
+        "name": "BITS Jobs",
+        "keep_reason": [
+          "attack-evidence"
+        ],
+        "tactics": [
+          "execution",
+          "persistence",
+          "stealth"
+        ]
+      },
+      {
+        "id": "T1203",
+        "name": "Exploitation for Client Execution",
+        "keep_reason": [
+          "attack-evidence",
+          "core-loader"
+        ],
+        "tactics": [
+          "execution"
+        ]
+      },
+      {
+        "id": "T1204",
+        "name": "User Execution",
+        "keep_reason": [
+          "core-loader",
+          "report"
+        ],
+        "tactics": [
+          "execution"
+        ]
+      },
+      {
+        "id": "T1204.001",
+        "name": "Malicious Link",
+        "keep_reason": [
+          "attack-evidence",
+          "core-loader"
+        ],
+        "tactics": [
+          "execution"
+        ]
+      },
+      {
+        "id": "T1204.002",
+        "name": "Malicious File",
+        "keep_reason": [
+          "attack-evidence",
+          "core-loader"
+        ],
+        "tactics": [
+          "execution"
+        ]
+      },
+      {
+        "id": "T1217",
+        "name": "Browser Information Discovery",
+        "keep_reason": [
+          "attack-evidence"
+        ],
+        "tactics": [
+          "discovery"
+        ]
+      },
+      {
+        "id": "T1218",
+        "name": "System Binary Proxy Execution",
+        "keep_reason": [
+          "core-loader"
+        ],
+        "tactics": [
+          "stealth"
+        ]
+      },
+      {
+        "id": "T1218.001",
+        "name": "Compiled HTML File",
+        "keep_reason": [
+          "core-loader"
+        ],
+        "tactics": [
+          "stealth"
+        ]
+      },
+      {
+        "id": "T1218.002",
+        "name": "Control Panel",
+        "keep_reason": [
+          "core-loader"
+        ],
+        "tactics": [
+          "stealth"
+        ]
+      },
+      {
+        "id": "T1218.005",
+        "name": "Mshta",
+        "keep_reason": [
+          "core-loader"
+        ],
+        "tactics": [
+          "stealth"
+        ]
+      },
+      {
+        "id": "T1218.008",
+        "name": "Odbcconf",
+        "keep_reason": [
+          "core-loader"
+        ],
+        "tactics": [
+          "stealth"
+        ]
+      },
+      {
+        "id": "T1218.010",
+        "name": "Regsvr32",
+        "keep_reason": [
+          "attack-evidence",
+          "core-loader"
+        ],
+        "tactics": [
+          "stealth"
+        ]
+      },
+      {
+        "id": "T1218.011",
+        "name": "Rundll32",
+        "keep_reason": [
+          "attack-evidence",
+          "core-loader"
+        ],
+        "tactics": [
+          "stealth"
+        ]
+      },
+      {
+        "id": "T1219",
+        "name": "Remote Access Tools",
+        "keep_reason": [
+          "core-loader"
+        ],
+        "tactics": [
+          "command-and-control"
+        ]
+      },
+      {
+        "id": "T1222",
+        "name": "File and Directory Permissions Modification",
+        "keep_reason": [
+          "core-loader"
+        ],
+        "tactics": [
+          "defense-impairment"
+        ]
+      },
+      {
+        "id": "T1480",
+        "name": "Execution Guardrails",
+        "keep_reason": [
+          "attack-evidence",
+          "core-loader"
+        ],
+        "tactics": [
+          "stealth"
+        ]
+      },
+      {
+        "id": "T1480.002",
+        "name": "Mutual Exclusion",
+        "keep_reason": [
+          "attack-evidence"
+        ],
+        "tactics": [
+          "stealth"
+        ]
+      },
+      {
+        "id": "T1482",
+        "name": "Domain Trust Discovery",
+        "keep_reason": [
+          "attack-evidence"
+        ],
+        "tactics": [
+          "discovery"
+        ]
+      },
+      {
+        "id": "T1497",
+        "name": "Virtualization/Sandbox Evasion",
+        "keep_reason": [
+          "attack-evidence",
+          "core-loader"
+        ],
+        "tactics": [
+          "discovery",
+          "stealth"
+        ]
+      },
+      {
+        "id": "T1497.001",
+        "name": "System Checks",
+        "keep_reason": [
+          "attack-evidence",
+          "core-loader"
+        ],
+        "tactics": [
+          "discovery",
+          "stealth"
+        ]
+      },
+      {
+        "id": "T1497.003",
+        "name": "Time Based Checks",
+        "keep_reason": [
+          "attack-evidence",
+          "core-loader"
+        ],
+        "tactics": [
+          "discovery",
+          "stealth"
+        ]
+      },
+      {
+        "id": "T1518",
+        "name": "Software Discovery",
+        "keep_reason": [
+          "attack-evidence",
+          "core-loader"
+        ],
+        "tactics": [
+          "discovery"
+        ]
+      },
+      {
+        "id": "T1518.001",
+        "name": "Security Software Discovery",
+        "keep_reason": [
+          "attack-evidence",
+          "core-loader"
+        ],
+        "tactics": [
+          "discovery"
+        ]
+      },
+      {
+        "id": "T1543",
+        "name": "Create or Modify System Process",
+        "keep_reason": [
+          "attack-evidence",
+          "core-loader"
+        ],
+        "tactics": [
+          "persistence",
+          "privilege-escalation"
+        ]
+      },
+      {
+        "id": "T1543.003",
+        "name": "Windows Service",
+        "keep_reason": [
+          "attack-evidence",
+          "core-loader"
+        ],
+        "tactics": [
+          "persistence",
+          "privilege-escalation"
+        ]
+      },
+      {
+        "id": "T1546",
+        "name": "Event Triggered Execution",
+        "keep_reason": [
+          "core-loader"
+        ],
+        "tactics": [
+          "persistence",
+          "privilege-escalation"
+        ]
+      },
+      {
+        "id": "T1546.003",
+        "name": "Windows Management Instrumentation Event Subscription",
+        "keep_reason": [
+          "core-loader"
+        ],
+        "tactics": [
+          "persistence",
+          "privilege-escalation"
+        ]
+      },
+      {
+        "id": "T1546.015",
+        "name": "Component Object Model Hijacking",
+        "keep_reason": [
+          "attack-evidence"
+        ],
+        "tactics": [
+          "persistence",
+          "privilege-escalation"
+        ]
+      },
+      {
+        "id": "T1547",
+        "name": "Boot or Logon Autostart Execution",
+        "keep_reason": [
+          "core-loader"
+        ],
+        "tactics": [
+          "persistence",
+          "privilege-escalation"
+        ]
+      },
+      {
+        "id": "T1547.001",
+        "name": "Registry Run Keys / Startup Folder",
+        "keep_reason": [
+          "attack-evidence",
+          "core-loader"
+        ],
+        "tactics": [
+          "persistence",
+          "privilege-escalation"
+        ]
+      },
+      {
+        "id": "T1547.004",
+        "name": "Winlogon Helper DLL",
+        "keep_reason": [
+          "attack-evidence"
+        ],
+        "tactics": [
+          "persistence",
+          "privilege-escalation"
+        ]
+      },
+      {
+        "id": "T1547.009",
+        "name": "Shortcut Modification",
+        "keep_reason": [
+          "attack-evidence",
+          "core-loader"
+        ],
+        "tactics": [
+          "persistence",
+          "privilege-escalation"
+        ]
+      },
+      {
+        "id": "T1553",
+        "name": "Subvert Trust Controls",
+        "keep_reason": [
+          "core-loader"
+        ],
+        "tactics": [
+          "defense-impairment"
+        ]
+      },
+      {
+        "id": "T1553.002",
+        "name": "Code Signing",
+        "keep_reason": [
+          "attack-evidence",
+          "core-loader"
+        ],
+        "tactics": [
+          "defense-impairment"
+        ]
+      },
+      {
+        "id": "T1559",
+        "name": "Inter-Process Communication",
+        "keep_reason": [
+          "core-loader"
+        ],
+        "tactics": [
+          "execution"
+        ]
+      },
+      {
+        "id": "T1559.001",
+        "name": "Component Object Model",
+        "keep_reason": [
+          "attack-evidence",
+          "core-loader"
+        ],
+        "tactics": [
+          "execution"
+        ]
+      },
+      {
+        "id": "T1559.002",
+        "name": "Dynamic Data Exchange",
+        "keep_reason": [
+          "core-loader"
+        ],
+        "tactics": [
+          "execution"
+        ]
+      },
+      {
+        "id": "T1564",
+        "name": "Hide Artifacts",
+        "keep_reason": [
+          "core-loader"
+        ],
+        "tactics": [
+          "stealth"
+        ]
+      },
+      {
+        "id": "T1564.001",
+        "name": "Hidden Files and Directories",
+        "keep_reason": [
+          "attack-evidence",
+          "core-loader"
+        ],
+        "tactics": [
+          "stealth"
+        ]
+      },
+      {
+        "id": "T1564.003",
+        "name": "Hidden Window",
+        "keep_reason": [
+          "attack-evidence"
+        ],
+        "tactics": [
+          "stealth"
+        ]
+      },
+      {
+        "id": "T1566",
+        "name": "Phishing",
+        "keep_reason": [
+          "core-loader"
+        ],
+        "tactics": [
+          "initial-access"
+        ]
+      },
+      {
+        "id": "T1566.001",
+        "name": "Spearphishing Attachment",
+        "keep_reason": [
+          "attack-evidence",
+          "core-loader",
+          "report"
+        ],
+        "tactics": [
+          "initial-access"
+        ]
+      },
+      {
+        "id": "T1566.002",
+        "name": "Spearphishing Link",
+        "keep_reason": [
+          "attack-evidence",
+          "core-loader"
+        ],
+        "tactics": [
+          "initial-access"
+        ]
+      },
+      {
+        "id": "T1566.004",
+        "name": "Spearphishing Voice",
+        "keep_reason": [
+          "core-loader"
+        ],
+        "tactics": [
+          "initial-access"
+        ]
+      },
+      {
+        "id": "T1568",
+        "name": "Dynamic Resolution",
+        "keep_reason": [
+          "core-loader"
+        ],
+        "tactics": [
+          "command-and-control"
+        ]
+      },
+      {
+        "id": "T1568.002",
+        "name": "Domain Generation Algorithms",
+        "keep_reason": [
+          "attack-evidence",
+          "core-loader"
+        ],
+        "tactics": [
+          "command-and-control"
+        ]
+      },
+      {
+        "id": "T1573",
+        "name": "Encrypted Channel",
+        "keep_reason": [
+          "attack-evidence",
+          "core-loader"
+        ],
+        "tactics": [
+          "command-and-control"
+        ]
+      },
+      {
+        "id": "T1573.001",
+        "name": "Symmetric Cryptography",
+        "keep_reason": [
+          "attack-evidence"
+        ],
+        "tactics": [
+          "command-and-control"
+        ]
+      },
+      {
+        "id": "T1573.002",
+        "name": "Asymmetric Cryptography",
+        "keep_reason": [
+          "attack-evidence",
+          "core-loader"
+        ],
+        "tactics": [
+          "command-and-control"
+        ]
+      },
+      {
+        "id": "T1574",
+        "name": "Hijack Execution Flow",
+        "keep_reason": [
+          "core-loader"
+        ],
+        "tactics": [
+          "execution",
+          "stealth"
+        ]
+      },
+      {
+        "id": "T1574.001",
+        "name": "DLL",
+        "keep_reason": [
+          "attack-evidence",
+          "core-loader"
+        ],
+        "tactics": [
+          "execution",
+          "stealth"
+        ]
+      },
+      {
+        "id": "T1574.008",
+        "name": "Path Interception by Search Order Hijacking",
+        "keep_reason": [
+          "core-loader"
+        ],
+        "tactics": [
+          "execution",
+          "stealth"
+        ]
+      },
+      {
+        "id": "T1574.014",
+        "name": "AppDomainManager",
+        "keep_reason": [
+          "attack-evidence"
+        ],
+        "tactics": [
+          "execution",
+          "stealth"
+        ]
+      },
+      {
+        "id": "T1583",
+        "name": "Acquire Infrastructure",
+        "keep_reason": [
+          "core-loader"
+        ],
+        "tactics": [
+          "resource-development"
+        ]
+      },
+      {
+        "id": "T1583.001",
+        "name": "Domains",
+        "keep_reason": [
+          "attack-evidence",
+          "core-loader",
+          "report"
+        ],
+        "tactics": [
+          "resource-development"
+        ]
+      },
+      {
+        "id": "T1583.003",
+        "name": "Virtual Private Server",
+        "keep_reason": [
+          "core-loader"
+        ],
+        "tactics": [
+          "resource-development"
+        ]
+      },
+      {
+        "id": "T1583.004",
+        "name": "Server",
+        "keep_reason": [
+          "core-loader"
+        ],
+        "tactics": [
+          "resource-development"
+        ]
+      },
+      {
+        "id": "T1583.006",
+        "name": "Web Services",
+        "keep_reason": [
+          "core-loader"
+        ],
+        "tactics": [
+          "resource-development"
+        ]
+      },
+      {
+        "id": "T1584",
+        "name": "Compromise Infrastructure",
+        "keep_reason": [
+          "core-loader"
+        ],
+        "tactics": [
+          "resource-development"
+        ]
+      },
+      {
+        "id": "T1584.001",
+        "name": "Domains",
+        "keep_reason": [
+          "attack-evidence",
+          "core-loader"
+        ],
+        "tactics": [
+          "resource-development"
+        ]
+      },
+      {
+        "id": "T1584.006",
+        "name": "Web Services",
+        "keep_reason": [
+          "attack-evidence"
+        ],
+        "tactics": [
+          "resource-development"
+        ]
+      },
+      {
+        "id": "T1587",
+        "name": "Develop Capabilities",
+        "keep_reason": [
+          "core-loader"
+        ],
+        "tactics": [
+          "resource-development"
+        ]
+      },
+      {
+        "id": "T1587.001",
+        "name": "Malware",
+        "keep_reason": [
+          "core-loader"
+        ],
+        "tactics": [
+          "resource-development"
+        ]
+      },
+      {
+        "id": "T1588",
+        "name": "Obtain Capabilities",
+        "keep_reason": [
+          "core-loader"
+        ],
+        "tactics": [
+          "resource-development"
+        ]
+      },
+      {
+        "id": "T1588.001",
+        "name": "Malware",
+        "keep_reason": [
+          "core-loader"
+        ],
+        "tactics": [
+          "resource-development"
+        ]
+      },
+      {
+        "id": "T1588.002",
+        "name": "Tool",
+        "keep_reason": [
+          "attack-evidence",
+          "core-loader"
+        ],
+        "tactics": [
+          "resource-development"
+        ]
+      },
+      {
+        "id": "T1608",
+        "name": "Stage Capabilities",
+        "keep_reason": [
+          "core-loader"
+        ],
+        "tactics": [
+          "resource-development"
+        ]
+      },
+      {
+        "id": "T1608.001",
+        "name": "Upload Malware",
+        "keep_reason": [
+          "core-loader"
+        ],
+        "tactics": [
+          "resource-development"
+        ]
+      },
+      {
+        "id": "T1608.002",
+        "name": "Upload Tool",
+        "keep_reason": [
+          "core-loader"
+        ],
+        "tactics": [
+          "resource-development"
+        ]
+      },
+      {
+        "id": "T1608.003",
+        "name": "Install Digital Certificate",
+        "keep_reason": [
+          "core-loader"
+        ],
+        "tactics": [
+          "resource-development"
+        ]
+      },
+      {
+        "id": "T1609",
+        "name": "Container Administration Command",
+        "keep_reason": [
+          "core-loader"
+        ],
+        "tactics": [
+          "execution"
+        ]
+      },
+      {
+        "id": "T1610",
+        "name": "Deploy Container",
+        "keep_reason": [
+          "core-loader"
+        ],
+        "tactics": [
+          "execution"
+        ]
+      },
+      {
+        "id": "T1614",
+        "name": "System Location Discovery",
+        "keep_reason": [
+          "attack-evidence"
+        ],
+        "tactics": [
+          "discovery"
+        ]
+      },
+      {
+        "id": "T1614.001",
+        "name": "System Language Discovery",
+        "keep_reason": [
+          "attack-evidence"
+        ],
+        "tactics": [
+          "discovery"
+        ]
+      },
+      {
+        "id": "T1620",
+        "name": "Reflective Code Loading",
+        "keep_reason": [
+          "attack-evidence",
+          "core-loader"
+        ],
+        "tactics": [
+          "stealth"
+        ]
+      },
+      {
+        "id": "T1622",
+        "name": "Debugger Evasion",
+        "keep_reason": [
+          "attack-evidence"
+        ],
+        "tactics": [
+          "discovery",
+          "stealth"
+        ]
+      },
+      {
+        "id": "T1680",
+        "name": "Local Storage Discovery",
+        "keep_reason": [
+          "attack-evidence"
+        ],
+        "tactics": [
+          "discovery"
+        ]
+      },
+      {
+        "id": "T1685",
+        "name": "Disable or Modify Tools",
+        "keep_reason": [
+          "attack-evidence",
+          "core-loader"
+        ],
+        "tactics": [
+          "defense-impairment"
+        ]
+      },
+      {
+        "id": "T1685.001",
+        "name": "Disable or Modify Windows Event Log",
+        "keep_reason": [
+          "core-loader"
+        ],
+        "tactics": [
+          "defense-impairment"
+        ]
+      },
+      {
+        "id": "T1686",
+        "name": "Disable or Modify System Firewall",
+        "keep_reason": [
+          "core-loader"
+        ],
+        "tactics": [
+          "defense-impairment"
+        ]
+      },
+      {
+        "id": "T1686.003",
+        "name": "Windows Host Firewall",
+        "keep_reason": [
+          "core-loader"
+        ],
+        "tactics": [
+          "defense-impairment"
+        ]
+      }
+    ]
+  },
+  "report_only": {
+    "explanation": "technique chi co trong bao cao, nam ngoai dinh nghia pham vi loader; duoc tao o layer='report' chu khong dua vao lop nen",
+    "techniques": [
+      {
+        "id": "T1005",
+        "name": "Data from Local System",
+        "tactics": [
+          "collection"
+        ]
+      },
+      {
+        "id": "T1485",
+        "name": "Data Destruction",
+        "tactics": [
+          "impact"
+        ]
+      },
+      {
+        "id": "T1486",
+        "name": "Data Encrypted for Impact",
+        "tactics": [
+          "impact"
+        ]
+      },
+      {
+        "id": "T1490",
+        "name": "Inhibit System Recovery",
+        "tactics": [
+          "impact"
+        ]
+      },
+      {
+        "id": "T1491",
+        "name": "Defacement",
+        "tactics": [
+          "impact"
+        ]
+      },
+      {
+        "id": "T1561",
+        "name": "Disk Wipe",
+        "tactics": [
+          "impact"
+        ]
+      },
+      {
+        "id": "T1583.008",
+        "name": "Malvertising",
+        "tactics": [
+          "resource-development"
+        ]
+      }
+    ]
+  },
+  "dropped": {
+    "by_node_type": {
+      "attack-pattern": {
+        "total": 697,
+        "kept": 178,
+        "dropped": 519
+      },
+      "campaign": {
+        "total": 56,
+        "kept": 0,
+        "dropped": 56
+      },
+      "course-of-action": {
+        "total": 44,
+        "kept": 0,
+        "dropped": 44
+      },
+      "identity": {
+        "total": 1,
+        "kept": 0,
+        "dropped": 1
+      },
+      "intrusion-set": {
+        "total": 176,
+        "kept": 0,
+        "dropped": 176
+      },
+      "malware": {
+        "total": 730,
+        "kept": 0,
+        "dropped": 730
+      },
+      "marking-definition": {
+        "total": 1,
+        "kept": 0,
+        "dropped": 1
+      },
+      "relationship": {
+        "total": 21262,
+        "kept": 0,
+        "dropped": 21262
+      },
+      "tool": {
+        "total": 95,
+        "kept": 0,
+        "dropped": 95
+      },
+      "x-mitre-analytic": {
+        "total": 1758,
+        "kept": 0,
+        "dropped": 1758
+      },
+      "x-mitre-data-component": {
+        "total": 106,
+        "kept": 0,
+        "dropped": 106
+      },
+      "x-mitre-detection-strategy": {
+        "total": 697,
+        "kept": 0,
+        "dropped": 697
+      },
+      "x-mitre-matrix": {
+        "total": 1,
+        "kept": 0,
+        "dropped": 1
+      },
+      "x-mitre-tactic": {
+        "total": 15,
+        "kept": 10,
+        "dropped": 5
+      }
+    },
+    "tactics": [
+      {
+        "id": "TA0006",
+        "name": "Credential Access",
+        "shortname": "credential-access"
+      },
+      {
+        "id": "TA0040",
+        "name": "Impact",
+        "shortname": "impact"
+      },
+      {
+        "id": "TA0004",
+        "name": "Privilege Escalation",
+        "shortname": "privilege-escalation"
+      },
+      {
+        "id": "TA0008",
+        "name": "Lateral Movement",
+        "shortname": "lateral-movement"
+      },
+      {
+        "id": "TA0010",
+        "name": "Exfiltration",
+        "shortname": "exfiltration"
+      },
+      {
+        "id": "TA0009",
+        "name": "Collection",
+        "shortname": "collection"
+      },
+      {
+        "id": "TA0043",
+        "name": "Reconnaissance",
+        "shortname": "reconnaissance"
+      }
+    ],
+    "techniques_out_of_scope_count": 519,
+    "techniques_out_of_scope_sample": [
+      "T1001",
+      "T1001.001",
+      "T1001.002",
+      "T1001.003",
+      "T1003",
+      "T1003.001",
+      "T1003.002",
+      "T1003.003",
+      "T1003.004",
+      "T1003.005",
+      "T1003.006",
+      "T1003.007",
+      "T1003.008",
+      "T1006",
+      "T1007",
+      "T1010",
+      "T1011",
+      "T1011.001",
+      "T1014",
+      "T1016.002",
+      "T1020",
+      "T1020.001",
+      "T1021",
+      "T1021.001",
+      "T1021.002",
+      "T1021.003",
+      "T1021.004",
+      "T1021.005",
+      "T1021.006",
+      "T1021.007",
+      "T1021.008",
+      "T1025",
+      "T1027.003",
+      "T1027.005",
+      "T1027.006",
+      "T1027.011",
+      "T1027.012",
+      "T1027.014",
+      "T1027.015",
+      "T1027.016"
+    ]
+  },
+  "loader_software_used_for_evidence": [
+    {
+      "id": "S0177",
+      "name": "Power Loader",
+      "type": "malware"
+    },
+    {
+      "id": "S0226",
+      "name": "Smoke Loader",
+      "type": "malware"
+    },
+    {
+      "id": "S0624",
+      "name": "Ecipekac",
+      "type": "malware"
+    },
+    {
+      "id": "S0278",
+      "name": "iKitten",
+      "type": "malware"
+    },
+    {
+      "id": "S1152",
+      "name": "IMAPLoader",
+      "type": "malware"
+    },
+    {
+      "id": "S1138",
+      "name": "Gootloader",
+      "type": "malware"
+    },
+    {
+      "id": "S1237",
+      "name": "CANONSTAGER",
+      "type": "malware"
+    },
+    {
+      "id": "S1249",
+      "name": "HexEval Loader",
+      "type": "malware"
+    },
+    {
+      "id": "S0561",
+      "name": "GuLoader",
+      "type": "malware"
+    },
+    {
+      "id": "S1236",
+      "name": "CLAIMLOADER",
+      "type": "malware"
+    },
+    {
+      "id": "S1097",
+      "name": "HUI Loader",
+      "type": "malware"
+    },
+    {
+      "id": "S1232",
+      "name": "SplatDropper",
+      "type": "malware"
+    },
+    {
+      "id": "S1143",
+      "name": "LunarLoader",
+      "type": "malware"
+    },
+    {
+      "id": "S0044",
+      "name": "JHUHUGIT",
+      "type": "malware"
+    },
+    {
+      "id": "S0188",
+      "name": "Starloader",
+      "type": "malware"
+    },
+    {
+      "id": "S9016",
+      "name": "Caminho",
+      "type": "malware"
+    },
+    {
+      "id": "S0534",
+      "name": "Bazar",
+      "type": "malware"
+    },
+    {
+      "id": "S1207",
+      "name": "XLoader",
+      "type": "malware"
+    },
+    {
+      "id": "S0071",
+      "name": "hcdLoader",
+      "type": "malware"
+    },
+    {
+      "id": "S0124",
+      "name": "Pisloader",
+      "type": "malware"
+    },
+    {
+      "id": "S0284",
+      "name": "More_eggs",
+      "type": "malware"
+    },
+    {
+      "id": "S0648",
+      "name": "JSS Loader",
+      "type": "malware"
+    },
+    {
+      "id": "S0681",
+      "name": "Lizar",
+      "type": "malware"
+    },
+    {
+      "id": "S1248",
+      "name": "XORIndex Loader",
+      "type": "malware"
+    },
+    {
+      "id": "S0527",
+      "name": "CSPY Downloader",
+      "type": "tool"
+    }
+  ],
+  "report": {
+    "techniques": [
+      "T1005",
+      "T1027",
+      "T1027.009",
+      "T1036.001",
+      "T1059",
+      "T1059.001",
+      "T1059.003",
+      "T1070.004",
+      "T1071.003",
+      "T1112",
+      "T1204",
+      "T1485",
+      "T1486",
+      "T1490",
+      "T1491",
+      "T1561",
+      "T1566.001",
+      "T1583.001",
+      "T1583.008"
+    ],
+    "id_remapped": [
+      {
+        "old_id": "T1086",
+        "new_id": "T1059.001",
+        "old_name": "PowerShell",
+        "new_name": "PowerShell"
+      }
+    ],
+    "id_unknown": [],
+    "core_list_ids_not_in_attack": [],
+    "procedures_present": 5,
+    "out_of_loader_scope_techniques": [
+      "T1005",
+      "T1485",
+      "T1486",
+      "T1490",
+      "T1491",
+      "T1561",
+      "T1583.008"
+    ]
+  }
+}

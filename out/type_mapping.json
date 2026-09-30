@@ -1,0 +1,644 @@
+{
+  "meta": {
+    "generated_at": "2026-09-30T17:14:34",
+    "source": "src/grid/GRID_backbone.py (ENTITY_TYPES, REL_TYPES)",
+    "entity_type_count": 33,
+    "rel_type_count": 44,
+    "status_counts": {
+      "mapped": 11,
+      "approximate": 17,
+      "unmapped": 47,
+      "alias": 2
+    },
+    "attack_bundle_relationship_vocabulary": [
+      "uses",
+      "mitigates",
+      "detects",
+      "subtechnique-of",
+      "revoked-by",
+      "attributed-to"
+    ],
+    "attack_bundle_vocabulary_note": "Do bang dem relationship_type trong enterprise-attack.json: chi co 6 gia tri. Moi `attack_relationship` gan o trang nay deu nam trong 6 gia tri do.",
+    "how_to_use": "status=unmapped -> node/canh GIU NGUYEN ten GRID va gan co `unmapped`/`type_unmapped` de nguoi dung quyet dinh. status=approximate -> da gan gia tri gan nhat nhung CHUA cung nghia, can duyet. Khong co gi bi xoa."
+  },
+  "entity_types": {
+    "user-account": {
+      "stix_type": "identity",
+      "attack_type": "identity",
+      "status": "mapped",
+      "keep_original": false,
+      "node_type": "identity",
+      "note": "ATT&CK bundle chi co 1 object `identity`"
+    },
+    "identity": {
+      "stix_type": "identity",
+      "attack_type": "identity",
+      "status": "mapped",
+      "keep_original": false,
+      "node_type": "identity",
+      "note": ""
+    },
+    "threat-actor-or-intrusion-set": {
+      "stix_type": "intrusion-set",
+      "attack_type": "intrusion-set",
+      "status": "mapped",
+      "keep_original": false,
+      "node_type": "intrusion-set",
+      "note": ""
+    },
+    "malware": {
+      "stix_type": "malware",
+      "attack_type": "malware",
+      "status": "mapped",
+      "keep_original": false,
+      "node_type": "malware",
+      "note": ""
+    },
+    "hacker-tool": {
+      "stix_type": "tool",
+      "attack_type": "tool",
+      "status": "mapped",
+      "keep_original": false,
+      "node_type": "tool",
+      "note": ""
+    },
+    "general-software": {
+      "stix_type": "tool",
+      "attack_type": "tool",
+      "status": "approximate",
+      "keep_original": false,
+      "node_type": "tool",
+      "note": "GRID rong hon `tool` (gom ca phan mem thuong); bundle khong co type rieng"
+    },
+    "detailed-part-of-malware-or-hackertool": {
+      "stix_type": null,
+      "attack_type": null,
+      "status": "unmapped",
+      "keep_original": true,
+      "node_type": "detailed-part-of-malware-or-hackertool",
+      "note": "STIX khong co; giu nguyen ten GRID"
+    },
+    "detailed-part-of-general-software": {
+      "stix_type": null,
+      "attack_type": null,
+      "status": "unmapped",
+      "keep_original": true,
+      "node_type": "detailed-part-of-general-software",
+      "note": "STIX khong co; giu nguyen ten GRID"
+    },
+    "vulnerability": {
+      "stix_type": "vulnerability",
+      "attack_type": null,
+      "status": "approximate",
+      "keep_original": false,
+      "node_type": "vulnerability",
+      "note": "STIX 2.1 co `vulnerability`, nhung bundle ATT&CK khong chua loai nay"
+    },
+    "attack-pattern": {
+      "stix_type": "attack-pattern",
+      "attack_type": "attack-pattern",
+      "status": "mapped",
+      "keep_original": false,
+      "node_type": "attack-pattern",
+      "note": ""
+    },
+    "campaign": {
+      "stix_type": "campaign",
+      "attack_type": "campaign",
+      "status": "mapped",
+      "keep_original": false,
+      "node_type": "campaign",
+      "note": ""
+    },
+    "file": {
+      "stix_type": null,
+      "attack_type": null,
+      "status": "unmapped",
+      "keep_original": true,
+      "node_type": "file",
+      "note": "khong co trong STIX 2.1 lẫn ATT&CK"
+    },
+    "process": {
+      "stix_type": null,
+      "attack_type": null,
+      "status": "unmapped",
+      "keep_original": true,
+      "node_type": "process",
+      "note": "khong co trong STIX 2.1 lẫn ATT&CK"
+    },
+    "windows-registry-key": {
+      "stix_type": null,
+      "attack_type": null,
+      "status": "unmapped",
+      "keep_original": true,
+      "node_type": "windows-registry-key",
+      "note": "khong co trong STIX 2.1 lẫn ATT&CK"
+    },
+    "ipv4-addr": {
+      "stix_type": "ipv4-addr",
+      "attack_type": null,
+      "status": "approximate",
+      "keep_original": false,
+      "node_type": "ipv4-addr",
+      "note": "SCO cua STIX 2.1; bundle khong chua"
+    },
+    "ipv6-addr": {
+      "stix_type": "ipv6-addr",
+      "attack_type": null,
+      "status": "approximate",
+      "keep_original": false,
+      "node_type": "ipv6-addr",
+      "note": "SCO cua STIX 2.1; bundle khong chua"
+    },
+    "domain-name": {
+      "stix_type": "domain-name",
+      "attack_type": null,
+      "status": "approximate",
+      "keep_original": false,
+      "node_type": "domain-name",
+      "note": "SCO cua STIX 2.1; bundle khong chua"
+    },
+    "url": {
+      "stix_type": "url",
+      "attack_type": null,
+      "status": "approximate",
+      "keep_original": false,
+      "node_type": "url",
+      "note": "SCO cua STIX 2.1; bundle khong chua"
+    },
+    "email-address": {
+      "stix_type": "email-addr",
+      "attack_type": null,
+      "status": "alias",
+      "keep_original": false,
+      "node_type": "email-addr",
+      "note": "STIX 2.1 dat ten la `email-addr`, khac GRID"
+    },
+    "network-traffic": {
+      "stix_type": "network-traffic",
+      "attack_type": null,
+      "status": "approximate",
+      "keep_original": false,
+      "node_type": "network-traffic",
+      "note": "SCO cua STIX 2.1; bundle khong chua"
+    },
+    "mac-address": {
+      "stix_type": "mac-addr",
+      "attack_type": null,
+      "status": "alias",
+      "keep_original": false,
+      "node_type": "mac-addr",
+      "note": "STIX 2.1 dat ten la `mac-addr`, khac GRID"
+    },
+    "infrastructure": {
+      "stix_type": "infrastructure",
+      "attack_type": null,
+      "status": "approximate",
+      "keep_original": false,
+      "node_type": "infrastructure",
+      "note": "SDO cua STIX 2.1; bundle ATT&CK khong chua"
+    },
+    "credential-value": {
+      "stix_type": null,
+      "attack_type": null,
+      "status": "unmapped",
+      "keep_original": true,
+      "node_type": "credential-value",
+      "note": "khong co trong STIX 2.1 lẫn ATT&CK"
+    },
+    "x509-certificate": {
+      "stix_type": "x509-certificate",
+      "attack_type": null,
+      "status": "approximate",
+      "keep_original": false,
+      "node_type": "x509-certificate",
+      "note": "SCO cua STIX 2.1; bundle khong chua"
+    },
+    "indicator": {
+      "stix_type": "indicator",
+      "attack_type": null,
+      "status": "approximate",
+      "keep_original": false,
+      "node_type": "indicator",
+      "note": "SDO cua STIX 2.1; ATT&CK khong dung loai nay"
+    },
+    "course-of-action": {
+      "stix_type": "course-of-action",
+      "attack_type": "course-of-action",
+      "status": "mapped",
+      "keep_original": false,
+      "node_type": "course-of-action",
+      "note": ""
+    },
+    "security-product": {
+      "stix_type": null,
+      "attack_type": null,
+      "status": "unmapped",
+      "keep_original": true,
+      "node_type": "security-product",
+      "note": "khong co trong STIX 2.1 lẫn ATT&CK"
+    },
+    "malware-analysis-document-or-publication-or-conference": {
+      "stix_type": null,
+      "attack_type": null,
+      "status": "unmapped",
+      "keep_original": true,
+      "node_type": "malware-analysis-document-or-publication-or-conference",
+      "note": "khong co trong STIX 2.1 lẫn ATT&CK"
+    },
+    "location": {
+      "stix_type": "location",
+      "attack_type": null,
+      "status": "approximate",
+      "keep_original": false,
+      "node_type": "location",
+      "note": "SDO cua STIX 2.1; bundle khong chua"
+    },
+    "abstract-concept": {
+      "stix_type": null,
+      "attack_type": null,
+      "status": "unmapped",
+      "keep_original": true,
+      "node_type": "abstract-concept",
+      "note": "khong phai loai cua STIX 2.1"
+    },
+    "generic-noun": {
+      "stix_type": null,
+      "attack_type": null,
+      "status": "unmapped",
+      "keep_original": true,
+      "node_type": "generic-noun",
+      "note": "khong phai loai cua STIX 2.1"
+    },
+    "other": {
+      "stix_type": null,
+      "attack_type": null,
+      "status": "unmapped",
+      "keep_original": true,
+      "node_type": "other",
+      "note": "giu nguyen `other`"
+    },
+    "noise": {
+      "stix_type": null,
+      "attack_type": null,
+      "status": "unmapped",
+      "keep_original": true,
+      "node_type": "noise",
+      "note": "giu nguyen `noise`; tang sau co the loai"
+    }
+  },
+  "rel_types": {
+    "exploits": {
+      "attack_relationship": "uses",
+      "status": "approximate",
+      "keep_original": false,
+      "edge_label": "uses",
+      "not_an_edge": false,
+      "note": "bundle chi co `uses`; `exploits` cua GRID gan nghia"
+    },
+    "bypasses": {
+      "attack_relationship": null,
+      "status": "unmapped",
+      "keep_original": true,
+      "edge_label": "bypasses",
+      "not_an_edge": false,
+      "note": "khong co trong 6 loai cua bundle"
+    },
+    "malicious-investigates-track-detects": {
+      "attack_relationship": "detects",
+      "status": "approximate",
+      "keep_original": false,
+      "edge_label": "detects",
+      "not_an_edge": false,
+      "note": "bundle co `detects` (dung cho detection strategy)"
+    },
+    "impersonates": {
+      "attack_relationship": null,
+      "status": "unmapped",
+      "keep_original": true,
+      "edge_label": "impersonates",
+      "not_an_edge": false,
+      "note": "khong co trong 6 loai cua bundle"
+    },
+    "targets": {
+      "attack_relationship": null,
+      "status": "unmapped",
+      "keep_original": true,
+      "edge_label": "targets",
+      "not_an_edge": false,
+      "note": "khong co trong 6 loai cua bundle"
+    },
+    "compromises": {
+      "attack_relationship": null,
+      "status": "unmapped",
+      "keep_original": true,
+      "edge_label": "compromises",
+      "not_an_edge": false,
+      "note": "khong co trong 6 loai cua bundle"
+    },
+    "leads-to": {
+      "attack_relationship": null,
+      "status": "unmapped",
+      "keep_original": true,
+      "edge_label": "leads-to",
+      "not_an_edge": false,
+      "note": "khong co trong 6 loai cua bundle"
+    },
+    "drops": {
+      "attack_relationship": null,
+      "status": "unmapped",
+      "keep_original": true,
+      "edge_label": "drops",
+      "not_an_edge": false,
+      "note": "khong co trong 6 loai cua bundle"
+    },
+    "downloads": {
+      "attack_relationship": null,
+      "status": "unmapped",
+      "keep_original": true,
+      "edge_label": "downloads",
+      "not_an_edge": false,
+      "note": "khong co trong 6 loai cua bundle"
+    },
+    "executes": {
+      "attack_relationship": "uses",
+      "status": "approximate",
+      "keep_original": false,
+      "edge_label": "uses",
+      "not_an_edge": false,
+      "note": "bundle chi co `uses`"
+    },
+    "delivers": {
+      "attack_relationship": null,
+      "status": "unmapped",
+      "keep_original": true,
+      "edge_label": "delivers",
+      "not_an_edge": false,
+      "note": "khong co trong 6 loai cua bundle"
+    },
+    "beacons-to": {
+      "attack_relationship": null,
+      "status": "unmapped",
+      "keep_original": true,
+      "edge_label": "beacons-to",
+      "not_an_edge": false,
+      "note": "khong co trong 6 loai cua bundle"
+    },
+    "exfiltrate-to": {
+      "attack_relationship": null,
+      "status": "unmapped",
+      "keep_original": true,
+      "edge_label": "exfiltrate-to",
+      "not_an_edge": false,
+      "note": "khong co trong 6 loai cua bundle"
+    },
+    "leaks": {
+      "attack_relationship": null,
+      "status": "unmapped",
+      "keep_original": true,
+      "edge_label": "leaks",
+      "not_an_edge": false,
+      "note": "khong co trong 6 loai cua bundle"
+    },
+    "communicates-with": {
+      "attack_relationship": null,
+      "status": "unmapped",
+      "keep_original": true,
+      "edge_label": "communicates-with",
+      "not_an_edge": false,
+      "note": "khong co trong 6 loai cua bundle"
+    },
+    "resolves-to": {
+      "attack_relationship": null,
+      "status": "unmapped",
+      "keep_original": true,
+      "edge_label": "resolves-to",
+      "not_an_edge": false,
+      "note": "khong co trong 6 loai cua bundle"
+    },
+    "hosts": {
+      "attack_relationship": null,
+      "status": "unmapped",
+      "keep_original": true,
+      "edge_label": "hosts",
+      "not_an_edge": false,
+      "note": "khong co trong 6 loai cua bundle"
+    },
+    "provides": {
+      "attack_relationship": null,
+      "status": "unmapped",
+      "keep_original": true,
+      "edge_label": "provides",
+      "not_an_edge": false,
+      "note": "khong co trong 6 loai cua bundle"
+    },
+    "authored-by": {
+      "attack_relationship": "attributed-to",
+      "status": "approximate",
+      "keep_original": false,
+      "edge_label": "attributed-to",
+      "not_an_edge": false,
+      "note": "bundle chi co `attributed-to`"
+    },
+    "owns": {
+      "attack_relationship": null,
+      "status": "unmapped",
+      "keep_original": true,
+      "edge_label": "owns",
+      "not_an_edge": false,
+      "note": "khong co trong 6 loai cua bundle"
+    },
+    "controls": {
+      "attack_relationship": null,
+      "status": "unmapped",
+      "keep_original": true,
+      "edge_label": "controls",
+      "not_an_edge": false,
+      "note": "khong co trong 6 loai cua bundle"
+    },
+    "attributed-to": {
+      "attack_relationship": "attributed-to",
+      "status": "mapped",
+      "keep_original": false,
+      "edge_label": "attributed-to",
+      "not_an_edge": false,
+      "note": ""
+    },
+    "affiliated-with": {
+      "attack_relationship": null,
+      "status": "unmapped",
+      "keep_original": true,
+      "edge_label": "affiliated-with",
+      "not_an_edge": false,
+      "note": "khong co trong 6 loai cua bundle"
+    },
+    "cooperates-with": {
+      "attack_relationship": null,
+      "status": "unmapped",
+      "keep_original": true,
+      "edge_label": "cooperates-with",
+      "not_an_edge": false,
+      "note": "khong co trong 6 loai cua bundle"
+    },
+    "is-part-of": {
+      "attack_relationship": null,
+      "status": "unmapped",
+      "keep_original": true,
+      "edge_label": "is-part-of",
+      "not_an_edge": false,
+      "note": "ATT&CK dung `subtechnique-of` cho TTP; quan he nay thuong noi thanh phan"
+    },
+    "consists-of": {
+      "attack_relationship": null,
+      "status": "unmapped",
+      "keep_original": true,
+      "edge_label": "consists-of",
+      "not_an_edge": false,
+      "note": "khong co trong 6 loai cua bundle"
+    },
+    "has": {
+      "attack_relationship": null,
+      "status": "unmapped",
+      "keep_original": true,
+      "edge_label": "has",
+      "not_an_edge": false,
+      "note": "khong co trong 6 loai cua bundle"
+    },
+    "depends-on": {
+      "attack_relationship": null,
+      "status": "unmapped",
+      "keep_original": true,
+      "edge_label": "depends-on",
+      "not_an_edge": false,
+      "note": "khong co trong 6 loai cua bundle"
+    },
+    "creates-or-generates": {
+      "attack_relationship": null,
+      "status": "unmapped",
+      "keep_original": true,
+      "edge_label": "creates-or-generates",
+      "not_an_edge": false,
+      "note": "khong co trong 6 loai cua bundle"
+    },
+    "modifies-or-removes-or-replaces": {
+      "attack_relationship": null,
+      "status": "unmapped",
+      "keep_original": true,
+      "edge_label": "modifies-or-removes-or-replaces",
+      "not_an_edge": false,
+      "note": "khong co trong 6 loai cua bundle"
+    },
+    "uses": {
+      "attack_relationship": "uses",
+      "status": "mapped",
+      "keep_original": false,
+      "edge_label": "uses",
+      "not_an_edge": false,
+      "note": ""
+    },
+    "variant-of": {
+      "attack_relationship": null,
+      "status": "unmapped",
+      "keep_original": true,
+      "edge_label": "variant-of",
+      "not_an_edge": false,
+      "note": "khong co trong 6 loai cua bundle"
+    },
+    "derived-from": {
+      "attack_relationship": null,
+      "status": "unmapped",
+      "keep_original": true,
+      "edge_label": "derived-from",
+      "not_an_edge": false,
+      "note": "khong co trong 6 loai cua bundle"
+    },
+    "alias-of": {
+      "attack_relationship": null,
+      "status": "unmapped",
+      "keep_original": true,
+      "edge_label": "alias-of",
+      "not_an_edge": false,
+      "note": "khong co trong 6 loai cua bundle"
+    },
+    "compares-to": {
+      "attack_relationship": null,
+      "status": "unmapped",
+      "keep_original": true,
+      "edge_label": "compares-to",
+      "not_an_edge": false,
+      "note": "khong co trong 6 loai cua bundle"
+    },
+    "categorized-as": {
+      "attack_relationship": null,
+      "status": "unmapped",
+      "keep_original": true,
+      "edge_label": "categorized-as",
+      "not_an_edge": false,
+      "note": "khong co trong 6 loai cua bundle"
+    },
+    "located-at": {
+      "attack_relationship": null,
+      "status": "unmapped",
+      "keep_original": true,
+      "edge_label": "located-at",
+      "not_an_edge": false,
+      "note": "khong co trong 6 loai cua bundle"
+    },
+    "originates-from": {
+      "attack_relationship": null,
+      "status": "unmapped",
+      "keep_original": true,
+      "edge_label": "originates-from",
+      "not_an_edge": false,
+      "note": "khong co trong 6 loai cua bundle"
+    },
+    "indicates": {
+      "attack_relationship": "detects",
+      "status": "approximate",
+      "keep_original": false,
+      "edge_label": "detects",
+      "not_an_edge": false,
+      "note": "bundle co `detects`"
+    },
+    "mitigates": {
+      "attack_relationship": "mitigates",
+      "status": "mapped",
+      "keep_original": false,
+      "edge_label": "mitigates",
+      "not_an_edge": false,
+      "note": ""
+    },
+    "based-on": {
+      "attack_relationship": null,
+      "status": "unmapped",
+      "keep_original": true,
+      "edge_label": "based-on",
+      "not_an_edge": false,
+      "note": "khong co trong 6 loai cua bundle"
+    },
+    "research-describes-analysis-of-characterizes-detects": {
+      "attack_relationship": "detects",
+      "status": "approximate",
+      "keep_original": false,
+      "edge_label": "detects",
+      "not_an_edge": false,
+      "note": "bundle co `detects`"
+    },
+    "negation": {
+      "attack_relationship": null,
+      "status": "unmapped",
+      "keep_original": true,
+      "edge_label": "negation",
+      "not_an_edge": true,
+      "note": "KHONG phai quan he - la dinh toc (special factuality). Dinh danh `not_an_edge` de nguoi dung quyet dinh"
+    },
+    "other": {
+      "attack_relationship": null,
+      "status": "unmapped",
+      "keep_original": true,
+      "edge_label": "other",
+      "not_an_edge": false,
+      "note": "giu nguyen `other`"
+    }
+  }
+}

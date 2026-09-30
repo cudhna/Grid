@@ -1,0 +1,481 @@
+PHUONG PHAP 2: MITRE ATT&CK LAM NEN (THU HEP PHAM VI MALWARE LOADER) + DU LIEU BAO CAO CTI
+============================================================================================
+
+0. TAI SAO THAY DOI PHAM VI
+---------------------------
+Ban dau nap toan bo MITRE ATT&CK vao Neo4j. Ket qua: do thi co 25.639 object dang hieu
+luc (697 technique, 730 malware, 176 intrusion-set, 95 tool, 56 campaign, 44 mitigation,
+1.758 analytic, 697 detection-strategy...). Do do rat rong so voi pham vi nghien cuu hien
+nay, va nhan xet "KHONG phai KG phuc vu CTI ma la mot ban sao cua ATT&CK".
+
+Quyet dinh: pham vi nghien cuu = MALWARE LOADER, va chi giu 2 loai node TACTIC + TECHNIQUE.
+Muc tieu la doi thu tu uu tien cua do thi: thay vi "toan bo ATT&CK", thi la
+"dinh nghia pham vi loader (o tang ontology) + ket qua gan TTP cua bao cao (o tang du lieu)".
+
+Ket qua cua viec thu hep: 25.639 object -> 179 node lop nen + 28 node lop bao cao.
+So node bi loai khoi pham vi: 533 node TTP + toan bo 24.927 object khong phai TTP.
+
+
+1. MUC TIEU
+-----------
+Dung mot knowledge graph trong Neo4j voi hai tang:
+  - Tang 1 (LOP NEN / ontology): dinh nghia pham vi "malware loader" duoc cat tu chinh
+    MITRE ATT&CK. Chi giu x-mitre-tactic va attack-pattern.
+  - Tang 2 (LOP BAO CAO / du lieu): ket qua gan TTP cua mot bao cao CTI (report_1.json)
+    phu len tren lop nen, luon ghi ro nguon va pham vi.
+  - Tang 3 (LOP GRID / du lieu, BO SUNG o muc 12): entity va triple do mo hinh GRID trich
+    truc tiep tu van bao procedure cua bao cao. Cung nap qua mot lenh nạp, khong doi lop nen.
+
+Nguyen tac:
+  - ATT&CK la ontology goc. Dung lieu tu bao cao chi bo sung, khong thay the.
+  - KHONG dung lai ontology rieng cua GRID.
+  - Moi node deu tra ve duoc "vi sao duoc giu" (truong keep_reason) => kiem toan duoc.
+  - Chay lai nhieu lan khong nhan doi du lieu (dung MERGE + khoa duy nhat).
+  - Tang 3 phai tach duoc "model trich" voi "code suy ra", va moi triple phai tro ve
+    duoc mot cau trong van bao bao cao (hoac bi gan co, khong duoc xoa).
+
+
+2. DAU VAO
+----------
+  a) enterprise-attack.json (48 MB)
+     STIX bundle cua MITRE ATT&CK. Day la KHO OBJECT, khong phai file schema.
+     Ban nay khá moi: co cac technique T168x, va doi ten tactic
+     (TA0005: "Defense Evasion" -> "Stealth", TA0112 -> "Defense Impairment").
+     Object co revoked = true hoac x_mitre_deprecated = true bi bo qua o buoc 1.
+     Con 25.639 object: 697 technique + 15 tactic + 24.927 object khac.
+
+  b) report_1.json (9.2 KB)
+     Ket qua pipeline GRID: danh sach theo chunk (34 chunk), moi chunk la danh sach
+     tactic, moi tactic co techniques[] gom id, name, procedure.
+     Trong ban nay: 20 muc technique (19 sau khi chuan hoa ID), 7 muc co procedure
+     (5 technique khac nhau co procedure).
+
+  c) chunks.jsonl
+     Van ban goc chia chunk. CHUA DUNG, vi chua xac nhan report_1.json thuoc bao cao nao
+     trong chunks.jsonl.
+
+  d) Neo4j dang chay (Neo4j Desktop hoac AuraDB).
+
+
+3. PHUONG PHAP (3 BUOC)
+-----------------------
+
+BUOC 1. scope_loader.py -- thu nep MITRE ve pham vi malware loader
+-----------------------------------------------------------------
+Input : enterprise-attack.json, report_1.json
+Output: kg_base_scoped.json, report_1.canonical.json, scope_report.json
+
+3.1 L0 -- LOAI THEO LOAI NODE
+    Chi giu 2 loai: x-mitre-tactic va attack-pattern.
+    Loai toan bo: malware, tool, intrusion-set, campaign, course-of-action,
+    x-mitre-data-component, x-mitre-analytic, x-mitre-detection-strategy, identity,
+    x-mitre-matrix, marking-definition.
+    => loai 24.927 object, chi giiu lai 712 node TTP.
+
+3.2 R1 -- attack-evidence (102 technique)  [bang chung tu chinh du lieu ATT&CK]
+    Buoc nay KHONG dua vao y kien ca nhan, ma lay truc tiep tu du lieu cua MITRE:
+      - Buoc 1a: quet tat ca object malware/tool, lay node ma ten hoac alias khop
+        bieu thuc "loader|downloader|dropper|stager". Tim duoc 25 phan mem:
+        Power Loader, Smoke Loader, IMAPLoader, Gootloader, CANONSTAGER, SplatDropper,
+        XLoader, JSS Loader, XORIndex Loader, CSPY Downloader...
+      - Buoc 1b: tu 25 phan mem do, lay tat ca quan he "uses" tro toi attack-pattern
+      - Buoc 1c: giu technique do chi khi no thuoc 1 trong 8 tactic cua vong doi loader
+    Y do dung: mot technique duoc MOT PHAN MEM LOADER THAT SU DUNG trong chinh ATT&CK
+    thi mac dinh la ky thuat cua loader. Day la lop bang chung manh nhat.
+
+3.3 R2 -- core-loader (121 technique)  [danh sach loi do nguoi nghien cuu dinh nghia]
+    Bo sung cho R1 cac ky thuat "chuan" cua ma doc loai ma ATT&CK chua gan phan mem
+    nao. Nhom theo giai doan cua vong doi loader:
+      Den       : T1566(.001/.002/.004), T1204(.001/.002), T1189, T1190, T1195(.002)
+      Ha tang   : T1583(.001/.003/.004/.006), T1584.001, T1587.001, T1588(.001/.002),
+                  T1608(.001/.002/.003)
+      Chay      : T1059(.001/.003/.005/.006/.007/.009), T1105, T1129, T1106, T1620,
+                  T1218(.001/.002/.005/.008/.010/.011), T1559(.001/.002), T1564.001
+      Ton tai   : T1547(.001/.009), T1543.003, T1546.003, T1136.001,
+                  T1574.001, T1574.008
+      An min    : T1036(.001-.007), T1027(.004/.008/.009), T1140, T1553.002, T1480,
+                  T1497(.001/.003), T1685(.001), T1686(.003), T1070.006, T1222,
+                  T1055(.001-.004), T1134.001
+      Do la     : T1082, T1016, T1057, T1518(.001), T1083, T1012, T1049, T1018
+      C2        : T1071(.001/.004), T1095, T1573.002, T1102, T1219, T1568.002,
+                  T1090(.002/.003), T1132
+    Danh sach nay viet trong CODE (CORE_TECHNIQUES) de kiem toan duoc, khong nam trong
+    file cau hinh rieng. Neu mot ID khong con ton tai trong bundle thi script BAO LOI
+    chu khong bo qua am tham.
+
+3.4 R3 -- report (19 technique)
+    Technique nao xuat hien trong bao cao thi LUON giu, ke ca khi nam ngoai pham vi
+    loader. Mot technique chi duoc bao cao nhac toi ma khong thuoc dinh nghia loader se
+    co in_loader_scope = false va layer = "report" (khong dua vao lop nen).
+    Ly do: khong duoc xoa thong tin nguoi doc that, nhung phai tach bach duoc.
+
+3.5 R4 -- parent-closure (5 technique)
+    Cac technique cha cua mot sub-technique da duoc giu. Bat buoc: giu T1218.011 ma bo
+    T1218 thi sub-technique bi mo coi. Dung BFS nguoc qua quan he "subtechnique-of".
+    5 technique cha duoc bo sung: T1037, T1053, T1069, T1087, T1137.
+    (T1486 thuoc Impact nen khong co sub-technique; no duoc giu do R3, khong phai do R4.)
+
+3.6 L1 -- LOAI TACTIC NGOAI VONG DOI LOADER
+    Giu 8 tactic: Initial Access (TA0001), Execution (TA0002), Persistence (TA0003),
+    Stealth (TA0005), Defense Impairment (TA0112), Discovery (TA0007),
+    Command and Control (TA0011), Resource Development (TA0042).
+    Loai 5 tactic: Credential Access (TA0006), Privilege Escalation (TA0004),
+    Lateral Movement (TA0008), Exfiltration (TA0010), Reconnaissance (TA0043).
+    Giu them 2 tactic chi vi bao cao nhac toi: Collection (TA0009), Impact (TA0040).
+
+3.7 L2, L3 -- LOAI TECHNIQUE VA CANH
+    Technique khong duoc R1..R4 giu thi loai (519/697 technique bi loai).
+    Do thi lop nen chi giu 2 loai quan he:
+      PART_OF           technique -> tactic   (184 canh, suy tu kill_chain_phases)
+      SUBTECHNIQUE_OF   sub-technique -> cha  (99 canh)
+    Moi canh co dau muc cham deu bi loai. Khong giu uses / mitigates / detects /
+    attributed-to / subtechnique-of voi node ngoai pham vi.
+
+3.8 CHUAN HOA ID BAO CAO
+    report_1.json do mo hinh sinh ra, nen co the chua ID da bi MITRE thuhoi.
+    Script tra quan he "revoked-by" (157 quan he trong bundle nay) de doi sang ID
+    hien hanh. Ket qua:
+        T1086 (PowerShell)  ->  T1059.001 (PowerShell)
+    Sau chuan hoa: 19 technique thay vi 20, va 19/19 deu ton tai trong ATT&CK.
+    File report_1.canonical.json giu nguyen cau truc list-of-chunk, them
+    original_id + canonicalized cho muc da doi, va chuan hoa ten tactic theo ATT&CK
+    (giu ten goc o truong report_name).
+
+    => YEU TOO HAI: pipeline GRID can duoc sua de khong sinh ID da deprecated,
+       vi du loi nay xay ra o muc T1086.
+
+
+BUOC 2. dict_kg.py -- dung lop bao cao
+----------------------------------------
+Input : enterprise-attack.json, report_1.canonical.json  (LUU Y: dung ban da chuan hoa)
+Output: kg.json, flags.json
+
+  - Khop tu dien ATT&CK: quet procedure khong rong, khop chuoi de gan ID co san.
+    Ten dai (>4 ky tu) khop khong phan biet hoa/thuong; ten ngan (<=4) phan biet
+    hoa/thuong de bot nhieu. Ten trung nhieu doi tuong duoc gan co ambiguous.
+  - Kiem tra tung technique: ID co ton tai trong ATT&CK khong, ten co khop khong,
+    co bi deprecated khong. Chi gan co (flags.json), khong tu sua hay xoa.
+  - Sinh triple, kem truong "source" phan biet:
+      source = "attack" : quan he lay tu ATT&CK (technique part_of tactic)
+      source = "report" : entity xuat hien trong procedure cua technique
+                          (mentioned_in_procedure_of, kem chunk va vi tri ky tu)
+  - Co them co --only-ttp: chi giu node tactic/technique, bo qua malware/tool/
+    intrusion-set/campaign. Dung co nay de phu hop pham vi hien tai.
+    (Trong du lieu nay tinh trung cung khong co entity nao khop duoc, nen khac biet
+    chua thay doi ket qua -- nhung co la de pham vi khong phu thuoc vao mayy co khop hay khong.)
+
+
+BUOC 3. attack_kg_neo4j.py -- nap 2 lop vao Neo4j
+---------------------------------------------------
+Input: kg_base_scoped.json (lop nen) + kg.json (lop bao cao)
+  --scoped : nap lop nen DA THU HEP   (mac dinh, phu hop pham vi hien tai)
+  --attack : nap TOAN BO ATT&CK       (neu can do thi day du)
+  --dry-run: khong can Neo4j, chi in so node/canh se nap (kiem tra truoc khi nap that)
+
+  - Node lop nen: nhan theo type (AttackPattern, XMitreTactic), id = external_id.
+  - Node lop bao cao: MERGE vao node nen neu da ton tai (chi ghi them
+    in_loader_scope / keep_reason); node chua co trong nen thi tao moi,
+    gan layer = "report", in_loader_scope = false, keep_reason = ["report"].
+  - Node Report + canh OBSERVES tu report_1 toi cac technique trong bao cao.
+  - Chay lai nhieu lan khong nhan doi du lieu (MERGE + khoa duy nhat).
+
+
+4. KET QUA THU NGHIEM (so lieu that tren du lieu nay)
+-----------------------------------------------------
+  ATT&CK dang hieu luc           : 25.639 object (697 technique, 15 tactic)
+
+  BUOC 1 - phan bo theo quy tac:
+    R1 attack-evidence  : 25 phan mem loader -> 102 technique
+    R2 core-loader      : 121 technique
+    R3 report           : 19 technique
+    R4 parent-closure   : 5 technique
+    (R1 va R2 co giao nhau, nen tong la 171 technique thuoc pham vi loader)
+
+  BUOC 1 - ket qua:
+    Lop nen (dinh nghia malware loader) : 179 node = 171 technique + 8 tactic
+                                         283 canh = 184 PART_OF + 99 SUBTECHNIQUE_OF
+    Chi co trong bao cao, nam ngoai pham vi : 7 technique + 2 tactic
+    Node TTP bi loai khoi pham vi           : 533 / 712
+    Node khong phai TTP bi loai toan bo     : 24.927
+
+  BUOC 2 - ket qua:
+    19 technique khac nhau, 7 muc co procedure (5 technique co procedure)
+    28 node (19 technique + 9 tactic), 20 triple part_of, 1 co
+    Khong entity nao khop duoc tu dien ATT&CK
+
+  BUOC 3 - do thi cuoi cung trong Neo4j:
+    188 node (179 lop nen + 9 node lop bao cao)
+    302 canh (283 lop nen + 19 canh OBSERVES; 20 part_of cua bao cao trung voi lop
+    nen nen khong tao lai, tranh canh trung)
+    Trong do 12/19 technique cua bao cao nam trong pham vi loader,
+    7/19 nam ngoai pham vi (6/7 thuoc Impact + 1 Malvertising)
+
+
+5. PHAN TICH CHAT LUONG DU LIEU (2 phat hien khi chay thu)
+-----------------------------------------------------------
+  (1) ID BI THUHOI TRONG BAO CAO
+      report_1.json co T1086, mitre da thu hoi ID nay va chuyen thanh T1059.001.
+      Neu nap nguyen report vao Neo4j, T1086 se tro thanh mot node "mo coi" khong
+      gan duoc tactic nao -> ket qua gan TTP bi sai cho 1/19 technique.
+      Da xu ly bang buoc chuan hoa ID (3.8). Bai hoc: pipeline sinh TTP phai
+      kiem tra ID con hieu luc truoc khi dua vao KG.
+
+  (2) TEN TECHNIQUE SAI TRONG BAO CAO
+      flags.json con 1 co:
+        T1036.001  bao cao ghi "Masquerading", ATT&CK goi "Invalid Code Signature"
+      Nguyên nhân: mo hinh nhon ten technique CHA (T1036 Masquerading) thay vi
+      ten sub-technique (T1036.001). Day la loi pho bien khi LLM sinh TTP.
+      Da giu nguyen (khong tu sua) va ghi co de bao cao. Neu can, sua o buoc
+      kiem tra ten bang cach gan ID -> ten chuan cua ATT&CK, nhung phai luu lai
+      ten goc de truy vet.
+
+  (3) HAN CHẾ DO DU LIEU BAO CAO
+      Chi 7/34 muc co procedure. 21/34 chunk rong. 19 technique co trong bao cao
+      deu rai rac, khong tieu de suy ra chuoi hanh dong (kill chain) cua mot cuoc
+      tan cong. Day la ly do KG chua the "ke chuyen" nhu mot bao cao chan thuc.
+
+
+6. DU LIEU DAO VAO / RA
+-----------------------
+  VAO   enterprise-attack.json    STIX bundle cua MITRE ATT&CK
+        report_1.json             ket qua gan TTP tu pipeline GRID
+
+  RA    kg_base_scoped.json       LOP NEN da thu hep. Node: id, type, name, external_id,
+                                  stix_id, url, description, is_subtechnique, layer,
+                                  in_loader_scope, keep_reason.
+                                  Canh: h, r (part_of | subtechnique_of), t, source, layer.
+                                  meta: pham vi, 8 tactic, mo ta 4 quy tac, thong ke.
+        report_1.canonical.json   report da chuan hoa ID. Dung cho dict_kg.py.
+        scope_report.json         BAO CAO KIEM TOAN: so luong theo quy tac, danh sach
+                                  node giu kem keep_reason, danh sach node bi loai theo
+                                  loai, danh sach tactic bi loai, danh sach 25 phan mem
+                                  dung lam bang chung, ID da doi, ID khong tim thay.
+        kg.json                   KG cua rieng bao cao (dict_kg.py)
+        flags.json                Co kiem tra ten / ID
+        Neo4j                     Do thi 2 tang (base + report)
+
+
+7. CACH CHAY
+------------
+Yeu cau: Python 3, driver neo4j (cai mot lan):
+    python -m pip install neo4j
+
+Vao thu muc phuong_phap_2, chay dung thu tu:
+
+(1) Thu nep pham vi + chuan hoa bao cao:
+    python scope_loader.py --attack enterprise-attack.json --report report_1.json --out .
+    In ra: so technique theo tung quy tac, so node lop nen, ID da doi, canh bao ID sai.
+
+(2) Dung lop bao cao (PHAI dung ban da chuan hoa):
+    python dict_kg.py --attack enterprise-attack.json --report report_1.canonical.json --out . --only-ttp
+
+(3) Kiem tra truoc khi nap (khong can Neo4j):
+    python attack_kg_neo4j.py --scoped kg_base_scoped.json --kg kg.json --password x --dry-run
+
+(4) Nap vao Neo4j, lan dau (--wipe xoa graph cu):
+    python attack_kg_neo4j.py --scoped kg_base_scoped.json --kg kg.json --report-name report_1 --uri bolt://localhost:7687 --user neo4j --password MAT_KHAU_CUA_BAN --wipe
+    (Trong PowerShell viet tren mot dong, khong dung dau ^.)
+
+(5) Them bao cao khac: chay lai (1)(2) voi report moi, roi lenh (4) BO --wipe,
+    doi --report-name. Chi nap nen: bo --kg.
+    Voi AuraDB: dung --uri neo4j+s://xxxxxxxx.databases.neo4j.io
+
+(6) Tang 3 (GRID) -- xem muc 12. Phan chay GRID can GPU (Colab), phan ghep KG chay
+    offline tren mayy nay:
+        python out\build_kg_full.py
+        python attack_kg_neo4j.py --scoped kg_base_scoped.json --kg ..\out\kg_full.json --report-name report_1 --password MAT_KHAU --dry-run
+
+
+8. TRUY VAN CYPHER TRONG NEO4J BROWSER
+---------------------------------------
+Khong chay "tra ve tat ca" vi lop nen van la 179 node, nhung van nen chon dung pham vi.
+
+  -- Kiem tra pham vi --
+  // Toan bo node theo pham vi
+  MATCH (t:AttackPattern) RETURN t.in_loader_scope AS in_scope, count(*) AS n ORDER BY n DESC
+
+  // Ky thuat loader, theo nhom va ly do duoc giu
+  MATCH (t:AttackPattern) WHERE t.in_loader_scope
+  RETURN t.keep_reason AS reason, count(*) AS n ORDER BY n DESC
+
+  // Ky thuat chi co trong bao cao, nam ngoai pham vi loader
+  MATCH (t:AttackPattern) WHERE t.in_loader_scope = false AND t.layer = 'report'
+  RETURN t.id, t.name, t.keep_reason
+
+  -- Ket qua gan TTP cua bao cao --
+  // Technique bao cao quan sat + tactic tuong ung
+  MATCH (r:Report {id:'report_1'})-[:OBSERVES]->(t)-[:PART_OF]->(k) RETURN r, t, k
+
+  // Phan bo theo tactic (cua lop bao cao)
+  MATCH (r:Report {id:'report_1'})-[:OBSERVES]->(t)-[:PART_OF]->(k)
+  RETURN k.name AS tactic, count(*) AS n ORDER BY n DESC
+
+  // Chi phan trong pham vi loader
+  MATCH (r:Report {id:'report_1'})-[:OBSERVES]->(t) WHERE t.in_loader_scope
+  RETURN t.id, t.name
+
+  // Cay sub-technique cua mot technique
+  MATCH (p:AttackPattern)-[:SUBTECHNIQUE_OF*1..2]->(c:AttackPattern {id:'T1059'})
+  RETURN p.id, p.name
+
+  -- Kiem tra chat luong --
+  // Technique co ten khac ten chuan cua ATT&CK (lay tu flags.json)
+  // Node lop bao bao chua co node nen nao noi toi (dang so)
+  MATCH (a)-[e]->(b) WHERE e.layer = 'report' AND NOT a:Report RETURN a, e, b
+
+Meo: trong tab Graph, chon caption cua tung loai node la "name" de de doc.
+
+
+9. HAN CHE
+----------
+  - Pham vi loader dinh nghia bang 2 lop: R1 la bang chung tu ATT&CK, R2 la danh sach
+    do nguoi nghien cuu chon. R2 co tinh chu quan; neu muon bao ve hon thi lay
+    chi R1 (102 technique) va bo R2 khoi CORE_TECHNIQUES.
+  - Chi giu 2 loai quan he nen that duong chuyen mach khong the "di chuyen" giua
+    2 phan mem khac nhau. Muon mo rong: them quan he subtechnique-of, hoac giu lai
+    node software nhung gan nhan "out-of-scope" thay vi xoa.
+  - 24.927 object khong phai TTP bi loai hoan toan, gom ca 1758 analytic va 697
+    detection-strategy. Neu muon dung chung de danh gia phat hien, phai nap lai
+    va gan nhan rieng.
+  - Phu thuoc procedure: chi 5/19 technique co procedure nen lop bao cao rong.
+  - Khop tu dien bo sot entity ATT&CK chua biet (CyberLock, Lucky_Gh0$t khong co
+    trong ATT&CK) va khong tao quan he giua cac entity.
+  - Chua xac nhan report_1.json thuoc bao cao nao trong chunks.jsonl.
+  - Ten tactic trong ban ATT&CK nay da doi (TA0005 = "Stealth"). Khong nen hardcode
+    ten, luon dung x_mitre_shortname.
+  - Bundle enterprise-attack.json phai dung lai khi MITRE ra ban moi, neu khong
+    danh sach ID trong CORE_TECHNIQUES se bao loi.
+
+
+10. HUONG PHAT TRIEN
+---------------------
+  - Them buoc trich entity bao cao (NER) va tao node malware/tool o layer = "report",
+    kem quan he "uses" giua entity do va technique. Day la thieu sot lon nhat.
+    => DA LAM o muc 12 (tang 3, trich bang GRID tren GPU, nen chay tren Colab).
+  - Luu chunk vao canh OBSERVES de truy ve nguon goc cua tung technique.
+  - Xac nhan bao cao nguon trong chunks.jsonl de thay procedure bang van ban goc.
+  - Tu dong sua loi "ten technique sai" bang ID -> ten chuan, luu ten goc de truy vet.
+  - Bo sung quy tac R5: giữ kỹ thuật nằm trong cùng "chi phí" phat hien ATT&CK
+    (co detection strategy), phuc vu cho muc tieu phat hien mau.
+  - Mo rong pham vi sang cac loai malware khac (stealer, RAT, wiper) theo cung
+    4 quy tac, chi thay LOADER_TACTICS va CORE_TECHNIQUES.
+
+
+11. LUU Y BAO MAT
+------------------
+Khong ghi mat khau Neo4j vao tai lieu hay chia se lenh co mat khau that. Script chi nhan
+mat khau qua tham so dong lenh nen khong duoc dan vao script hay commit len git.
+Neu da dan mat khau vao noi cong khai va dung lai o cho khac thi nen doi.
+
+
+12. TANG 3: TRICH ENTITY + TRIPLE BANG GRID (BO SUNG)
+======================================================
+Muc 10/11 da noi "thieu sot lon nhat" la khong co node malware/tool. Muc 12 bo sung
+tang do bang cach chay mo hinh GRID truc tiep tren VAN BA procedure cua bao cao.
+Khac biet voi muc 2 (dict_kg.py): muc 2 chi khop TEN co san trong tu dien ATT&CK, con
+tang 3 de model tu tim ra ca entity khong co san (CyberLock, Lucky_Gh0$t...), nen can
+vai tro moi: node malware/tool/intrusion-set, va quan he giua chung voi nhau.
+
+TACH PHAI CHAY
+--------------
+  PHAI TREN GPU (Colab T4)          OFFLINE, tren mayy local
+  -------------------------------   -----------------------------
+  A1 chan doan                       B1 out/type_mapping.json
+  A2 chon checkpoint                 B2 khop entity -> external_id
+  A3 chay GRID rieng tung procedure  B3 canh USES suy ra bang CODE
+  A4 xuat out/grid_raw/              B4 triple do model trich + bang chung
+                                     B5 out/kg_full.json + nap Neo4j
+  Ly do tach: mayy local khong co GPU, va phan B khong duoc goi model nen chay lai
+  khong ton tai.
+
+  A -> B: tai nguyen thu muc out/grid_raw/ tu Colab ve mayy local (thu muc Colab la
+  ephemeral, mat khi restart runtime). Huong dan day du: out/colab_guide.md.
+
+A1-A4: out/run_grid_colab.py
+----------------------------
+  Mot lan chay, tu lam ca 4 viec. Bat buoc:
+    - Cai json-repair. _robust_json_parse() goi `import json_repair` de doc marker
+      #Entity_List_Start# / #Relationship_List_Start#, va 3 cho "except Exception: pass"
+      nuot luon ImportError do -> parse fail am thanh, entities/relations = []. Da do lai:
+      thieu json_repair thi CA 6 mau chuan deu ra 0.
+    - Bo dong tieu de "[Chunk n] Tactic - Txxxx" khoi input (chi giu van ba procedure).
+    - temperature = 0, retry toi da 2 lan neu rong, ghi log vao attempts.json.
+    - Chay ca 2 che do: 1 lan gop 7 procedure + 7 lan rieng tung procedure.
+  Output out/grid_raw/: procedure_map.json, manifest.json, run.log, vllm_calls.jsonl,
+  diagnosis.md, template_debug/, aggregate/, proc_NN_TXXXX/ (11 file moi len chay).
+
+  LUU Y KHI DOC KET QUA: raw_output.txt KHONG phai output tho cua model. No do
+  GRID_backbone._build_final_split_output() dung lai tu final_entities/final_relations
+  da parse. Output tho that o step1_raw.txt va step2_raw.txt.
+  vllm_calls.jsonl ghi finish_reason + truncated + error cho tung lan goi, de phan biet
+  "model tu sinh list rong" / "bi cat output" / "request hong".
+
+B1: out/type_mapping.json (CAN DUYET)
+-------------------------------------
+  Do tu 33 entity type + 44 relation type cua GRID_backbone.py (ENTITY_TYPES, REL_TYPES).
+  Tu vung quan he do duoc trong enterprise-attack.json chi co 6 gia tri: uses, mitigates,
+  detects, subtechnique-of, revoked-by, attributed-to. Moi attack_relationship deu nam
+  trong 6 gia tri nay.
+  Trang thai: mapped / alias / approximate / unmapped. KHONG co gi bi xoa: type khong map
+  duoc thi giu ten goc + co "unmapped".
+
+B2-B4: out/build_kg_full.py (offline)
+-------------------------------------
+  B2 Khop entity voi malware/tool/intrusion-set trong bundle de gan external_id.
+     4 buoc theo thu tu: (1) ma technique trong van ban -> (2) software theo ten/alias
+     -> (3) attack-pattern theo ten -> (4) tao node moi "grid:<Ten>".
+     Mo ho (nhieu object cung ten) hoac khong co -> DE TRONG external_id va tao node moi,
+     khong doan. Node moi gan layer = "report", khong dua vao lop nen.
+     Regex bat ma technique (vd T1112) trong van ba de noi vao node technique co san.
+  B3 Moi procedure: chu the duoc trich noi canh `uses` toi technique_id cua procedure do,
+     gan source = "report" + inferred_by = "code" + canh bang chung (cau van ba) + chunk.
+     Day la SUY RA BANG CODE, khong phai model trich -- tach rieng de khong nham.
+  B4 Moi triple GRID phai co cau bang chung chua CA chu the lan doi tuong trong van ba
+     bao cao. Tim theo vong chinh xac, roi vong gan dung ("found_partial_name", luu
+     evidence_matched_words). Khong tim duoc -> gan co evidence_status, KHONG xoa triple.
+
+B5: out/kg_full.json + nap Neo4j
+--------------------------------
+  Dinh dang giong kg.json (nodes / triples), nen nap bang CHUNG mot lenh:
+     python attack_kg_neo4j.py --scoped kg_base_scoped.json --kg out/kg_full.json \
+         --report-name report_1 --password MAT_KHAU
+  LOP NEN khong doi. attack_kg_neo4j.py da sua de:
+     - canh source = "attack" chi gan confirmed_by_report (so sanh khong phan biet
+       hoa/thuong vi kg_full chuan hoa nhan qua cypher_rel);
+     - canh source = "grid" nap voi layer = "grid", kem inferred_by, evidence,
+       evidence_status, rel_type_unmapped, not_an_edge;
+     - node giu them truong "layers" (danh sach cac lop da cham node), con "layer" lay
+       theo thu tu base > grid > report -- node da co trong lop nen giu layer = "base";
+     - gia tri kieu dict (vd evidence_matched_words) doi thanh chuoi JSON vi Neo4j chi
+       nhan primitive hoac list primitive.
+  --dry-run in ra so node/canh se nap, node theo tung lop, va so canh GRID.
+
+PHAN BIET TRONG TRUY VAN
+------------------------
+  Trong kg_full.json, moi canh tach bang truong "inferred_by":
+      "code" -> canh USES suy ra bang code (B3) -- tach rieng
+      "grid" -> triple do model trich (B4)
+  Node/canh lop GRID co source = "grid", layer = "grid". Truong "negation" khong phai
+  canh that: nen canh do gan not_an_edge = true de nguoi dung quyet dinh.
+
+  MATCH (a)-[e]->(t:AttackPattern) WHERE e.source='grid' AND e.inferred_by='grid'
+  RETURN a.name, type(e), t.name, e.evidence LIMIT 25;
+
+  MATCH (a)-[e:USES]->(t:AttackPattern) WHERE e.inferred_by='code'
+  RETURN a.name, t.name, e.edge_role, e.procedure_id;
+
+  // triple GRID chua tim duoc cau bang chung (da gan co, KHONG bi xoa)
+  MATCH (a)-[e]->(b) WHERE e.inferred_by='grid' AND e.evidence IS NULL
+  RETURN a.name, type(e), b.name, e.rel_type_grid;
+
+  // node da duoc ca bao cao va GRID cham vao
+  MATCH (n) WHERE size(n.layers) > 1 RETURN n.id, n.name, n.layers, n.layer
+
+TINH TRANG KHI VIET TAI LIEU NAY
+-------------------------------
+  CHUA CHAY tren du lieu that: phan A can GPU, va agent khong co GPU / khong truy cap
+  duoc Colab. out/grid_raw/ hien chi co diagnosis.md (A1 chay offline duoc).
+  out/kg_full.json CHUA duoc sinh. Khong co so lieu nao trong out/report.md la uoc luong.
+  Cac file da chay duoc offline va co so lieu that: out/type_mapping.json (B1),
+  out/grid_raw/diagnosis.md (A1 probe), va out/selfcheck_part_b.py (fixture tong hop,
+  dung de kiem tra bat bien -- khong phai ket qua that).

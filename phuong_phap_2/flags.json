@@ -1,0 +1,8 @@
+[
+  {
+    "technique": "T1036.001",
+    "flag": "name_mismatch",
+    "report": "Masquerading",
+    "attack": "Invalid Code Signature"
+  }
+]

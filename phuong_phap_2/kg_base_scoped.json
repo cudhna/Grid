@@ -1,0 +1,4943 @@
+{
+  "meta": {
+    "scope": "malware-loader",
+    "generated_at": "2026-09-30T16:01:42",
+    "attack_bundle": "enterprise-attack.json",
+    "loader_tactics": [
+      "initial-access",
+      "execution",
+      "persistence",
+      "stealth",
+      "defense-impairment",
+      "discovery",
+      "command-and-control",
+      "resource-development"
+    ],
+    "rules": {
+      "attack-evidence": "R1: ATT&CK ghi nhan phan mem loader/dropper/stager su dung",
+      "core-loader": "R2: nam trong danh sach loi cua malware loader",
+      "report": "R3: co trong bao cao CTI",
+      "parent-closure": "R4: la technique cha cua mot sub-technique da giu",
+      "tactic-scope": "L0: thuoc 8 tactic cua vong doi loader",
+      "tactic-report": "L1: tactic xuat hien trong bao cao"
+    },
+    "stats": {
+      "kept_nodes": 179,
+      "kept_edges": 283,
+      "kept_tactics": 8,
+      "kept_techniques": 171,
+      "in_loader_scope": 171,
+      "report_only_not_in_base": 7
+    },
+    "report_only_techniques": [
+      "T1005",
+      "T1485",
+      "T1486",
+      "T1490",
+      "T1491",
+      "T1561",
+      "T1583.008"
+    ]
+  },
+  "nodes": [
+    {
+      "id": "TA0001",
+      "type": "x-mitre-tactic",
+      "name": "Initial Access",
+      "external_id": "TA0001",
+      "stix_id": "x-mitre-tactic--ffd5bcee-6e16-4dd2-8eca-7b3beedf33ca",
+      "source": "attack",
+      "layer": "base",
+      "in_loader_scope": true,
+      "keep_reason": [
+        "tactic-report",
+        "tactic-scope"
+      ]
+    },
+    {
+      "id": "TA0002",
+      "type": "x-mitre-tactic",
+      "name": "Execution",
+      "external_id": "TA0002",
+      "stix_id": "x-mitre-tactic--4ca45d45-df4d-4613-8980-bac22d278fa5",
+      "source": "attack",
+      "layer": "base",
+      "in_loader_scope": true,
+      "keep_reason": [
+        "tactic-report",
+        "tactic-scope"
+      ]
+    },
+    {
+      "id": "TA0003",
+      "type": "x-mitre-tactic",
+      "name": "Persistence",
+      "external_id": "TA0003",
+      "stix_id": "x-mitre-tactic--5bc1d813-693e-4823-9961-abf9af4b0e92",
+      "source": "attack",
+      "layer": "base",
+      "in_loader_scope": true,
+      "keep_reason": [
+        "tactic-report",
+        "tactic-scope"
+      ]
+    },
+    {
+      "id": "TA0005",
+      "type": "x-mitre-tactic",
+      "name": "Stealth",
+      "external_id": "TA0005",
+      "stix_id": "x-mitre-tactic--78b23412-0651-46d7-a540-170a1ce8bd5a",
+      "source": "attack",
+      "layer": "base",
+      "in_loader_scope": true,
+      "keep_reason": [
+        "tactic-report",
+        "tactic-scope"
+      ]
+    },
+    {
+      "id": "TA0007",
+      "type": "x-mitre-tactic",
+      "name": "Discovery",
+      "external_id": "TA0007",
+      "stix_id": "x-mitre-tactic--c17c5845-175e-4421-9713-829d0573dbc9",
+      "source": "attack",
+      "layer": "base",
+      "in_loader_scope": true,
+      "keep_reason": [
+        "tactic-scope"
+      ]
+    },
+    {
+      "id": "TA0011",
+      "type": "x-mitre-tactic",
+      "name": "Command and Control",
+      "external_id": "TA0011",
+      "stix_id": "x-mitre-tactic--f72804c5-f15a-449e-a5da-2eecd181f813",
+      "source": "attack",
+      "layer": "base",
+      "in_loader_scope": true,
+      "keep_reason": [
+        "tactic-report",
+        "tactic-scope"
+      ]
+    },
+    {
+      "id": "TA0042",
+      "type": "x-mitre-tactic",
+      "name": "Resource Development",
+      "external_id": "TA0042",
+      "stix_id": "x-mitre-tactic--d679bca2-e57d-4935-8650-8031c87a4400",
+      "source": "attack",
+      "layer": "base",
+      "in_loader_scope": true,
+      "keep_reason": [
+        "tactic-report",
+        "tactic-scope"
+      ]
+    },
+    {
+      "id": "TA0112",
+      "type": "x-mitre-tactic",
+      "name": "Defense Impairment",
+      "external_id": "TA0112",
+      "stix_id": "x-mitre-tactic--43c49635-f2fa-44f2-92b9-0ee980bbf4ef",
+      "source": "attack",
+      "layer": "base",
+      "in_loader_scope": true,
+      "keep_reason": [
+        "tactic-report",
+        "tactic-scope"
+      ]
+    },
+    {
+      "id": "T1008",
+      "type": "attack-pattern",
+      "name": "Fallback Channels",
+      "external_id": "T1008",
+      "stix_id": "attack-pattern--f24faf46-3b26-4dbb-98f2-63460498e433",
+      "url": "https://attack.mitre.org/techniques/T1008",
+      "description": "Adversaries may use fallback or alternate communication channels if the primary channel is compromised or inaccessible in order to maintain reliable command and control and to avoid data transfer thresholds.",
+      "is_subtechnique": false,
+      "source": "attack",
+      "layer": "base",
+      "in_loader_scope": true,
+      "keep_reason": [
+        "attack-evidence"
+      ]
+    },
+    {
+      "id": "T1012",
+      "type": "attack-pattern",
+      "name": "Query Registry",
+      "external_id": "T1012",
+      "stix_id": "attack-pattern--c32f7008-9fea-41f7-8366-5eb9b74bd896",
+      "url": "https://attack.mitre.org/techniques/T1012",
+      "description": "Adversaries may interact with the Windows Registry to gather information about the system, configuration, and installed software.\n\nThe Registry contains a significant amount of information about the operating system, configuration, software, and security.(Citation: Wikipedia Windows Registry) Information can easily be queried using the [Reg](https://attack.mitre.org/software/S0075) utility, though",
+      "is_subtechnique": false,
+      "source": "attack",
+      "layer": "base",
+      "in_loader_scope": true,
+      "keep_reason": [
+        "attack-evidence",
+        "core-loader"
+      ]
+    },
+    {
+      "id": "T1016",
+      "type": "attack-pattern",
+      "name": "System Network Configuration Discovery",
+      "external_id": "T1016",
+      "stix_id": "attack-pattern--707399d6-ab3e-4963-9315-d9d3818cd6a0",
+      "url": "https://attack.mitre.org/techniques/T1016",
+      "description": "Adversaries may look for details about the network configuration and settings, such as IP and/or MAC addresses, of systems they access or through information discovery of remote systems. Several operating system administration utilities exist that can be used to gather this information. Examples include [Arp](https://attack.mitre.org/software/S0099), [ipconfig](https://attack.mitre.org/software/S0",
+      "is_subtechnique": false,
+      "source": "attack",
+      "layer": "base",
+      "in_loader_scope": true,
+      "keep_reason": [
+        "attack-evidence",
+        "core-loader"
+      ]
+    },
+    {
+      "id": "T1016.001",
+      "type": "attack-pattern",
+      "name": "Internet Connection Discovery",
+      "external_id": "T1016.001",
+      "stix_id": "attack-pattern--132d5b37-aac5-4378-a8dc-3127b18a73dc",
+      "url": "https://attack.mitre.org/techniques/T1016/001",
+      "description": "Adversaries may check for Internet connectivity on compromised systems. This may be performed during automated discovery and can be accomplished in numerous ways such as using [Ping](https://attack.mitre.org/software/S0097), <code>tracert</code>, and GET requests to websites, or performing initial speed testing to confirm bandwidth.\n\nAdversaries may use the results and responses from these request",
+      "is_subtechnique": true,
+      "source": "attack",
+      "layer": "base",
+      "in_loader_scope": true,
+      "keep_reason": [
+        "attack-evidence"
+      ]
+    },
+    {
+      "id": "T1018",
+      "type": "attack-pattern",
+      "name": "Remote System Discovery",
+      "external_id": "T1018",
+      "stix_id": "attack-pattern--e358d692-23c0-4a31-9eb6-ecc13a8d7735",
+      "url": "https://attack.mitre.org/techniques/T1018",
+      "description": "Adversaries may attempt to get a listing of other systems by IP address, hostname, or other logical identifier on a network that may be used for Lateral Movement from the current system. Functionality could exist within remote access tools to enable this, but utilities available on the operating system could also be used such as  [Ping](https://attack.mitre.org/software/S0097), <code>net view</cod",
+      "is_subtechnique": false,
+      "source": "attack",
+      "layer": "base",
+      "in_loader_scope": true,
+      "keep_reason": [
+        "attack-evidence",
+        "core-loader"
+      ]
+    },
+    {
+      "id": "T1027",
+      "type": "attack-pattern",
+      "name": "Obfuscated Files or Information",
+      "external_id": "T1027",
+      "stix_id": "attack-pattern--b3d682b6-98f2-4fb0-aa3b-b4df007ca70a",
+      "url": "https://attack.mitre.org/techniques/T1027",
+      "description": "Adversaries may attempt to make an executable or file difficult to discover or analyze by encrypting, encoding, or otherwise obfuscating its contents on the system or in transit. This is common behavior that can be used across different platforms and the network to evade defenses. \n\nPayloads may be compressed, archived, or encrypted in order to avoid detection. These payloads may be used during In",
+      "is_subtechnique": false,
+      "source": "attack",
+      "layer": "base",
+      "in_loader_scope": true,
+      "keep_reason": [
+        "attack-evidence",
+        "core-loader",
+        "report"
+      ]
+    },
+    {
+      "id": "T1027.001",
+      "type": "attack-pattern",
+      "name": "Binary Padding",
+      "external_id": "T1027.001",
+      "stix_id": "attack-pattern--5bfccc3f-2326-4112-86cc-c1ece9d8a2b5",
+      "url": "https://attack.mitre.org/techniques/T1027/001",
+      "description": "Adversaries may use binary padding to add junk data and change the on-disk representation of malware. This can be done without affecting the functionality or behavior of a binary, but can increase the size of the binary beyond what some security tools are capable of handling due to file size limitations. \n\nBinary padding effectively changes the checksum of the file and can also be used to avoid ha",
+      "is_subtechnique": true,
+      "source": "attack",
+      "layer": "base",
+      "in_loader_scope": true,
+      "keep_reason": [
+        "attack-evidence"
+      ]
+    },
+    {
+      "id": "T1027.002",
+      "type": "attack-pattern",
+      "name": "Software Packing",
+      "external_id": "T1027.002",
+      "stix_id": "attack-pattern--deb98323-e13f-4b0c-8d94-175379069062",
+      "url": "https://attack.mitre.org/techniques/T1027/002",
+      "description": "Adversaries may perform software packing or virtual machine software protection to conceal their code. Software packing is a method of compressing or encrypting an executable. Packing an executable changes the file signature in an attempt to avoid signature-based detection. Most decompression techniques decompress the executable code in memory. Virtual machine software protection translates an exe",
+      "is_subtechnique": true,
+      "source": "attack",
+      "layer": "base",
+      "in_loader_scope": true,
+      "keep_reason": [
+        "attack-evidence"
+      ]
+    },
+    {
+      "id": "T1027.004",
+      "type": "attack-pattern",
+      "name": "Compile After Delivery",
+      "external_id": "T1027.004",
+      "stix_id": "attack-pattern--c726e0a2-a57a-4b7b-a973-d0f013246617",
+      "url": "https://attack.mitre.org/techniques/T1027/004",
+      "description": "Adversaries may attempt to make payloads difficult to discover and analyze by delivering files to victims as uncompiled code. Text-based source code files may subvert analysis and scrutiny from protections targeting executables/binaries. These payloads will need to be compiled before execution; typically via native utilities such as ilasm.exe(Citation: ATTACK IQ), csc.exe, or GCC/MinGW.(Citation: ",
+      "is_subtechnique": true,
+      "source": "attack",
+      "layer": "base",
+      "in_loader_scope": true,
+      "keep_reason": [
+        "core-loader"
+      ]
+    },
+    {
+      "id": "T1027.007",
+      "type": "attack-pattern",
+      "name": "Dynamic API Resolution",
+      "external_id": "T1027.007",
+      "stix_id": "attack-pattern--ea4c2f9c-9df1-477c-8c42-6da1118f2ac4",
+      "url": "https://attack.mitre.org/techniques/T1027/007",
+      "description": "Adversaries may obfuscate then dynamically resolve API functions called by their malware in order to conceal malicious functionalities and impair defensive analysis. Malware commonly uses various [Native API](https://attack.mitre.org/techniques/T1106) functions provided by the OS to perform various tasks such as those involving processes, files, and other system artifacts.\n\nAPI functions called by",
+      "is_subtechnique": true,
+      "source": "attack",
+      "layer": "base",
+      "in_loader_scope": true,
+      "keep_reason": [
+        "attack-evidence"
+      ]
+    },
+    {
+      "id": "T1027.008",
+      "type": "attack-pattern",
+      "name": "Stripped Payloads",
+      "external_id": "T1027.008",
+      "stix_id": "attack-pattern--2f41939b-54c3-41d6-8f8b-35f1ec18ed97",
+      "url": "https://attack.mitre.org/techniques/T1027/008",
+      "description": "Adversaries may attempt to make a payload difficult to analyze by removing symbols, strings, and other human readable information. Scripts and executables may contain variables names and other strings that help developers document code functionality. Symbols are often created by an operating system’s `linker` when executable payloads are compiled. Reverse engineers use these symbols and strings to",
+      "is_subtechnique": true,
+      "source": "attack",
+      "layer": "base",
+      "in_loader_scope": true,
+      "keep_reason": [
+        "core-loader"
+      ]
+    },
+    {
+      "id": "T1027.009",
+      "type": "attack-pattern",
+      "name": "Embedded Payloads",
+      "external_id": "T1027.009",
+      "stix_id": "attack-pattern--0533ab23-3f7d-463f-9bd8-634d27e4dee1",
+      "url": "https://attack.mitre.org/techniques/T1027/009",
+      "description": "Adversaries may embed payloads within other files to conceal malicious content from defenses. Otherwise seemingly benign files (such as scripts and executables) may be abused to carry and obfuscate malicious payloads and content. In some cases, embedded payloads may also enable adversaries to [Subvert Trust Controls](https://attack.mitre.org/techniques/T1553) by not impacting execution controls su",
+      "is_subtechnique": true,
+      "source": "attack",
+      "layer": "base",
+      "in_loader_scope": true,
+      "keep_reason": [
+        "core-loader",
+        "report"
+      ]
+    },
+    {
+      "id": "T1027.010",
+      "type": "attack-pattern",
+      "name": "Command Obfuscation",
+      "external_id": "T1027.010",
+      "stix_id": "attack-pattern--d511a6f6-4a33-41d5-bc95-c343875d1377",
+      "url": "https://attack.mitre.org/techniques/T1027/010",
+      "description": "Adversaries may obfuscate content during command execution to impede detection. Command-line obfuscation is a method of making strings and patterns within commands and scripts more difficult to signature and analyze. This type of obfuscation can be included within commands executed by delivered payloads (e.g., [Phishing](https://attack.mitre.org/techniques/T1566) and [Drive-by Compromise](https://",
+      "is_subtechnique": true,
+      "source": "attack",
+      "layer": "base",
+      "in_loader_scope": true,
+      "keep_reason": [
+        "attack-evidence"
+      ]
+    },
+    {
+      "id": "T1027.013",
+      "type": "attack-pattern",
+      "name": "Encrypted/Encoded File",
+      "external_id": "T1027.013",
+      "stix_id": "attack-pattern--0d91b3c0-5e50-47c3-949a-2a796f04d144",
+      "url": "https://attack.mitre.org/techniques/T1027/013",
+      "description": "Adversaries may encrypt or encode files to obfuscate strings, bytes, and other specific patterns to impede detection. Encrypting and/or encoding file content aims to conceal malicious artifacts within a file used in an intrusion. Many other techniques, such as [Software Packing](https://attack.mitre.org/techniques/T1027/002), [Steganography](https://attack.mitre.org/techniques/T1027/003), and [Emb",
+      "is_subtechnique": true,
+      "source": "attack",
+      "layer": "base",
+      "in_loader_scope": true,
+      "keep_reason": [
+        "attack-evidence"
+      ]
+    },
+    {
+      "id": "T1033",
+      "type": "attack-pattern",
+      "name": "System Owner/User Discovery",
+      "external_id": "T1033",
+      "stix_id": "attack-pattern--03d7999c-1f4c-42cc-8373-e7690d318104",
+      "url": "https://attack.mitre.org/techniques/T1033",
+      "description": "Adversaries may attempt to identify the primary user, currently logged in user, set of users that commonly uses a system, or whether a user is actively using the system. They may do this, for example, by retrieving account usernames or by using [OS Credential Dumping](https://attack.mitre.org/techniques/T1003). The information may be collected in a number of different ways using other Discovery te",
+      "is_subtechnique": false,
+      "source": "attack",
+      "layer": "base",
+      "in_loader_scope": true,
+      "keep_reason": [
+        "attack-evidence"
+      ]
+    },
+    {
+      "id": "T1036",
+      "type": "attack-pattern",
+      "name": "Masquerading",
+      "external_id": "T1036",
+      "stix_id": "attack-pattern--42e8de7b-37b2-4258-905a-6897815e58e0",
+      "url": "https://attack.mitre.org/techniques/T1036",
+      "description": "Adversaries may attempt to manipulate features of their artifacts to make them appear legitimate or benign to users and/or security tools. Masquerading occurs when the name or location of an object, legitimate or malicious, is manipulated or abused for the sake of evading defenses and observation. This may include manipulating file metadata, tricking users into misidentifying the file type, and gi",
+      "is_subtechnique": false,
+      "source": "attack",
+      "layer": "base",
+      "in_loader_scope": true,
+      "keep_reason": [
+        "core-loader"
+      ]
+    },
+    {
+      "id": "T1036.001",
+      "type": "attack-pattern",
+      "name": "Invalid Code Signature",
+      "external_id": "T1036.001",
+      "stix_id": "attack-pattern--b4b7458f-81f2-4d38-84be-1c5ba0167a52",
+      "url": "https://attack.mitre.org/techniques/T1036/001",
+      "description": "Adversaries may attempt to mimic features of valid code signatures to increase the chance of deceiving a user, analyst, or tool. Code signing provides a level of authenticity on a binary from the developer and a guarantee that the binary has not been tampered with. Adversaries can copy the metadata and signature information from a signed program, then use it as a template for an unsigned program. ",
+      "is_subtechnique": true,
+      "source": "attack",
+      "layer": "base",
+      "in_loader_scope": true,
+      "keep_reason": [
+        "core-loader",
+        "report"
+      ]
+    },
+    {
+      "id": "T1036.002",
+      "type": "attack-pattern",
+      "name": "Right-to-Left Override",
+      "external_id": "T1036.002",
+      "stix_id": "attack-pattern--77eae145-55db-4519-8ae5-77b0c7215d69",
+      "url": "https://attack.mitre.org/techniques/T1036/002",
+      "description": "Adversaries may abuse the right-to-left override (RTLO or RLO) character (U+202E) to disguise a string and/or file name to make it appear benign. RTLO is a non-printing Unicode character that causes the text that follows it to be displayed in reverse. For example, a Windows screensaver executable named <code>March 25 \\u202Excod.scr</code> will display as <code>March 25 rcs.docx</code>. A JavaScrip",
+      "is_subtechnique": true,
+      "source": "attack",
+      "layer": "base",
+      "in_loader_scope": true,
+      "keep_reason": [
+        "core-loader"
+      ]
+    },
+    {
+      "id": "T1036.003",
+      "type": "attack-pattern",
+      "name": "Rename Legitimate Utilities",
+      "external_id": "T1036.003",
+      "stix_id": "attack-pattern--bd5b58a4-a52d-4a29-bc0d-3f1d3968eb6b",
+      "url": "https://attack.mitre.org/techniques/T1036/003",
+      "description": "Adversaries may rename legitimate / system utilities to try to evade security mechanisms concerning the usage of those utilities. Security monitoring and control mechanisms may be in place for legitimate utilities adversaries are capable of abusing, including both built-in binaries and tools such as PSExec, AutoHotKey, and IronPython.(Citation: LOLBAS Main Site)(Citation: Huntress Python Malware 2",
+      "is_subtechnique": true,
+      "source": "attack",
+      "layer": "base",
+      "in_loader_scope": true,
+      "keep_reason": [
+        "core-loader"
+      ]
+    },
+    {
+      "id": "T1036.004",
+      "type": "attack-pattern",
+      "name": "Masquerade Task or Service",
+      "external_id": "T1036.004",
+      "stix_id": "attack-pattern--7bdca9d5-d500-4d7d-8c52-5fd47baf4c0c",
+      "url": "https://attack.mitre.org/techniques/T1036/004",
+      "description": "Adversaries may attempt to manipulate the name of a task or service to make it appear legitimate or benign. Tasks/services executed by the Task Scheduler or systemd will typically be given a name and/or description.(Citation: TechNet Schtasks)(Citation: Systemd Service Units) Windows services will have a service name as well as a display name. Many benign tasks and services exist that have commonl",
+      "is_subtechnique": true,
+      "source": "attack",
+      "layer": "base",
+      "in_loader_scope": true,
+      "keep_reason": [
+        "attack-evidence",
+        "core-loader"
+      ]
+    },
+    {
+      "id": "T1036.005",
+      "type": "attack-pattern",
+      "name": "Match Legitimate Resource Name or Location",
+      "external_id": "T1036.005",
+      "stix_id": "attack-pattern--1c4e5d32-1fe9-4116-9d9d-59e3925bd6a2",
+      "url": "https://attack.mitre.org/techniques/T1036/005",
+      "description": "Adversaries may match or approximate the name or location of legitimate files, Registry keys, or other resources when naming/placing them. This is done for the sake of evading defenses and observation. \n\nThis may be done by placing an executable in a commonly trusted directory (ex: under System32) or giving it the name of a legitimate, trusted program (ex: `svchost.exe`). Alternatively, a Windows ",
+      "is_subtechnique": true,
+      "source": "attack",
+      "layer": "base",
+      "in_loader_scope": true,
+      "keep_reason": [
+        "attack-evidence",
+        "core-loader"
+      ]
+    },
+    {
+      "id": "T1036.006",
+      "type": "attack-pattern",
+      "name": "Space after Filename",
+      "external_id": "T1036.006",
+      "stix_id": "attack-pattern--e51137a5-1cdc-499e-911a-abaedaa5ac86",
+      "url": "https://attack.mitre.org/techniques/T1036/006",
+      "description": "Adversaries can hide a program's true filetype by changing the extension of a file. With certain file types (specifically this does not work with .app extensions), appending a space to the end of a filename will change how the file is processed by the operating system.\n\nFor example, if there is a Mach-O executable file called <code>evil.bin</code>, when it is double clicked by a user, it will laun",
+      "is_subtechnique": true,
+      "source": "attack",
+      "layer": "base",
+      "in_loader_scope": true,
+      "keep_reason": [
+        "core-loader"
+      ]
+    },
+    {
+      "id": "T1036.007",
+      "type": "attack-pattern",
+      "name": "Double File Extension",
+      "external_id": "T1036.007",
+      "stix_id": "attack-pattern--11f29a39-0942-4d62-92b6-fe236cf3066e",
+      "url": "https://attack.mitre.org/techniques/T1036/007",
+      "description": "Adversaries may abuse a double extension in the filename as a means of masquerading the true file type. A file name may include a secondary file type extension that may cause only the first extension to be displayed (ex: <code>File.txt.exe</code> may render in some views as just <code>File.txt</code>). However, the second extension is the true file type that determines how the file is opened and e",
+      "is_subtechnique": true,
+      "source": "attack",
+      "layer": "base",
+      "in_loader_scope": true,
+      "keep_reason": [
+        "attack-evidence",
+        "core-loader"
+      ]
+    },
+    {
+      "id": "T1037",
+      "type": "attack-pattern",
+      "name": "Boot or Logon Initialization Scripts",
+      "external_id": "T1037",
+      "stix_id": "attack-pattern--03259939-0b57-482f-8eb5-87c0e0d54334",
+      "url": "https://attack.mitre.org/techniques/T1037",
+      "description": "Adversaries may use scripts automatically executed at boot or logon initialization to establish persistence.(Citation: Mandiant APT29 Eye Spy Email Nov 22)(Citation: Anomali Rocke March 2019) Initialization scripts can be used to perform administrative functions, which may often execute other programs or send information to an internal logging server. These scripts can vary based on operating syst",
+      "is_subtechnique": false,
+      "source": "attack",
+      "layer": "base",
+      "in_loader_scope": true,
+      "keep_reason": [
+        "parent-closure"
+      ]
+    },
+    {
+      "id": "T1037.001",
+      "type": "attack-pattern",
+      "name": "Logon Script (Windows)",
+      "external_id": "T1037.001",
+      "stix_id": "attack-pattern--eb125d40-0b2d-41ac-a71a-3229241c2cd3",
+      "url": "https://attack.mitre.org/techniques/T1037/001",
+      "description": "Adversaries may use Windows logon scripts automatically executed at logon initialization to establish persistence. Windows allows logon scripts to be run whenever a specific user or group of users log into a system.(Citation: TechNet Logon Scripts) This is done via adding a path to a script to the <code>HKCU\\Environment\\UserInitMprLogonScript</code> Registry key.(Citation: Hexacorn Logon Scripts)\n",
+      "is_subtechnique": true,
+      "source": "attack",
+      "layer": "base",
+      "in_loader_scope": true,
+      "keep_reason": [
+        "attack-evidence"
+      ]
+    },
+    {
+      "id": "T1037.004",
+      "type": "attack-pattern",
+      "name": "RC Scripts",
+      "external_id": "T1037.004",
+      "stix_id": "attack-pattern--dca670cf-eeec-438f-8185-fd959d9ef211",
+      "url": "https://attack.mitre.org/techniques/T1037/004",
+      "description": "Adversaries may establish persistence by modifying RC scripts, which are executed during a Unix-like system’s startup. These files allow system administrators to map and start custom services at startup for different run levels. RC scripts require root privileges to modify.\n\nAdversaries may establish persistence by adding a malicious binary path or shell commands to <code>rc.local</code>, <code>rc",
+      "is_subtechnique": true,
+      "source": "attack",
+      "layer": "base",
+      "in_loader_scope": true,
+      "keep_reason": [
+        "attack-evidence"
+      ]
+    },
+    {
+      "id": "T1047",
+      "type": "attack-pattern",
+      "name": "Windows Management Instrumentation",
+      "external_id": "T1047",
+      "stix_id": "attack-pattern--01a5a209-b94c-450b-b7f9-946497d91055",
+      "url": "https://attack.mitre.org/techniques/T1047",
+      "description": "Adversaries may abuse Windows Management Instrumentation (WMI) to execute malicious commands and payloads. WMI is designed for programmers and is the infrastructure for management data and operations on Windows systems.(Citation: WMI 1-3) WMI is an administration feature that provides a uniform environment to access Windows system components.\n\nThe WMI service enables both local and remote access, ",
+      "is_subtechnique": false,
+      "source": "attack",
+      "layer": "base",
+      "in_loader_scope": true,
+      "keep_reason": [
+        "attack-evidence"
+      ]
+    },
+    {
+      "id": "T1049",
+      "type": "attack-pattern",
+      "name": "System Network Connections Discovery",
+      "external_id": "T1049",
+      "stix_id": "attack-pattern--7e150503-88e7-4861-866b-ff1ac82c4475",
+      "url": "https://attack.mitre.org/techniques/T1049",
+      "description": "Adversaries may attempt to get a listing of network connections to or from the compromised system they are currently accessing or from remote systems by querying for information over the network. \n\nAn adversary who gains access to a system that is part of a cloud-based environment may map out Virtual Private Clouds or Virtual Networks in order to determine what systems and services are connected. ",
+      "is_subtechnique": false,
+      "source": "attack",
+      "layer": "base",
+      "in_loader_scope": true,
+      "keep_reason": [
+        "attack-evidence",
+        "core-loader"
+      ]
+    },
+    {
+      "id": "T1053",
+      "type": "attack-pattern",
+      "name": "Scheduled Task/Job",
+      "external_id": "T1053",
+      "stix_id": "attack-pattern--35dd844a-b219-4e2b-a6bb-efa9a75995a9",
+      "url": "https://attack.mitre.org/techniques/T1053",
+      "description": "Adversaries may abuse task scheduling functionality to facilitate initial or recurring execution of malicious code. Utilities exist within all major operating systems to schedule programs or scripts to be executed at a specified date and time. A task can also be scheduled on a remote system, provided the proper authentication is met (ex: RPC and file and printer sharing in Windows environments). S",
+      "is_subtechnique": false,
+      "source": "attack",
+      "layer": "base",
+      "in_loader_scope": true,
+      "keep_reason": [
+        "parent-closure"
+      ]
+    },
+    {
+      "id": "T1053.005",
+      "type": "attack-pattern",
+      "name": "Scheduled Task",
+      "external_id": "T1053.005",
+      "stix_id": "attack-pattern--005a06c6-14bf-4118-afa0-ebcd8aebb0c9",
+      "url": "https://attack.mitre.org/techniques/T1053/005",
+      "description": "Adversaries may abuse the Windows Task Scheduler to perform task scheduling for initial or recurring execution of malicious code. There are multiple ways to access the Task Scheduler in Windows. The [schtasks](https://attack.mitre.org/software/S0111) utility can be run directly on the command line, or the Task Scheduler can be opened through the GUI within the Administrator Tools section of the Co",
+      "is_subtechnique": true,
+      "source": "attack",
+      "layer": "base",
+      "in_loader_scope": true,
+      "keep_reason": [
+        "attack-evidence"
+      ]
+    },
+    {
+      "id": "T1055",
+      "type": "attack-pattern",
+      "name": "Process Injection",
+      "external_id": "T1055",
+      "stix_id": "attack-pattern--43e7dc91-05b2-474c-b9ac-2ed4fe101f4d",
+      "url": "https://attack.mitre.org/techniques/T1055",
+      "description": "Adversaries may inject code into processes in order to evade process-based defenses as well as possibly elevate privileges. Process injection is a method of executing arbitrary code in the address space of a separate live process. Running code in the context of another process may allow access to the process's memory, system/network resources, and possibly elevated privileges. Execution via proces",
+      "is_subtechnique": false,
+      "source": "attack",
+      "layer": "base",
+      "in_loader_scope": true,
+      "keep_reason": [
+        "attack-evidence",
+        "core-loader"
+      ]
+    },
+    {
+      "id": "T1055.001",
+      "type": "attack-pattern",
+      "name": "Dynamic-link Library Injection",
+      "external_id": "T1055.001",
+      "stix_id": "attack-pattern--f4599aa0-4f85-4a32-80ea-fc39dc965945",
+      "url": "https://attack.mitre.org/techniques/T1055/001",
+      "description": "Adversaries may inject dynamic-link libraries (DLLs) into processes in order to evade process-based defenses as well as possibly elevate privileges. DLL injection is a method of executing arbitrary code in the address space of a separate live process.  \n\nDLL injection is commonly performed by writing the path to a DLL in the virtual address space of the target process before loading the DLL by inv",
+      "is_subtechnique": true,
+      "source": "attack",
+      "layer": "base",
+      "in_loader_scope": true,
+      "keep_reason": [
+        "attack-evidence",
+        "core-loader"
+      ]
+    },
+    {
+      "id": "T1055.002",
+      "type": "attack-pattern",
+      "name": "Portable Executable Injection",
+      "external_id": "T1055.002",
+      "stix_id": "attack-pattern--806a49c4-970d-43f9-9acc-ac0ee11e6662",
+      "url": "https://attack.mitre.org/techniques/T1055/002",
+      "description": "Adversaries may inject portable executables (PE) into processes in order to evade process-based defenses as well as possibly elevate privileges. PE injection is a method of executing arbitrary code in the address space of a separate live process. \n\nPE injection is commonly performed by copying code (perhaps without a file on disk) into the virtual address space of the target process before invokin",
+      "is_subtechnique": true,
+      "source": "attack",
+      "layer": "base",
+      "in_loader_scope": true,
+      "keep_reason": [
+        "attack-evidence",
+        "core-loader"
+      ]
+    },
+    {
+      "id": "T1055.003",
+      "type": "attack-pattern",
+      "name": "Thread Execution Hijacking",
+      "external_id": "T1055.003",
+      "stix_id": "attack-pattern--41d9846c-f6af-4302-a654-24bba2729bc6",
+      "url": "https://attack.mitre.org/techniques/T1055/003",
+      "description": "Adversaries may inject malicious code into hijacked processes in order to evade process-based defenses as well as possibly elevate privileges. Thread Execution Hijacking is a method of executing arbitrary code in the address space of a separate live process. \n\nThread Execution Hijacking is commonly performed by suspending an existing process then unmapping/hollowing its memory, which can then be r",
+      "is_subtechnique": true,
+      "source": "attack",
+      "layer": "base",
+      "in_loader_scope": true,
+      "keep_reason": [
+        "core-loader"
+      ]
+    },
+    {
+      "id": "T1055.004",
+      "type": "attack-pattern",
+      "name": "Asynchronous Procedure Call",
+      "external_id": "T1055.004",
+      "stix_id": "attack-pattern--7c0f17c9-1af6-4628-9cbd-9e45482dd605",
+      "url": "https://attack.mitre.org/techniques/T1055/004",
+      "description": "Adversaries may inject malicious code into processes via the asynchronous procedure call (APC) queue in order to evade process-based defenses as well as possibly elevate privileges. APC injection is a method of executing arbitrary code in the address space of a separate live process. \n\nAPC injection is commonly performed by attaching malicious code to the APC Queue (Citation: Microsoft APC) of a p",
+      "is_subtechnique": true,
+      "source": "attack",
+      "layer": "base",
+      "in_loader_scope": true,
+      "keep_reason": [
+        "attack-evidence",
+        "core-loader"
+      ]
+    },
+    {
+      "id": "T1055.005",
+      "type": "attack-pattern",
+      "name": "Thread Local Storage",
+      "external_id": "T1055.005",
+      "stix_id": "attack-pattern--e49ee9d2-0d98-44ef-85e5-5d3100065744",
+      "url": "https://attack.mitre.org/techniques/T1055/005",
+      "description": "Adversaries may inject malicious code into processes via thread local storage (TLS) callbacks in order to evade process-based defenses as well as possibly elevate privileges. TLS callback injection is a method of executing arbitrary code in the address space of a separate live process. \n\nTLS callback injection involves manipulating pointers inside a portable executable (PE) to redirect a process t",
+      "is_subtechnique": true,
+      "source": "attack",
+      "layer": "base",
+      "in_loader_scope": true,
+      "keep_reason": [
+        "attack-evidence"
+      ]
+    },
+    {
+      "id": "T1055.011",
+      "type": "attack-pattern",
+      "name": "Extra Window Memory Injection",
+      "external_id": "T1055.011",
+      "stix_id": "attack-pattern--0042a9f5-f053-4769-b3ef-9ad018dfa298",
+      "url": "https://attack.mitre.org/techniques/T1055/011",
+      "description": "Adversaries may inject malicious code into process via Extra Window Memory (EWM) in order to evade process-based defenses as well as possibly elevate privileges. EWM injection is a method of executing arbitrary code in the address space of a separate live process. \n\nBefore creating a window, graphical Windows-based processes must prescribe to or register a windows class, which stipulate appearance",
+      "is_subtechnique": true,
+      "source": "attack",
+      "layer": "base",
+      "in_loader_scope": true,
+      "keep_reason": [
+        "attack-evidence"
+      ]
+    },
+    {
+      "id": "T1055.012",
+      "type": "attack-pattern",
+      "name": "Process Hollowing",
+      "external_id": "T1055.012",
+      "stix_id": "attack-pattern--b200542e-e877-4395-875b-cf1a44537ca4",
+      "url": "https://attack.mitre.org/techniques/T1055/012",
+      "description": "Adversaries may inject malicious code into suspended and hollowed processes in order to evade process-based defenses. Process hollowing is a method of executing arbitrary code in the address space of a separate live process.  \n\nProcess hollowing is commonly performed by creating a process in a suspended state then unmapping/hollowing its memory, which can then be replaced with malicious code. A vi",
+      "is_subtechnique": true,
+      "source": "attack",
+      "layer": "base",
+      "in_loader_scope": true,
+      "keep_reason": [
+        "attack-evidence"
+      ]
+    },
+    {
+      "id": "T1055.013",
+      "type": "attack-pattern",
+      "name": "Process Doppelgänging",
+      "external_id": "T1055.013",
+      "stix_id": "attack-pattern--7007935a-a8a7-4c0b-bd98-4e85be8ed197",
+      "url": "https://attack.mitre.org/techniques/T1055/013",
+      "description": "Adversaries may inject malicious code into process via process doppelgänging in order to evade process-based defenses as well as possibly elevate privileges. Process doppelgänging is a method of executing arbitrary code in the address space of a separate live process. \n\nWindows Transactional NTFS (TxF) was introduced in Vista as a method to perform safe file operations. (Citation: Microsoft TxF) T",
+      "is_subtechnique": true,
+      "source": "attack",
+      "layer": "base",
+      "in_loader_scope": true,
+      "keep_reason": [
+        "attack-evidence"
+      ]
+    },
+    {
+      "id": "T1057",
+      "type": "attack-pattern",
+      "name": "Process Discovery",
+      "external_id": "T1057",
+      "stix_id": "attack-pattern--8f4a33ec-8b1f-4b80-a2f6-642b2e479580",
+      "url": "https://attack.mitre.org/techniques/T1057",
+      "description": "Adversaries may attempt to get information about running processes on a system. Information obtained could be used to gain an understanding of common software/applications running on systems within the network. Administrator or otherwise elevated access may provide better process details. Adversaries may use the information from [Process Discovery](https://attack.mitre.org/techniques/T1057) during",
+      "is_subtechnique": false,
+      "source": "attack",
+      "layer": "base",
+      "in_loader_scope": true,
+      "keep_reason": [
+        "attack-evidence",
+        "core-loader"
+      ]
+    },
+    {
+      "id": "T1059",
+      "type": "attack-pattern",
+      "name": "Command and Scripting Interpreter",
+      "external_id": "T1059",
+      "stix_id": "attack-pattern--7385dfaf-6886-4229-9ecd-6fd678040830",
+      "url": "https://attack.mitre.org/techniques/T1059",
+      "description": "Adversaries may abuse command and script interpreters to execute commands, scripts, or binaries. These interfaces and languages provide ways of interacting with computer systems and are a common feature across many different platforms. Most systems come with some built-in command-line interface and scripting capabilities, for example, macOS and Linux distributions include some flavor of [Unix Shel",
+      "is_subtechnique": false,
+      "source": "attack",
+      "layer": "base",
+      "in_loader_scope": true,
+      "keep_reason": [
+        "core-loader",
+        "report"
+      ]
+    },
+    {
+      "id": "T1059.001",
+      "type": "attack-pattern",
+      "name": "PowerShell",
+      "external_id": "T1059.001",
+      "stix_id": "attack-pattern--970a3432-3237-47ad-bcca-7d8cbb217736",
+      "url": "https://attack.mitre.org/techniques/T1059/001",
+      "description": "Adversaries may abuse PowerShell commands and scripts for execution. PowerShell is a powerful interactive command-line interface and scripting environment included in the Windows operating system.(Citation: TechNet PowerShell) Adversaries can use PowerShell to perform a number of actions, including discovery of information and execution of code. Examples include the <code>Start-Process</code> cmdl",
+      "is_subtechnique": true,
+      "source": "attack",
+      "layer": "base",
+      "in_loader_scope": true,
+      "keep_reason": [
+        "attack-evidence",
+        "core-loader",
+        "report"
+      ]
+    },
+    {
+      "id": "T1059.003",
+      "type": "attack-pattern",
+      "name": "Windows Command Shell",
+      "external_id": "T1059.003",
+      "stix_id": "attack-pattern--d1fcf083-a721-4223-aedf-bf8960798d62",
+      "url": "https://attack.mitre.org/techniques/T1059/003",
+      "description": "Adversaries may abuse the Windows command shell for execution. The Windows command shell ([cmd](https://attack.mitre.org/software/S0106)) is the primary command prompt on Windows systems. The Windows command prompt can be used to control almost any aspect of a system, with various permission levels required for different subsets of commands. The command prompt can be invoked remotely via [Remote S",
+      "is_subtechnique": true,
+      "source": "attack",
+      "layer": "base",
+      "in_loader_scope": true,
+      "keep_reason": [
+        "attack-evidence",
+        "core-loader",
+        "report"
+      ]
+    },
+    {
+      "id": "T1059.005",
+      "type": "attack-pattern",
+      "name": "Visual Basic",
+      "external_id": "T1059.005",
+      "stix_id": "attack-pattern--dfd7cc1d-e1d8-4394-a198-97c4cab8aa67",
+      "url": "https://attack.mitre.org/techniques/T1059/005",
+      "description": "Adversaries may abuse Visual Basic (VB) for execution. VB is a programming language created by Microsoft with interoperability with many Windows technologies such as [Component Object Model](https://attack.mitre.org/techniques/T1559/001) and the [Native API](https://attack.mitre.org/techniques/T1106) through the Windows API. Although tagged as legacy with no planned future evolutions, VB is integr",
+      "is_subtechnique": true,
+      "source": "attack",
+      "layer": "base",
+      "in_loader_scope": true,
+      "keep_reason": [
+        "attack-evidence",
+        "core-loader"
+      ]
+    },
+    {
+      "id": "T1059.006",
+      "type": "attack-pattern",
+      "name": "Python",
+      "external_id": "T1059.006",
+      "stix_id": "attack-pattern--cc3502b5-30cc-4473-ad48-42d51a6ef6d1",
+      "url": "https://attack.mitre.org/techniques/T1059/006",
+      "description": "Adversaries may abuse Python commands and scripts for execution. Python is a very popular scripting/programming language, with capabilities to perform many functions. Python can be executed interactively from the command-line (via the <code>python.exe</code> interpreter) or via scripts (.py) that can be written and distributed to different systems. Python code can also be compiled into binary exec",
+      "is_subtechnique": true,
+      "source": "attack",
+      "layer": "base",
+      "in_loader_scope": true,
+      "keep_reason": [
+        "attack-evidence",
+        "core-loader"
+      ]
+    },
+    {
+      "id": "T1059.007",
+      "type": "attack-pattern",
+      "name": "JavaScript",
+      "external_id": "T1059.007",
+      "stix_id": "attack-pattern--0f4a0c76-ab2d-4cb0-85d3-3f0efb8cba0d",
+      "url": "https://attack.mitre.org/techniques/T1059/007",
+      "description": "Adversaries may abuse various implementations of JavaScript for execution. JavaScript (JS) is a platform-independent scripting language (compiled just-in-time at runtime) commonly associated with scripts in webpages, though JS can be executed in runtime environments outside the browser.(Citation: NodeJS)\n\nJScript is the Microsoft implementation of the same scripting standard. JScript is interprete",
+      "is_subtechnique": true,
+      "source": "attack",
+      "layer": "base",
+      "in_loader_scope": true,
+      "keep_reason": [
+        "attack-evidence",
+        "core-loader"
+      ]
+    },
+    {
+      "id": "T1059.009",
+      "type": "attack-pattern",
+      "name": "Cloud API",
+      "external_id": "T1059.009",
+      "stix_id": "attack-pattern--55bb4471-ff1f-43b4-88c1-c9384ec47abf",
+      "url": "https://attack.mitre.org/techniques/T1059/009",
+      "description": "Adversaries may abuse cloud APIs to execute malicious commands. APIs available in cloud environments provide various functionalities and are a feature-rich method for programmatic access to nearly all aspects of a tenant. These APIs may be utilized through various methods such as command line interpreters (CLIs), in-browser Cloud Shells, [PowerShell](https://attack.mitre.org/techniques/T1059/001) ",
+      "is_subtechnique": true,
+      "source": "attack",
+      "layer": "base",
+      "in_loader_scope": true,
+      "keep_reason": [
+        "core-loader"
+      ]
+    },
+    {
+      "id": "T1059.010",
+      "type": "attack-pattern",
+      "name": "AutoHotKey & AutoIT",
+      "external_id": "T1059.010",
+      "stix_id": "attack-pattern--3a32740a-11b0-4bcf-b0a9-3abd0f6d3cd5",
+      "url": "https://attack.mitre.org/techniques/T1059/010",
+      "description": "Adversaries may execute commands and perform malicious tasks using AutoIT and AutoHotKey automation scripts. AutoIT and AutoHotkey (AHK) are scripting languages that enable users to automate Windows tasks. These automation scripts can be used to perform a wide variety of actions, such as clicking on buttons, entering text, and opening and closing programs.(Citation: AutoIT)(Citation: AutoHotKey)\n\n",
+      "is_subtechnique": true,
+      "source": "attack",
+      "layer": "base",
+      "in_loader_scope": true,
+      "keep_reason": [
+        "attack-evidence"
+      ]
+    },
+    {
+      "id": "T1069",
+      "type": "attack-pattern",
+      "name": "Permission Groups Discovery",
+      "external_id": "T1069",
+      "stix_id": "attack-pattern--15dbf668-795c-41e6-8219-f0447c0e64ce",
+      "url": "https://attack.mitre.org/techniques/T1069",
+      "description": "Adversaries may attempt to discover group and permission settings. This information can help adversaries determine which user accounts and groups are available, the membership of users in particular groups, and which users and groups have elevated permissions.\n\nAdversaries may attempt to discover group permission settings in many different ways. This data may provide the adversary with information",
+      "is_subtechnique": false,
+      "source": "attack",
+      "layer": "base",
+      "in_loader_scope": true,
+      "keep_reason": [
+        "parent-closure"
+      ]
+    },
+    {
+      "id": "T1069.002",
+      "type": "attack-pattern",
+      "name": "Domain Groups",
+      "external_id": "T1069.002",
+      "stix_id": "attack-pattern--2aed01ad-3df3-4410-a8cb-11ea4ded587c",
+      "url": "https://attack.mitre.org/techniques/T1069/002",
+      "description": "Adversaries may attempt to find domain-level groups and permission settings. The knowledge of domain-level permission groups can help adversaries determine which groups exist and which users belong to a particular group. Adversaries may use this information to determine which users have elevated permissions, such as domain administrators.\n\nCommands such as <code>net group /domain</code> of the [Ne",
+      "is_subtechnique": true,
+      "source": "attack",
+      "layer": "base",
+      "in_loader_scope": true,
+      "keep_reason": [
+        "attack-evidence"
+      ]
+    },
+    {
+      "id": "T1070",
+      "type": "attack-pattern",
+      "name": "Indicator Removal",
+      "external_id": "T1070",
+      "stix_id": "attack-pattern--799ace7f-e227-4411-baa0-8868704f2a69",
+      "url": "https://attack.mitre.org/techniques/T1070",
+      "description": "Adversaries may selectively delete or modify artifacts generated to reduce indications of their presence and blend in with legitimate activity. Rather than broadly removing evidence, adversaries may target specific artifacts that appear anomalous or are likely to draw scrutiny, while leaving sufficient data intact to maintain the appearance of normal system behavior.\n\nArtifacts such as command his",
+      "is_subtechnique": false,
+      "source": "attack",
+      "layer": "base",
+      "in_loader_scope": true,
+      "keep_reason": [
+        "attack-evidence",
+        "core-loader"
+      ]
+    },
+    {
+      "id": "T1070.004",
+      "type": "attack-pattern",
+      "name": "File Deletion",
+      "external_id": "T1070.004",
+      "stix_id": "attack-pattern--d63a3fb8-9452-4e9d-a60a-54be68d5998c",
+      "url": "https://attack.mitre.org/techniques/T1070/004",
+      "description": "Adversaries may delete files left behind by the actions of their intrusion activity. Malware, tools, or other non-native files dropped or created on a system by an adversary (ex: [Ingress Tool Transfer](https://attack.mitre.org/techniques/T1105)) may leave traces to indicate to what was done within a network and how. Removal of these files can occur during an intrusion, or as part of a post-intrus",
+      "is_subtechnique": true,
+      "source": "attack",
+      "layer": "base",
+      "in_loader_scope": true,
+      "keep_reason": [
+        "attack-evidence",
+        "report"
+      ]
+    },
+    {
+      "id": "T1070.006",
+      "type": "attack-pattern",
+      "name": "Timestomp",
+      "external_id": "T1070.006",
+      "stix_id": "attack-pattern--47f2d673-ca62-47e9-929b-1b0be9657611",
+      "url": "https://attack.mitre.org/techniques/T1070/006",
+      "description": "Adversaries may modify file time attributes to hide new files or changes to existing files. Timestomping is a technique that modifies the timestamps of a file (the modify, access, create, and change times), often to mimic files that are in the same folder and blend malicious files with legitimate files.\n\nIn Windows systems, both the `$STANDARD_INFORMATION` (`$SI`) and `$FILE_NAME` (`$FN`) attribut",
+      "is_subtechnique": true,
+      "source": "attack",
+      "layer": "base",
+      "in_loader_scope": true,
+      "keep_reason": [
+        "core-loader"
+      ]
+    },
+    {
+      "id": "T1070.009",
+      "type": "attack-pattern",
+      "name": "Clear Persistence",
+      "external_id": "T1070.009",
+      "stix_id": "attack-pattern--d2c4e5ea-dbdf-4113-805a-b1e2a337fb33",
+      "url": "https://attack.mitre.org/techniques/T1070/009",
+      "description": "Adversaries may clear artifacts associated with previously established persistence on a host system to remove evidence of their activity. This may involve various actions, such as removing services, deleting executables, [Modify Registry](https://attack.mitre.org/techniques/T1112), [Plist File Modification](https://attack.mitre.org/techniques/T1647), or other methods of cleanup to prevent defender",
+      "is_subtechnique": true,
+      "source": "attack",
+      "layer": "base",
+      "in_loader_scope": true,
+      "keep_reason": [
+        "attack-evidence"
+      ]
+    },
+    {
+      "id": "T1071",
+      "type": "attack-pattern",
+      "name": "Application Layer Protocol",
+      "external_id": "T1071",
+      "stix_id": "attack-pattern--355be19c-ffc9-46d5-8d50-d6a036c675b6",
+      "url": "https://attack.mitre.org/techniques/T1071",
+      "description": "Adversaries may communicate using OSI application layer protocols to avoid detection/network filtering by blending in with existing traffic. Commands to the remote system, and often the results of those commands, will be embedded within the protocol traffic between the client and server. \n\nAdversaries may utilize many different protocols, including those used for web browsing, transferring files, ",
+      "is_subtechnique": false,
+      "source": "attack",
+      "layer": "base",
+      "in_loader_scope": true,
+      "keep_reason": [
+        "core-loader"
+      ]
+    },
+    {
+      "id": "T1071.001",
+      "type": "attack-pattern",
+      "name": "Web Protocols",
+      "external_id": "T1071.001",
+      "stix_id": "attack-pattern--df8b2a25-8bdf-4856-953c-a04372b1c161",
+      "url": "https://attack.mitre.org/techniques/T1071/001",
+      "description": "Adversaries may communicate using application layer protocols associated with web traffic to avoid detection/network filtering by blending in with existing traffic. Commands to the remote system, and often the results of those commands, will be embedded within the protocol traffic between the client and server. \n\nProtocols such as HTTP/S(Citation: CrowdStrike Putter Panda) and WebSocket(Citation: ",
+      "is_subtechnique": true,
+      "source": "attack",
+      "layer": "base",
+      "in_loader_scope": true,
+      "keep_reason": [
+        "attack-evidence",
+        "core-loader"
+      ]
+    },
+    {
+      "id": "T1071.003",
+      "type": "attack-pattern",
+      "name": "Mail Protocols",
+      "external_id": "T1071.003",
+      "stix_id": "attack-pattern--54b4c251-1f0e-4eba-ba6b-dbc7a6f6f06b",
+      "url": "https://attack.mitre.org/techniques/T1071/003",
+      "description": "Adversaries may communicate using application layer protocols associated with electronic mail delivery to avoid detection/network filtering by blending in with existing traffic. Commands to the remote system, and often the results of those commands, will be embedded within the protocol traffic between the client and server. \n\nProtocols such as SMTP/S, POP3/S, and IMAP that carry electronic mail ma",
+      "is_subtechnique": true,
+      "source": "attack",
+      "layer": "base",
+      "in_loader_scope": true,
+      "keep_reason": [
+        "attack-evidence",
+        "report"
+      ]
+    },
+    {
+      "id": "T1071.004",
+      "type": "attack-pattern",
+      "name": "DNS",
+      "external_id": "T1071.004",
+      "stix_id": "attack-pattern--1996eef1-ced3-4d7f-bf94-33298cabbf72",
+      "url": "https://attack.mitre.org/techniques/T1071/004",
+      "description": "Adversaries may communicate using the Domain Name System (DNS) application layer protocol to avoid detection/network filtering by blending in with existing traffic. Commands to the remote system, and often the results of those commands, will be embedded within the protocol traffic between the client and server. \n\nThe DNS protocol serves an administrative function in computer networking and thus ma",
+      "is_subtechnique": true,
+      "source": "attack",
+      "layer": "base",
+      "in_loader_scope": true,
+      "keep_reason": [
+        "attack-evidence",
+        "core-loader"
+      ]
+    },
+    {
+      "id": "T1082",
+      "type": "attack-pattern",
+      "name": "System Information Discovery",
+      "external_id": "T1082",
+      "stix_id": "attack-pattern--354a7f88-63fb-41b5-a801-ce3b377b36f1",
+      "url": "https://attack.mitre.org/techniques/T1082",
+      "description": "An adversary may attempt to get detailed information about the operating system and hardware, including version, patches, hotfixes, service packs, and architecture. Adversaries may use this information to shape follow-on behaviors, including whether or not the adversary fully infects the target and/or attempts specific actions. This behavior is distinct from [Local Storage Discovery](https://attac",
+      "is_subtechnique": false,
+      "source": "attack",
+      "layer": "base",
+      "in_loader_scope": true,
+      "keep_reason": [
+        "attack-evidence",
+        "core-loader"
+      ]
+    },
+    {
+      "id": "T1083",
+      "type": "attack-pattern",
+      "name": "File and Directory Discovery",
+      "external_id": "T1083",
+      "stix_id": "attack-pattern--7bc57495-ea59-4380-be31-a64af124ef18",
+      "url": "https://attack.mitre.org/techniques/T1083",
+      "description": "Adversaries may enumerate files and directories or may search in specific locations of a host or network share for certain information within a file system. Adversaries may use the information from [File and Directory Discovery](https://attack.mitre.org/techniques/T1083) during automated discovery to shape follow-on behaviors, including whether or not the adversary fully infects the target and/or ",
+      "is_subtechnique": false,
+      "source": "attack",
+      "layer": "base",
+      "in_loader_scope": true,
+      "keep_reason": [
+        "attack-evidence",
+        "core-loader"
+      ]
+    },
+    {
+      "id": "T1087",
+      "type": "attack-pattern",
+      "name": "Account Discovery",
+      "external_id": "T1087",
+      "stix_id": "attack-pattern--72b74d71-8169-42aa-92e0-e7b04b9f5a08",
+      "url": "https://attack.mitre.org/techniques/T1087",
+      "description": "Adversaries may attempt to get a listing of valid accounts, usernames, or email addresses on a system or within a compromised environment. This information can help adversaries determine which accounts exist, which can aid in follow-on behavior such as brute-forcing, spear-phishing attacks, or account takeovers (e.g., [Valid Accounts](https://attack.mitre.org/techniques/T1078)).\n\nAdversaries may u",
+      "is_subtechnique": false,
+      "source": "attack",
+      "layer": "base",
+      "in_loader_scope": true,
+      "keep_reason": [
+        "parent-closure"
+      ]
+    },
+    {
+      "id": "T1087.001",
+      "type": "attack-pattern",
+      "name": "Local Account",
+      "external_id": "T1087.001",
+      "stix_id": "attack-pattern--25659dd6-ea12-45c4-97e6-381e3e4b593e",
+      "url": "https://attack.mitre.org/techniques/T1087/001",
+      "description": "Adversaries may attempt to get a listing of local system accounts. This information can help adversaries determine which local accounts exist on a system to aid in follow-on behavior.\n\nCommands such as <code>net user</code> and <code>net localgroup</code> of the [Net](https://attack.mitre.org/software/S0039) utility and <code>id</code> and <code>groups</code> on macOS and Linux can list local user",
+      "is_subtechnique": true,
+      "source": "attack",
+      "layer": "base",
+      "in_loader_scope": true,
+      "keep_reason": [
+        "attack-evidence"
+      ]
+    },
+    {
+      "id": "T1087.002",
+      "type": "attack-pattern",
+      "name": "Domain Account",
+      "external_id": "T1087.002",
+      "stix_id": "attack-pattern--21875073-b0ee-49e3-9077-1e2a885359af",
+      "url": "https://attack.mitre.org/techniques/T1087/002",
+      "description": "Adversaries may attempt to get a listing of domain accounts. This information can help adversaries determine which domain accounts exist to aid in follow-on behavior such as targeting specific accounts which possess particular privileges.\n\nCommands such as <code>net user /domain</code> and <code>net group /domain</code> of the [Net](https://attack.mitre.org/software/S0039) utility, <code>dscacheut",
+      "is_subtechnique": true,
+      "source": "attack",
+      "layer": "base",
+      "in_loader_scope": true,
+      "keep_reason": [
+        "attack-evidence"
+      ]
+    },
+    {
+      "id": "T1087.003",
+      "type": "attack-pattern",
+      "name": "Email Account",
+      "external_id": "T1087.003",
+      "stix_id": "attack-pattern--4bc31b94-045b-4752-8920-aebaebdb6470",
+      "url": "https://attack.mitre.org/techniques/T1087/003",
+      "description": "Adversaries may attempt to get a listing of email addresses and accounts. Adversaries may try to dump Exchange address lists such as global address lists (GALs).(Citation: Microsoft Exchange Address Lists)\n\nIn on-premises Exchange and Exchange Online, the <code>Get-GlobalAddressList</code> PowerShell cmdlet can be used to obtain email addresses and accounts from a domain using an authenticated ses",
+      "is_subtechnique": true,
+      "source": "attack",
+      "layer": "base",
+      "in_loader_scope": true,
+      "keep_reason": [
+        "attack-evidence"
+      ]
+    },
+    {
+      "id": "T1090",
+      "type": "attack-pattern",
+      "name": "Proxy",
+      "external_id": "T1090",
+      "stix_id": "attack-pattern--731f4f55-b6d0-41d1-a7a9-072a66389aea",
+      "url": "https://attack.mitre.org/techniques/T1090",
+      "description": "Adversaries may use a connection proxy to direct network traffic between systems or act as an intermediary for network communications to a command and control server to avoid direct connections to their infrastructure. Many tools exist that enable traffic redirection through proxies or port redirection, including [HTRAN](https://attack.mitre.org/software/S0040), ZXProxy, and ZXPortMap. (Citation: ",
+      "is_subtechnique": false,
+      "source": "attack",
+      "layer": "base",
+      "in_loader_scope": true,
+      "keep_reason": [
+        "core-loader"
+      ]
+    },
+    {
+      "id": "T1090.002",
+      "type": "attack-pattern",
+      "name": "External Proxy",
+      "external_id": "T1090.002",
+      "stix_id": "attack-pattern--69b8fd78-40e8-4600-ae4d-662c9d7afdb3",
+      "url": "https://attack.mitre.org/techniques/T1090/002",
+      "description": "Adversaries may use an external proxy to act as an intermediary for network communications to a command and control server to avoid direct connections to their infrastructure. Many tools exist that enable traffic redirection through proxies or port redirection, including [HTRAN](https://attack.mitre.org/software/S0040), ZXProxy, and ZXPortMap. (Citation: Trend Micro APT Attack Tools) Adversaries u",
+      "is_subtechnique": true,
+      "source": "attack",
+      "layer": "base",
+      "in_loader_scope": true,
+      "keep_reason": [
+        "core-loader"
+      ]
+    },
+    {
+      "id": "T1090.003",
+      "type": "attack-pattern",
+      "name": "Multi-hop Proxy",
+      "external_id": "T1090.003",
+      "stix_id": "attack-pattern--a782ebe2-daba-42c7-bc82-e8e9d923162d",
+      "url": "https://attack.mitre.org/techniques/T1090/003",
+      "description": "Adversaries may chain together multiple proxies to disguise the source of malicious traffic. Typically, a defender will be able to identify the last proxy traffic traversed before it enters their network; the defender may or may not be able to identify any previous proxies before the last-hop proxy. This technique makes identifying the original source of the malicious traffic even more difficult b",
+      "is_subtechnique": true,
+      "source": "attack",
+      "layer": "base",
+      "in_loader_scope": true,
+      "keep_reason": [
+        "core-loader"
+      ]
+    },
+    {
+      "id": "T1095",
+      "type": "attack-pattern",
+      "name": "Non-Application Layer Protocol",
+      "external_id": "T1095",
+      "stix_id": "attack-pattern--c21d5a77-d422-4a69-acd7-2c53c1faa34b",
+      "url": "https://attack.mitre.org/techniques/T1095",
+      "description": "Adversaries may use an OSI non-application layer protocol for communication between host and C2 server or among infected hosts within a network. The list of possible protocols is extensive.(Citation: Wikipedia OSI) Specific examples include use of network layer protocols, such as the Internet Control Message Protocol (ICMP), transport layer protocols, such as the User Datagram Protocol (UDP), sess",
+      "is_subtechnique": false,
+      "source": "attack",
+      "layer": "base",
+      "in_loader_scope": true,
+      "keep_reason": [
+        "attack-evidence",
+        "core-loader"
+      ]
+    },
+    {
+      "id": "T1102",
+      "type": "attack-pattern",
+      "name": "Web Service",
+      "external_id": "T1102",
+      "stix_id": "attack-pattern--830c9528-df21-472c-8c14-a036bf17d665",
+      "url": "https://attack.mitre.org/techniques/T1102",
+      "description": "Adversaries may use an existing, legitimate external Web service as a means for relaying data to/from a compromised system. Popular websites, cloud services, and social media acting as a mechanism for C2 may give a significant amount of cover due to the likelihood that hosts within a network are already communicating with them prior to a compromise. Using common services, such as those offered by ",
+      "is_subtechnique": false,
+      "source": "attack",
+      "layer": "base",
+      "in_loader_scope": true,
+      "keep_reason": [
+        "attack-evidence",
+        "core-loader"
+      ]
+    },
+    {
+      "id": "T1104",
+      "type": "attack-pattern",
+      "name": "Multi-Stage Channels",
+      "external_id": "T1104",
+      "stix_id": "attack-pattern--84e02621-8fdf-470f-bd58-993bb6a89d91",
+      "url": "https://attack.mitre.org/techniques/T1104",
+      "description": "Adversaries may create multiple stages for command and control that are employed under different conditions or for certain functions. Use of multiple stages may obfuscate the command and control channel to make detection more difficult.\n\nRemote access tools will call back to the first-stage command and control server for instructions. The first stage may have automated capabilities to collect basi",
+      "is_subtechnique": false,
+      "source": "attack",
+      "layer": "base",
+      "in_loader_scope": true,
+      "keep_reason": [
+        "attack-evidence"
+      ]
+    },
+    {
+      "id": "T1105",
+      "type": "attack-pattern",
+      "name": "Ingress Tool Transfer",
+      "external_id": "T1105",
+      "stix_id": "attack-pattern--e6919abc-99f9-4c6c-95a5-14761e7b2add",
+      "url": "https://attack.mitre.org/techniques/T1105",
+      "description": "Adversaries may transfer tools or other files from an external system into a compromised environment. Tools or files may be copied from an external adversary-controlled system to the victim network through the command and control channel or through alternate protocols such as [ftp](https://attack.mitre.org/software/S0095). Once present, adversaries may also transfer/spread tools between victim dev",
+      "is_subtechnique": false,
+      "source": "attack",
+      "layer": "base",
+      "in_loader_scope": true,
+      "keep_reason": [
+        "attack-evidence",
+        "core-loader"
+      ]
+    },
+    {
+      "id": "T1106",
+      "type": "attack-pattern",
+      "name": "Native API",
+      "external_id": "T1106",
+      "stix_id": "attack-pattern--391d824f-0ef1-47a0-b0ee-c59a75e27670",
+      "url": "https://attack.mitre.org/techniques/T1106",
+      "description": "Adversaries may interact with the native OS application programming interface (API) to execute behaviors. Native APIs provide a controlled means of calling low-level OS services within the kernel, such as those involving hardware/devices, memory, and processes.(Citation: NT API Windows)(Citation: Linux Kernel API) These native APIs are leveraged by the OS during system boot (when other system comp",
+      "is_subtechnique": false,
+      "source": "attack",
+      "layer": "base",
+      "in_loader_scope": true,
+      "keep_reason": [
+        "attack-evidence",
+        "core-loader"
+      ]
+    },
+    {
+      "id": "T1112",
+      "type": "attack-pattern",
+      "name": "Modify Registry",
+      "external_id": "T1112",
+      "stix_id": "attack-pattern--57340c81-c025-4189-8fa0-fc7ede51bae4",
+      "url": "https://attack.mitre.org/techniques/T1112",
+      "description": "Adversaries may interact with the Windows Registry as part of a variety of other techniques to aid in defense evasion, persistence, and execution.\n\nAccess to specific areas of the Registry depends on account permissions, with some keys requiring administrator-level access. The built-in Windows command-line utility [Reg](https://attack.mitre.org/software/S0075) may be used for local or remote Regis",
+      "is_subtechnique": false,
+      "source": "attack",
+      "layer": "base",
+      "in_loader_scope": true,
+      "keep_reason": [
+        "attack-evidence",
+        "report"
+      ]
+    },
+    {
+      "id": "T1124",
+      "type": "attack-pattern",
+      "name": "System Time Discovery",
+      "external_id": "T1124",
+      "stix_id": "attack-pattern--f3c544dc-673c-4ef3-accb-53229f1ae077",
+      "url": "https://attack.mitre.org/techniques/T1124",
+      "description": "An adversary may gather the system time and/or time zone settings from a local or remote system. The system time is set and stored by services, such as the Windows Time Service on Windows or <code>systemsetup</code> on macOS.(Citation: MSDN System Time)(Citation: Technet Windows Time Service)(Citation: systemsetup mac time) These time settings may also be synchronized between systems and services ",
+      "is_subtechnique": false,
+      "source": "attack",
+      "layer": "base",
+      "in_loader_scope": true,
+      "keep_reason": [
+        "attack-evidence"
+      ]
+    },
+    {
+      "id": "T1129",
+      "type": "attack-pattern",
+      "name": "Shared Modules",
+      "external_id": "T1129",
+      "stix_id": "attack-pattern--0a5231ec-41af-4a35-83d0-6bdf11f28c65",
+      "url": "https://attack.mitre.org/techniques/T1129",
+      "description": "Adversaries may execute malicious payloads via loading shared modules. Shared modules are executable files that are loaded into processes to provide access to reusable code, such as specific custom functions or invoking OS API functions (i.e., [Native API](https://attack.mitre.org/techniques/T1106)).\n\nAdversaries may use this functionality as a way to execute arbitrary payloads on a victim system.",
+      "is_subtechnique": false,
+      "source": "attack",
+      "layer": "base",
+      "in_loader_scope": true,
+      "keep_reason": [
+        "core-loader"
+      ]
+    },
+    {
+      "id": "T1132",
+      "type": "attack-pattern",
+      "name": "Data Encoding",
+      "external_id": "T1132",
+      "stix_id": "attack-pattern--cc7b8c4e-9be0-47ca-b0bb-83915ec3ee2f",
+      "url": "https://attack.mitre.org/techniques/T1132",
+      "description": "Adversaries may encode data to make the content of command and control traffic more difficult to detect. Command and control (C2) information can be encoded using a standard data encoding system. Use of data encoding may adhere to existing protocol specifications and includes use of ASCII, Unicode, Base64, MIME, or other binary-to-text and character encoding systems.(Citation: Wikipedia Binary-to-",
+      "is_subtechnique": false,
+      "source": "attack",
+      "layer": "base",
+      "in_loader_scope": true,
+      "keep_reason": [
+        "core-loader"
+      ]
+    },
+    {
+      "id": "T1132.001",
+      "type": "attack-pattern",
+      "name": "Standard Encoding",
+      "external_id": "T1132.001",
+      "stix_id": "attack-pattern--04fd5427-79c7-44ea-ae13-11b24778ff1c",
+      "url": "https://attack.mitre.org/techniques/T1132/001",
+      "description": "Adversaries may encode data with a standard data encoding system to make the content of command and control traffic more difficult to detect. Command and control (C2) information can be encoded using a standard data encoding system that adheres to existing protocol specifications. Common data encoding schemes include ASCII, Unicode, hexadecimal, Base64, and MIME.(Citation: Wikipedia Binary-to-text",
+      "is_subtechnique": true,
+      "source": "attack",
+      "layer": "base",
+      "in_loader_scope": true,
+      "keep_reason": [
+        "attack-evidence"
+      ]
+    },
+    {
+      "id": "T1132.002",
+      "type": "attack-pattern",
+      "name": "Non-Standard Encoding",
+      "external_id": "T1132.002",
+      "stix_id": "attack-pattern--d467bc38-284b-4a00-96ac-125f447799fc",
+      "url": "https://attack.mitre.org/techniques/T1132/002",
+      "description": "Adversaries may encode data with a non-standard data encoding system to make the content of command and control traffic more difficult to detect. Command and control (C2) information can be encoded using a non-standard data encoding system that diverges from existing protocol specifications. Non-standard data encoding schemes may be based on or related to standard data encoding schemes, such as a ",
+      "is_subtechnique": true,
+      "source": "attack",
+      "layer": "base",
+      "in_loader_scope": true,
+      "keep_reason": [
+        "attack-evidence"
+      ]
+    },
+    {
+      "id": "T1134",
+      "type": "attack-pattern",
+      "name": "Access Token Manipulation",
+      "external_id": "T1134",
+      "stix_id": "attack-pattern--dcaa092b-7de9-4a21-977f-7fcb77e89c48",
+      "url": "https://attack.mitre.org/techniques/T1134",
+      "description": "Adversaries may modify access tokens to operate under a different user or system security context to perform actions and bypass access controls. Windows uses access tokens to determine the ownership of a running process. A user can manipulate access tokens to make a running process appear as though it is the child of a different process or belongs to someone other than the user that started the pr",
+      "is_subtechnique": false,
+      "source": "attack",
+      "layer": "base",
+      "in_loader_scope": true,
+      "keep_reason": [
+        "core-loader"
+      ]
+    },
+    {
+      "id": "T1134.001",
+      "type": "attack-pattern",
+      "name": "Token Impersonation/Theft",
+      "external_id": "T1134.001",
+      "stix_id": "attack-pattern--86850eff-2729-40c3-b85e-c4af26da4a2d",
+      "url": "https://attack.mitre.org/techniques/T1134/001",
+      "description": "Adversaries may duplicate then impersonate another user's existing token to escalate privileges and bypass access controls. For example, an adversary can duplicate an existing token using `DuplicateToken` or `DuplicateTokenEx`.(Citation: DuplicateToken function) The token can then be used with `ImpersonateLoggedOnUser` to allow the calling thread to impersonate a logged on user's security context,",
+      "is_subtechnique": true,
+      "source": "attack",
+      "layer": "base",
+      "in_loader_scope": true,
+      "keep_reason": [
+        "core-loader"
+      ]
+    },
+    {
+      "id": "T1135",
+      "type": "attack-pattern",
+      "name": "Network Share Discovery",
+      "external_id": "T1135",
+      "stix_id": "attack-pattern--3489cfc5-640f-4bb3-a103-9137b97de79f",
+      "url": "https://attack.mitre.org/techniques/T1135",
+      "description": "Adversaries may look for folders and drives shared on remote systems as a means of identifying sources of information to gather as a precursor for Collection and to identify potential systems of interest for Lateral Movement. Networks often contain shared network drives and folders that enable users to access file directories on various systems across a network. \n\nFile sharing over a Windows netwo",
+      "is_subtechnique": false,
+      "source": "attack",
+      "layer": "base",
+      "in_loader_scope": true,
+      "keep_reason": [
+        "attack-evidence"
+      ]
+    },
+    {
+      "id": "T1136",
+      "type": "attack-pattern",
+      "name": "Create Account",
+      "external_id": "T1136",
+      "stix_id": "attack-pattern--e01be9c5-e763-4caf-aeb7-000b416aef67",
+      "url": "https://attack.mitre.org/techniques/T1136",
+      "description": "Adversaries may create an account to maintain access to victim systems.(Citation: Symantec WastedLocker June 2020) With a sufficient level of access, creating such accounts may be used to establish secondary credentialed access that do not require persistent remote access tools to be deployed on the system.\n\nAccounts may be created on the local system or within a domain or cloud tenant. In cloud e",
+      "is_subtechnique": false,
+      "source": "attack",
+      "layer": "base",
+      "in_loader_scope": true,
+      "keep_reason": [
+        "core-loader"
+      ]
+    },
+    {
+      "id": "T1136.001",
+      "type": "attack-pattern",
+      "name": "Local Account",
+      "external_id": "T1136.001",
+      "stix_id": "attack-pattern--635cbe30-392d-4e27-978e-66774357c762",
+      "url": "https://attack.mitre.org/techniques/T1136/001",
+      "description": "Adversaries may create a local account to maintain access to victim systems. Local accounts are those configured by an organization for use by users, remote support, services, or for administration on a single system or service. \n\nFor example, with a sufficient level of access, the Windows <code>net user /add</code> command can be used to create a local account.  In Linux, the `useradd` command ca",
+      "is_subtechnique": true,
+      "source": "attack",
+      "layer": "base",
+      "in_loader_scope": true,
+      "keep_reason": [
+        "core-loader"
+      ]
+    },
+    {
+      "id": "T1137",
+      "type": "attack-pattern",
+      "name": "Office Application Startup",
+      "external_id": "T1137",
+      "stix_id": "attack-pattern--2c4d4e92-0ccf-4a97-b54c-86d662988a53",
+      "url": "https://attack.mitre.org/techniques/T1137",
+      "description": "Adversaries may leverage Microsoft Office-based applications for persistence between startups. Microsoft Office is a fairly common application suite on Windows-based operating systems within an enterprise network. There are multiple mechanisms that can be used with Office for persistence when an Office-based application is started; this can include the use of Office Template Macros and add-ins.\n\nA",
+      "is_subtechnique": false,
+      "source": "attack",
+      "layer": "base",
+      "in_loader_scope": true,
+      "keep_reason": [
+        "parent-closure"
+      ]
+    },
+    {
+      "id": "T1137.006",
+      "type": "attack-pattern",
+      "name": "Add-ins",
+      "external_id": "T1137.006",
+      "stix_id": "attack-pattern--34f1d81d-fe88-4f97-bd3b-a3164536255d",
+      "url": "https://attack.mitre.org/techniques/T1137/006",
+      "description": "Adversaries may abuse Microsoft Office add-ins to obtain persistence on a compromised system. Office add-ins can be used to add functionality to Office programs. (Citation: Microsoft Office Add-ins) There are different types of add-ins that can be used by the various Office products; including Word/Excel add-in Libraries (WLL/XLL), VBA add-ins, Office Component Object Model (COM) add-ins, automati",
+      "is_subtechnique": true,
+      "source": "attack",
+      "layer": "base",
+      "in_loader_scope": true,
+      "keep_reason": [
+        "attack-evidence"
+      ]
+    },
+    {
+      "id": "T1140",
+      "type": "attack-pattern",
+      "name": "Deobfuscate/Decode Files or Information",
+      "external_id": "T1140",
+      "stix_id": "attack-pattern--3ccef7ae-cb5e-48f6-8302-897105fbf55c",
+      "url": "https://attack.mitre.org/techniques/T1140",
+      "description": "Adversaries may use [Obfuscated Files or Information](https://attack.mitre.org/techniques/T1027) to hide artifacts of an intrusion from analysis. They may require separate mechanisms to decode or deobfuscate that information depending on how they intend to use it. Methods for doing that include built-in functionality of malware or by using utilities present on the system.\n\nOne such example is the ",
+      "is_subtechnique": false,
+      "source": "attack",
+      "layer": "base",
+      "in_loader_scope": true,
+      "keep_reason": [
+        "attack-evidence",
+        "core-loader"
+      ]
+    },
+    {
+      "id": "T1189",
+      "type": "attack-pattern",
+      "name": "Drive-by Compromise",
+      "external_id": "T1189",
+      "stix_id": "attack-pattern--d742a578-d70e-4d0e-96a6-02a9c30204e6",
+      "url": "https://attack.mitre.org/techniques/T1189",
+      "description": "Adversaries may gain access to a system through a user visiting a website over the normal course of browsing. Multiple ways of delivering exploit code to a browser exist (i.e., [Drive-by Target](https://attack.mitre.org/techniques/T1608/004)), including:\n\n* A legitimate website is compromised, allowing adversaries to inject malicious code\n* Script files served to a legitimate website from a public",
+      "is_subtechnique": false,
+      "source": "attack",
+      "layer": "base",
+      "in_loader_scope": true,
+      "keep_reason": [
+        "core-loader"
+      ]
+    },
+    {
+      "id": "T1190",
+      "type": "attack-pattern",
+      "name": "Exploit Public-Facing Application",
+      "external_id": "T1190",
+      "stix_id": "attack-pattern--3f886f2a-874f-4333-b794-aa6075009b1c",
+      "url": "https://attack.mitre.org/techniques/T1190",
+      "description": "Adversaries may attempt to exploit a weakness in an Internet-facing host or system to initially access a network. The weakness in the system can be a software bug, a temporary glitch, or a misconfiguration.\n\nExploited applications are often websites/web servers, but can also include databases (like SQL), standard services (like SMB or SSH), network device administration and management protocols (l",
+      "is_subtechnique": false,
+      "source": "attack",
+      "layer": "base",
+      "in_loader_scope": true,
+      "keep_reason": [
+        "core-loader"
+      ]
+    },
+    {
+      "id": "T1195",
+      "type": "attack-pattern",
+      "name": "Supply Chain Compromise",
+      "external_id": "T1195",
+      "stix_id": "attack-pattern--3f18edba-28f4-4bb9-82c3-8aa60dcac5f7",
+      "url": "https://attack.mitre.org/techniques/T1195",
+      "description": "Adversaries may manipulate products or product delivery mechanisms prior to receipt by a final consumer for the purpose of data or system compromise.\n\nSupply chain compromise can take place at any stage of the supply chain including:\n\n* Manipulation of development tools\n* Manipulation of a development environment\n* Manipulation of source code repositories (public or private)\n* Manipulation of sour",
+      "is_subtechnique": false,
+      "source": "attack",
+      "layer": "base",
+      "in_loader_scope": true,
+      "keep_reason": [
+        "core-loader"
+      ]
+    },
+    {
+      "id": "T1195.002",
+      "type": "attack-pattern",
+      "name": "Compromise Software Supply Chain",
+      "external_id": "T1195.002",
+      "stix_id": "attack-pattern--bd369cd9-abb8-41ce-b5bb-fff23ee86c00",
+      "url": "https://attack.mitre.org/techniques/T1195/002",
+      "description": "Adversaries may manipulate application software prior to receipt by a final consumer for the purpose of data or system compromise. Supply chain compromise of software can take place in a number of ways, including manipulation of the application source code, manipulation of the update/distribution mechanism for that software, or replacing compiled releases with a modified version.\n\nTargeting may be",
+      "is_subtechnique": true,
+      "source": "attack",
+      "layer": "base",
+      "in_loader_scope": true,
+      "keep_reason": [
+        "core-loader"
+      ]
+    },
+    {
+      "id": "T1197",
+      "type": "attack-pattern",
+      "name": "BITS Jobs",
+      "external_id": "T1197",
+      "stix_id": "attack-pattern--c8e87b83-edbb-48d4-9295-4974897525b7",
+      "url": "https://attack.mitre.org/techniques/T1197",
+      "description": "Adversaries may abuse BITS jobs to persistently execute code and perform various background tasks. Windows Background Intelligent Transfer Service (BITS) is a low-bandwidth, asynchronous file transfer mechanism exposed through [Component Object Model](https://attack.mitre.org/techniques/T1559/001) (COM).(Citation: Microsoft COM)(Citation: Microsoft BITS) BITS is commonly used by updaters, messenge",
+      "is_subtechnique": false,
+      "source": "attack",
+      "layer": "base",
+      "in_loader_scope": true,
+      "keep_reason": [
+        "attack-evidence"
+      ]
+    },
+    {
+      "id": "T1203",
+      "type": "attack-pattern",
+      "name": "Exploitation for Client Execution",
+      "external_id": "T1203",
+      "stix_id": "attack-pattern--be2dcee9-a7a7-4e38-afd6-21b31ecc3d63",
+      "url": "https://attack.mitre.org/techniques/T1203",
+      "description": "Adversaries may exploit software vulnerabilities in client applications to execute code. Vulnerabilities can exist in software due to unsecure coding practices that can lead to unanticipated behavior. Adversaries can take advantage of certain vulnerabilities through targeted exploitation for the purpose of arbitrary code execution. Oftentimes the most valuable exploits to an offensive toolkit are ",
+      "is_subtechnique": false,
+      "source": "attack",
+      "layer": "base",
+      "in_loader_scope": true,
+      "keep_reason": [
+        "attack-evidence",
+        "core-loader"
+      ]
+    },
+    {
+      "id": "T1204",
+      "type": "attack-pattern",
+      "name": "User Execution",
+      "external_id": "T1204",
+      "stix_id": "attack-pattern--8c32eb4d-805f-4fc5-bf60-c4d476c131b5",
+      "url": "https://attack.mitre.org/techniques/T1204",
+      "description": "An adversary may rely upon specific actions by a user in order to gain execution. Users may be subjected to social engineering to get them to execute malicious code by, for example, opening a malicious document file or link. These user actions will typically be observed as follow-on behavior from forms of [Phishing](https://attack.mitre.org/techniques/T1566).\n\nWhile [User Execution](https://attack",
+      "is_subtechnique": false,
+      "source": "attack",
+      "layer": "base",
+      "in_loader_scope": true,
+      "keep_reason": [
+        "core-loader",
+        "report"
+      ]
+    },
+    {
+      "id": "T1204.001",
+      "type": "attack-pattern",
+      "name": "Malicious Link",
+      "external_id": "T1204.001",
+      "stix_id": "attack-pattern--ef67e13e-5598-4adc-bdb2-998225874fa9",
+      "url": "https://attack.mitre.org/techniques/T1204/001",
+      "description": "An adversary may rely upon a user clicking a malicious link in order to gain execution. Users may be subjected to social engineering to get them to click on a link that will lead to code execution. This user action will typically be observed as follow-on behavior from [Spearphishing Link](https://attack.mitre.org/techniques/T1566/002). Clicking on a link may also lead to other execution techniques",
+      "is_subtechnique": true,
+      "source": "attack",
+      "layer": "base",
+      "in_loader_scope": true,
+      "keep_reason": [
+        "attack-evidence",
+        "core-loader"
+      ]
+    },
+    {
+      "id": "T1204.002",
+      "type": "attack-pattern",
+      "name": "Malicious File",
+      "external_id": "T1204.002",
+      "stix_id": "attack-pattern--232b7f21-adf9-4b42-b936-b9d6f7df856e",
+      "url": "https://attack.mitre.org/techniques/T1204/002",
+      "description": "An adversary may rely upon a user opening a malicious file in order to gain execution. Users may be subjected to social engineering to get them to open a file that will lead to code execution. This user action will typically be observed as follow-on behavior from [Spearphishing Attachment](https://attack.mitre.org/techniques/T1566/001). Adversaries may use several types of files that require a use",
+      "is_subtechnique": true,
+      "source": "attack",
+      "layer": "base",
+      "in_loader_scope": true,
+      "keep_reason": [
+        "attack-evidence",
+        "core-loader"
+      ]
+    },
+    {
+      "id": "T1217",
+      "type": "attack-pattern",
+      "name": "Browser Information Discovery",
+      "external_id": "T1217",
+      "stix_id": "attack-pattern--5e4a2073-9643-44cb-a0b5-e7f4048446c7",
+      "url": "https://attack.mitre.org/techniques/T1217",
+      "description": "Adversaries may enumerate information about browsers to learn more about compromised environments. Data saved by browsers (such as bookmarks, accounts, and browsing history) may reveal a variety of personal information about users (e.g., banking sites, relationships/interests, social media, etc.) as well as details about internal network resources such as servers, tools/dashboards, or other relate",
+      "is_subtechnique": false,
+      "source": "attack",
+      "layer": "base",
+      "in_loader_scope": true,
+      "keep_reason": [
+        "attack-evidence"
+      ]
+    },
+    {
+      "id": "T1218",
+      "type": "attack-pattern",
+      "name": "System Binary Proxy Execution",
+      "external_id": "T1218",
+      "stix_id": "attack-pattern--457c7820-d331-465a-915e-42f85500ccc4",
+      "url": "https://attack.mitre.org/techniques/T1218",
+      "description": "Adversaries may bypass process and/or signature-based defenses by proxying execution of malicious content with signed, or otherwise trusted, binaries. Binaries used in this technique are often Microsoft-signed files, indicating that they have been either downloaded from Microsoft or are already native in the operating system.(Citation: LOLBAS Project) Binaries signed with trusted digital certifica",
+      "is_subtechnique": false,
+      "source": "attack",
+      "layer": "base",
+      "in_loader_scope": true,
+      "keep_reason": [
+        "core-loader"
+      ]
+    },
+    {
+      "id": "T1218.001",
+      "type": "attack-pattern",
+      "name": "Compiled HTML File",
+      "external_id": "T1218.001",
+      "stix_id": "attack-pattern--a6937325-9321-4e2e-bb2b-3ed2d40b2a9d",
+      "url": "https://attack.mitre.org/techniques/T1218/001",
+      "description": "Adversaries may abuse Compiled HTML files (.chm) to conceal malicious code. CHM files are commonly distributed as part of the Microsoft HTML Help system. CHM files are compressed compilations of various content such as HTML documents, images, and scripting/web related programming languages such VBA, JScript, Java, and ActiveX. (Citation: Microsoft HTML Help May 2018) CHM content is displayed using",
+      "is_subtechnique": true,
+      "source": "attack",
+      "layer": "base",
+      "in_loader_scope": true,
+      "keep_reason": [
+        "core-loader"
+      ]
+    },
+    {
+      "id": "T1218.002",
+      "type": "attack-pattern",
+      "name": "Control Panel",
+      "external_id": "T1218.002",
+      "stix_id": "attack-pattern--4ff5d6a8-c062-4c68-a778-36fc5edd564f",
+      "url": "https://attack.mitre.org/techniques/T1218/002",
+      "description": "Adversaries may abuse control.exe to proxy execution of malicious payloads. The Windows Control Panel process binary (control.exe) handles execution of Control Panel items, which are utilities that allow users to view and adjust computer settings.\n\nControl Panel items are registered executable (.exe) or Control Panel (.cpl) files, the latter are actually renamed dynamic-link library (.dll) files t",
+      "is_subtechnique": true,
+      "source": "attack",
+      "layer": "base",
+      "in_loader_scope": true,
+      "keep_reason": [
+        "core-loader"
+      ]
+    },
+    {
+      "id": "T1218.005",
+      "type": "attack-pattern",
+      "name": "Mshta",
+      "external_id": "T1218.005",
+      "stix_id": "attack-pattern--840a987a-99bd-4a80-a5c9-0cb2baa6cade",
+      "url": "https://attack.mitre.org/techniques/T1218/005",
+      "description": "Adversaries may abuse mshta.exe to proxy execution of malicious .hta files and Javascript or VBScript through a trusted Windows utility. There are several examples of different types of threats leveraging mshta.exe during initial compromise and for execution of code (Citation: Cylance Dust Storm) (Citation: Red Canary HTA Abuse Part Deux) (Citation: FireEye Attacks Leveraging HTA) (Citation: Airbu",
+      "is_subtechnique": true,
+      "source": "attack",
+      "layer": "base",
+      "in_loader_scope": true,
+      "keep_reason": [
+        "core-loader"
+      ]
+    },
+    {
+      "id": "T1218.008",
+      "type": "attack-pattern",
+      "name": "Odbcconf",
+      "external_id": "T1218.008",
+      "stix_id": "attack-pattern--6e3bd510-6b33-41a4-af80-2d80f3ee0071",
+      "url": "https://attack.mitre.org/techniques/T1218/008",
+      "description": "Adversaries may abuse odbcconf.exe to proxy execution of malicious payloads. Odbcconf.exe is a Windows utility that allows you to configure Open Database Connectivity (ODBC) drivers and data source names.(Citation: Microsoft odbcconf.exe) The Odbcconf.exe binary may be digitally signed by Microsoft.\n\nAdversaries may abuse odbcconf.exe to bypass application control solutions that do not account for",
+      "is_subtechnique": true,
+      "source": "attack",
+      "layer": "base",
+      "in_loader_scope": true,
+      "keep_reason": [
+        "core-loader"
+      ]
+    },
+    {
+      "id": "T1218.010",
+      "type": "attack-pattern",
+      "name": "Regsvr32",
+      "external_id": "T1218.010",
+      "stix_id": "attack-pattern--b97f1d35-4249-4486-a6b5-ee60ccf24fab",
+      "url": "https://attack.mitre.org/techniques/T1218/010",
+      "description": "Adversaries may abuse Regsvr32.exe to proxy execution of malicious code. Regsvr32.exe is a command-line program used to register and unregister object linking and embedding controls, including dynamic link libraries (DLLs), on Windows systems. The Regsvr32.exe binary may also be signed by Microsoft. (Citation: Microsoft Regsvr32)\n\nMalicious usage of Regsvr32.exe may avoid triggering security tools",
+      "is_subtechnique": true,
+      "source": "attack",
+      "layer": "base",
+      "in_loader_scope": true,
+      "keep_reason": [
+        "attack-evidence",
+        "core-loader"
+      ]
+    },
+    {
+      "id": "T1218.011",
+      "type": "attack-pattern",
+      "name": "Rundll32",
+      "external_id": "T1218.011",
+      "stix_id": "attack-pattern--045d0922-2310-4e60-b5e4-3302302cb3c5",
+      "url": "https://attack.mitre.org/techniques/T1218/011",
+      "description": "Adversaries may abuse rundll32.exe to proxy execution of malicious code. Using rundll32.exe, vice executing directly (i.e. [Shared Modules](https://attack.mitre.org/techniques/T1129)), may avoid triggering security tools that may not monitor execution of the rundll32.exe process because of allowlists or false positives from normal operations. Rundll32.exe is commonly associated with executing DLL ",
+      "is_subtechnique": true,
+      "source": "attack",
+      "layer": "base",
+      "in_loader_scope": true,
+      "keep_reason": [
+        "attack-evidence",
+        "core-loader"
+      ]
+    },
+    {
+      "id": "T1219",
+      "type": "attack-pattern",
+      "name": "Remote Access Tools",
+      "external_id": "T1219",
+      "stix_id": "attack-pattern--4061e78c-1284-44b4-9116-73e4ac3912f7",
+      "url": "https://attack.mitre.org/techniques/T1219",
+      "description": "An adversary may use legitimate remote access tools to establish an interactive command and control channel within a network. Remote access tools create a session between two trusted hosts through a graphical interface, a command line interaction, a protocol tunnel via development or management software, or hardware-level access such as KVM (Keyboard, Video, Mouse) over IP solutions. Desktop suppo",
+      "is_subtechnique": false,
+      "source": "attack",
+      "layer": "base",
+      "in_loader_scope": true,
+      "keep_reason": [
+        "core-loader"
+      ]
+    },
+    {
+      "id": "T1222",
+      "type": "attack-pattern",
+      "name": "File and Directory Permissions Modification",
+      "external_id": "T1222",
+      "stix_id": "attack-pattern--65917ae0-b854-4139-83fe-bf2441cf0196",
+      "url": "https://attack.mitre.org/techniques/T1222",
+      "description": "Adversaries may modify file or directory permissions/attributes to evade access control lists (ACLs) and access protected files.(Citation: Hybrid Analysis Icacls1 June 2018)(Citation: Hybrid Analysis Icacls2 May 2018) File and directory permissions are commonly managed by ACLs configured by the file or directory owner, or users with the appropriate permissions. File and directory ACL implementatio",
+      "is_subtechnique": false,
+      "source": "attack",
+      "layer": "base",
+      "in_loader_scope": true,
+      "keep_reason": [
+        "core-loader"
+      ]
+    },
+    {
+      "id": "T1480",
+      "type": "attack-pattern",
+      "name": "Execution Guardrails",
+      "external_id": "T1480",
+      "stix_id": "attack-pattern--853c4192-4311-43e1-bfbb-b11b14911852",
+      "url": "https://attack.mitre.org/techniques/T1480",
+      "description": "Adversaries may use execution guardrails to constrain execution or actions based on adversary supplied and environment specific conditions that are expected to be present on the target. Guardrails ensure that a payload only executes against an intended target and reduces collateral damage from an adversary’s campaign.(Citation: FireEye Kevin Mandia Guardrails) Values an adversary can provide about",
+      "is_subtechnique": false,
+      "source": "attack",
+      "layer": "base",
+      "in_loader_scope": true,
+      "keep_reason": [
+        "attack-evidence",
+        "core-loader"
+      ]
+    },
+    {
+      "id": "T1480.002",
+      "type": "attack-pattern",
+      "name": "Mutual Exclusion",
+      "external_id": "T1480.002",
+      "stix_id": "attack-pattern--49fca0d2-685d-41eb-8bd4-05451cc3a742",
+      "url": "https://attack.mitre.org/techniques/T1480/002",
+      "description": "Adversaries may constrain execution or actions based on the presence of a mutex associated with malware. A mutex is a locking mechanism used to synchronize access to a resource. Only one thread or process can acquire a mutex at a given time.(Citation: Microsoft Mutexes)\n\nWhile local mutexes only exist within a given process, allowing multiple threads to synchronize access to a resource, system mut",
+      "is_subtechnique": true,
+      "source": "attack",
+      "layer": "base",
+      "in_loader_scope": true,
+      "keep_reason": [
+        "attack-evidence"
+      ]
+    },
+    {
+      "id": "T1482",
+      "type": "attack-pattern",
+      "name": "Domain Trust Discovery",
+      "external_id": "T1482",
+      "stix_id": "attack-pattern--767dbf9e-df3f-45cb-8998-4903ab5f80c0",
+      "url": "https://attack.mitre.org/techniques/T1482",
+      "description": "Adversaries may attempt to gather information on domain trust relationships that may be used to identify lateral movement opportunities in Windows multi-domain/forest environments. Domain trusts provide a mechanism for a domain to allow access to resources based on the authentication procedures of another domain.(Citation: Microsoft Trusts) Domain trusts allow the users of the trusted domain to ac",
+      "is_subtechnique": false,
+      "source": "attack",
+      "layer": "base",
+      "in_loader_scope": true,
+      "keep_reason": [
+        "attack-evidence"
+      ]
+    },
+    {
+      "id": "T1497",
+      "type": "attack-pattern",
+      "name": "Virtualization/Sandbox Evasion",
+      "external_id": "T1497",
+      "stix_id": "attack-pattern--82caa33e-d11a-433a-94ea-9b5a5fbef81d",
+      "url": "https://attack.mitre.org/techniques/T1497",
+      "description": "Adversaries may employ various means to detect and avoid virtualization and analysis environments. This may include changing behaviors based on the results of checks for the presence of artifacts indicative of a virtual machine environment (VME) or sandbox. If the adversary detects a VME, they may alter their malware to disengage from the victim or conceal the core functions of the implant. They m",
+      "is_subtechnique": false,
+      "source": "attack",
+      "layer": "base",
+      "in_loader_scope": true,
+      "keep_reason": [
+        "attack-evidence",
+        "core-loader"
+      ]
+    },
+    {
+      "id": "T1497.001",
+      "type": "attack-pattern",
+      "name": "System Checks",
+      "external_id": "T1497.001",
+      "stix_id": "attack-pattern--29be378d-262d-4e99-b00d-852d573628e6",
+      "url": "https://attack.mitre.org/techniques/T1497/001",
+      "description": "Adversaries may employ various system checks to detect and avoid virtualization and analysis environments. This may include changing behaviors based on the results of checks for the presence of artifacts indicative of a virtual machine environment (VME) or sandbox. If the adversary detects a VME, they may alter their malware to disengage from the victim or conceal the core functions of the implant",
+      "is_subtechnique": true,
+      "source": "attack",
+      "layer": "base",
+      "in_loader_scope": true,
+      "keep_reason": [
+        "attack-evidence",
+        "core-loader"
+      ]
+    },
+    {
+      "id": "T1497.003",
+      "type": "attack-pattern",
+      "name": "Time Based Checks",
+      "external_id": "T1497.003",
+      "stix_id": "attack-pattern--4bed873f-0b7d-41d4-b93a-b6905d1f90b0",
+      "url": "https://attack.mitre.org/techniques/T1497/003",
+      "description": "Adversaries may employ various time-based methods to detect virtualization and analysis environments, particularly those that attempt to manipulate time mechanisms to simulate longer elapses of time. This may include enumerating time-based properties, such as uptime or the system clock. \n\nAdversaries may use calls like `GetTickCount` and `GetSystemTimeAsFileTime` to discover if they are operating ",
+      "is_subtechnique": true,
+      "source": "attack",
+      "layer": "base",
+      "in_loader_scope": true,
+      "keep_reason": [
+        "attack-evidence",
+        "core-loader"
+      ]
+    },
+    {
+      "id": "T1518",
+      "type": "attack-pattern",
+      "name": "Software Discovery",
+      "external_id": "T1518",
+      "stix_id": "attack-pattern--e3b6daca-e963-4a69-aee6-ed4fd653ad58",
+      "url": "https://attack.mitre.org/techniques/T1518",
+      "description": "Adversaries may attempt to get a listing of software and software versions that are installed on a system or in a cloud environment. Adversaries may use the information from [Software Discovery](https://attack.mitre.org/techniques/T1518) during automated discovery to shape follow-on behaviors, including whether or not the adversary fully infects the target and/or attempts specific actions.\n\nSuch s",
+      "is_subtechnique": false,
+      "source": "attack",
+      "layer": "base",
+      "in_loader_scope": true,
+      "keep_reason": [
+        "attack-evidence",
+        "core-loader"
+      ]
+    },
+    {
+      "id": "T1518.001",
+      "type": "attack-pattern",
+      "name": "Security Software Discovery",
+      "external_id": "T1518.001",
+      "stix_id": "attack-pattern--cba37adb-d6fb-4610-b069-dd04c0643384",
+      "url": "https://attack.mitre.org/techniques/T1518/001",
+      "description": "Adversaries may attempt to get a listing of security software, configurations, defensive tools, and sensors that are installed on a system or in a cloud environment. This may include things such as cloud monitoring agents and anti-virus. Adversaries may use the information from [Security Software Discovery](https://attack.mitre.org/techniques/T1518/001) during automated discovery to shape follow-o",
+      "is_subtechnique": true,
+      "source": "attack",
+      "layer": "base",
+      "in_loader_scope": true,
+      "keep_reason": [
+        "attack-evidence",
+        "core-loader"
+      ]
+    },
+    {
+      "id": "T1543",
+      "type": "attack-pattern",
+      "name": "Create or Modify System Process",
+      "external_id": "T1543",
+      "stix_id": "attack-pattern--106c0cf6-bf73-4601-9aa8-0945c2715ec5",
+      "url": "https://attack.mitre.org/techniques/T1543",
+      "description": "Adversaries may create or modify system-level processes to repeatedly execute malicious payloads as part of persistence. When operating systems boot up, they can start processes that perform background system functions. On Windows and Linux, these system processes are referred to as services.(Citation: TechNet Services) On macOS, launchd processes known as [Launch Daemon](https://attack.mitre.org/",
+      "is_subtechnique": false,
+      "source": "attack",
+      "layer": "base",
+      "in_loader_scope": true,
+      "keep_reason": [
+        "attack-evidence",
+        "core-loader"
+      ]
+    },
+    {
+      "id": "T1543.003",
+      "type": "attack-pattern",
+      "name": "Windows Service",
+      "external_id": "T1543.003",
+      "stix_id": "attack-pattern--2959d63f-73fd-46a1-abd2-109d7dcede32",
+      "url": "https://attack.mitre.org/techniques/T1543/003",
+      "description": "Adversaries may create or modify Windows services to repeatedly execute malicious payloads as part of persistence. When Windows boots up, it starts programs or applications called services that perform background system functions.(Citation: TechNet Services) Windows service configuration information, including the file path to the service's executable or recovery programs/commands, is stored in th",
+      "is_subtechnique": true,
+      "source": "attack",
+      "layer": "base",
+      "in_loader_scope": true,
+      "keep_reason": [
+        "attack-evidence",
+        "core-loader"
+      ]
+    },
+    {
+      "id": "T1546",
+      "type": "attack-pattern",
+      "name": "Event Triggered Execution",
+      "external_id": "T1546",
+      "stix_id": "attack-pattern--b6301b64-ef57-4cce-bb0b-77026f14a8db",
+      "url": "https://attack.mitre.org/techniques/T1546",
+      "description": "Adversaries may establish persistence and/or elevate privileges using system mechanisms that trigger execution based on specific events. Various operating systems have means to monitor and subscribe to events such as logons or other user activity such as running specific applications/binaries. Cloud environments may also support various functions and services that monitor and can be invoked in res",
+      "is_subtechnique": false,
+      "source": "attack",
+      "layer": "base",
+      "in_loader_scope": true,
+      "keep_reason": [
+        "core-loader"
+      ]
+    },
+    {
+      "id": "T1546.003",
+      "type": "attack-pattern",
+      "name": "Windows Management Instrumentation Event Subscription",
+      "external_id": "T1546.003",
+      "stix_id": "attack-pattern--910906dd-8c0a-475a-9cc1-5e029e2fad58",
+      "url": "https://attack.mitre.org/techniques/T1546/003",
+      "description": "Adversaries may establish persistence and elevate privileges by executing malicious content triggered by a Windows Management Instrumentation (WMI) event subscription. WMI can be used to install event filters, providers, consumers, and bindings that execute code when a defined event occurs. Examples of events that may be subscribed to are the wall clock time, user login, or the computer's uptime.(",
+      "is_subtechnique": true,
+      "source": "attack",
+      "layer": "base",
+      "in_loader_scope": true,
+      "keep_reason": [
+        "core-loader"
+      ]
+    },
+    {
+      "id": "T1546.015",
+      "type": "attack-pattern",
+      "name": "Component Object Model Hijacking",
+      "external_id": "T1546.015",
+      "stix_id": "attack-pattern--bc0f5e80-91c0-4e04-9fbb-e4e332c85dae",
+      "url": "https://attack.mitre.org/techniques/T1546/015",
+      "description": "Adversaries may establish persistence by executing malicious content triggered by hijacked references to Component Object Model (COM) objects. COM is a system within Windows to enable interaction between software components through the operating system.(Citation: Microsoft Component Object Model)  References to various COM objects are stored in the Registry. \n\nAdversaries may use the COM system to",
+      "is_subtechnique": true,
+      "source": "attack",
+      "layer": "base",
+      "in_loader_scope": true,
+      "keep_reason": [
+        "attack-evidence"
+      ]
+    },
+    {
+      "id": "T1547",
+      "type": "attack-pattern",
+      "name": "Boot or Logon Autostart Execution",
+      "external_id": "T1547",
+      "stix_id": "attack-pattern--1ecb2399-e8ba-4f6b-8ba7-5c27d49405cf",
+      "url": "https://attack.mitre.org/techniques/T1547",
+      "description": "Adversaries may configure system settings to automatically execute a program during system boot or logon to maintain persistence or gain higher-level privileges on compromised systems. Operating systems may have mechanisms for automatically running a program on system boot or account logon.(Citation: Microsoft Run Key)(Citation: MSDN Authentication Packages)(Citation: Microsoft TimeProvider)(Citat",
+      "is_subtechnique": false,
+      "source": "attack",
+      "layer": "base",
+      "in_loader_scope": true,
+      "keep_reason": [
+        "core-loader"
+      ]
+    },
+    {
+      "id": "T1547.001",
+      "type": "attack-pattern",
+      "name": "Registry Run Keys / Startup Folder",
+      "external_id": "T1547.001",
+      "stix_id": "attack-pattern--9efb1ea7-c37b-4595-9640-b7680cd84279",
+      "url": "https://attack.mitre.org/techniques/T1547/001",
+      "description": "Adversaries may achieve persistence by adding a program to a startup folder or referencing it with a Registry run key. Adding an entry to the \"run keys\" in the Registry or startup folder will cause the program referenced to be executed when a user logs in.(Citation: Microsoft Run Key) These programs will be executed under the context of the user and will have the account's associated permissions l",
+      "is_subtechnique": true,
+      "source": "attack",
+      "layer": "base",
+      "in_loader_scope": true,
+      "keep_reason": [
+        "attack-evidence",
+        "core-loader"
+      ]
+    },
+    {
+      "id": "T1547.004",
+      "type": "attack-pattern",
+      "name": "Winlogon Helper DLL",
+      "external_id": "T1547.004",
+      "stix_id": "attack-pattern--6836813e-8ec8-4375-b459-abb388cb1a35",
+      "url": "https://attack.mitre.org/techniques/T1547/004",
+      "description": "Adversaries may abuse features of Winlogon to execute DLLs and/or executables when a user logs in. Winlogon.exe is a Windows component responsible for actions at logon/logoff as well as the secure attention sequence (SAS) triggered by Ctrl-Alt-Delete. Registry entries in <code>HKLM\\Software[\\\\Wow6432Node\\\\]\\Microsoft\\Windows NT\\CurrentVersion\\Winlogon\\</code> and <code>HKCU\\Software\\Microsoft\\Wind",
+      "is_subtechnique": true,
+      "source": "attack",
+      "layer": "base",
+      "in_loader_scope": true,
+      "keep_reason": [
+        "attack-evidence"
+      ]
+    },
+    {
+      "id": "T1547.009",
+      "type": "attack-pattern",
+      "name": "Shortcut Modification",
+      "external_id": "T1547.009",
+      "stix_id": "attack-pattern--4ab929c6-ee2d-4fb5-aab4-b14be2ed7179",
+      "url": "https://attack.mitre.org/techniques/T1547/009",
+      "description": "Adversaries may create or modify shortcuts that can execute a program during system boot or user login. Shortcuts or symbolic links are used to reference other files or programs that will be opened or executed when the shortcut is clicked or executed by a system startup process.\n\nAdversaries may abuse shortcuts in the startup folder to execute their tools and achieve persistence.(Citation: Shortcu",
+      "is_subtechnique": true,
+      "source": "attack",
+      "layer": "base",
+      "in_loader_scope": true,
+      "keep_reason": [
+        "attack-evidence",
+        "core-loader"
+      ]
+    },
+    {
+      "id": "T1553",
+      "type": "attack-pattern",
+      "name": "Subvert Trust Controls",
+      "external_id": "T1553",
+      "stix_id": "attack-pattern--b83e166d-13d7-4b52-8677-dff90c548fd7",
+      "url": "https://attack.mitre.org/techniques/T1553",
+      "description": "Adversaries may undermine security controls that will either warn users of untrusted activity or prevent execution of untrusted programs. Operating systems and security products may contain mechanisms to identify programs or websites as possessing some level of trust. Examples of such features would include a program being allowed to run because it is signed by a valid code signing certificate, a ",
+      "is_subtechnique": false,
+      "source": "attack",
+      "layer": "base",
+      "in_loader_scope": true,
+      "keep_reason": [
+        "core-loader"
+      ]
+    },
+    {
+      "id": "T1553.002",
+      "type": "attack-pattern",
+      "name": "Code Signing",
+      "external_id": "T1553.002",
+      "stix_id": "attack-pattern--32901740-b42c-4fdd-bc02-345b5dc57082",
+      "url": "https://attack.mitre.org/techniques/T1553/002",
+      "description": "Adversaries may create, acquire, or steal code signing materials to sign their malware or tools. Code signing provides a level of authenticity on a binary from the developer and a guarantee that the binary has not been tampered with. (Citation: Wikipedia Code Signing) The certificates used during an operation may be created, acquired, or stolen by the adversary. (Citation: Securelist Digital Certi",
+      "is_subtechnique": true,
+      "source": "attack",
+      "layer": "base",
+      "in_loader_scope": true,
+      "keep_reason": [
+        "attack-evidence",
+        "core-loader"
+      ]
+    },
+    {
+      "id": "T1559",
+      "type": "attack-pattern",
+      "name": "Inter-Process Communication",
+      "external_id": "T1559",
+      "stix_id": "attack-pattern--acd0ba37-7ba9-4cc5-ac61-796586cd856d",
+      "url": "https://attack.mitre.org/techniques/T1559",
+      "description": "Adversaries may abuse inter-process communication (IPC) mechanisms for local code or command execution. IPC is typically used by processes to share data, communicate with each other, or synchronize execution. IPC is also commonly used to avoid situations such as deadlocks, which occurs when processes are stuck in a cyclic waiting pattern. \n\nAdversaries may abuse IPC to execute arbitrary code or co",
+      "is_subtechnique": false,
+      "source": "attack",
+      "layer": "base",
+      "in_loader_scope": true,
+      "keep_reason": [
+        "core-loader"
+      ]
+    },
+    {
+      "id": "T1559.001",
+      "type": "attack-pattern",
+      "name": "Component Object Model",
+      "external_id": "T1559.001",
+      "stix_id": "attack-pattern--2f6b4ed7-fef1-44ba-bcb8-1b4beb610b64",
+      "url": "https://attack.mitre.org/techniques/T1559/001",
+      "description": "Adversaries may use the Windows Component Object Model (COM) for local code execution. COM is an inter-process communication (IPC) component of the native Windows application programming interface (API) that enables interaction between software objects, or executable code that implements one or more interfaces.(Citation: Fireeye Hunting COM June 2019) Through COM, a client object can call methods ",
+      "is_subtechnique": true,
+      "source": "attack",
+      "layer": "base",
+      "in_loader_scope": true,
+      "keep_reason": [
+        "attack-evidence",
+        "core-loader"
+      ]
+    },
+    {
+      "id": "T1559.002",
+      "type": "attack-pattern",
+      "name": "Dynamic Data Exchange",
+      "external_id": "T1559.002",
+      "stix_id": "attack-pattern--232a7e42-cd6e-4902-8fe9-2960f529dd4d",
+      "url": "https://attack.mitre.org/techniques/T1559/002",
+      "description": "Adversaries may use Windows Dynamic Data Exchange (DDE) to execute arbitrary commands. DDE is a client-server protocol for one-time and/or continuous inter-process communication (IPC) between applications. Once a link is established, applications can autonomously exchange transactions consisting of strings, warm data links (notifications when a data item changes), hot data links (duplications of c",
+      "is_subtechnique": true,
+      "source": "attack",
+      "layer": "base",
+      "in_loader_scope": true,
+      "keep_reason": [
+        "core-loader"
+      ]
+    },
+    {
+      "id": "T1564",
+      "type": "attack-pattern",
+      "name": "Hide Artifacts",
+      "external_id": "T1564",
+      "stix_id": "attack-pattern--22905430-4901-4c2a-84f6-98243cb173f8",
+      "url": "https://attack.mitre.org/techniques/T1564",
+      "description": "Adversaries may attempt to hide artifacts associated with their behaviors to evade detection. Operating systems may have features to hide various artifacts, such as important system files and administrative task execution, to avoid disrupting user work environments and prevent users from changing files or features on the system. Adversaries may abuse these features to hide artifacts such as files,",
+      "is_subtechnique": false,
+      "source": "attack",
+      "layer": "base",
+      "in_loader_scope": true,
+      "keep_reason": [
+        "core-loader"
+      ]
+    },
+    {
+      "id": "T1564.001",
+      "type": "attack-pattern",
+      "name": "Hidden Files and Directories",
+      "external_id": "T1564.001",
+      "stix_id": "attack-pattern--ec8fc7e2-b356-455c-8db5-2e37be158e7d",
+      "url": "https://attack.mitre.org/techniques/T1564/001",
+      "description": "Adversaries may set files and directories to be hidden to evade detection mechanisms. To prevent normal users from accidentally changing special files on a system, most operating systems have the concept of a ‘hidden’ file. These files don’t show up when a user browses the file system with a GUI or when using normal commands on the command line. Users must explicitly ask to show the hidden files e",
+      "is_subtechnique": true,
+      "source": "attack",
+      "layer": "base",
+      "in_loader_scope": true,
+      "keep_reason": [
+        "attack-evidence",
+        "core-loader"
+      ]
+    },
+    {
+      "id": "T1564.003",
+      "type": "attack-pattern",
+      "name": "Hidden Window",
+      "external_id": "T1564.003",
+      "stix_id": "attack-pattern--cbb66055-0325-4111-aca0-40547b6ad5b0",
+      "url": "https://attack.mitre.org/techniques/T1564/003",
+      "description": "Adversaries may use hidden windows to conceal malicious activity from the plain sight of users. In some cases, windows that would typically be displayed when an application carries out an operation can be hidden. This may be utilized by system administrators to avoid disrupting user work environments when carrying out administrative tasks. \n\nAdversaries may abuse these functionalities to hide othe",
+      "is_subtechnique": true,
+      "source": "attack",
+      "layer": "base",
+      "in_loader_scope": true,
+      "keep_reason": [
+        "attack-evidence"
+      ]
+    },
+    {
+      "id": "T1566",
+      "type": "attack-pattern",
+      "name": "Phishing",
+      "external_id": "T1566",
+      "stix_id": "attack-pattern--a62a8db3-f23a-4d8f-afd6-9dbc77e7813b",
+      "url": "https://attack.mitre.org/techniques/T1566",
+      "description": "Adversaries may send phishing messages to gain access to victim systems. All forms of phishing are electronically delivered social engineering. Phishing can be targeted, known as spearphishing. In spearphishing, a specific individual, company, or industry will be targeted by the adversary. More generally, adversaries can conduct non-targeted phishing, such as in mass malware spam campaigns.\n\nAdver",
+      "is_subtechnique": false,
+      "source": "attack",
+      "layer": "base",
+      "in_loader_scope": true,
+      "keep_reason": [
+        "core-loader"
+      ]
+    },
+    {
+      "id": "T1566.001",
+      "type": "attack-pattern",
+      "name": "Spearphishing Attachment",
+      "external_id": "T1566.001",
+      "stix_id": "attack-pattern--2e34237d-8574-43f6-aace-ae2915de8597",
+      "url": "https://attack.mitre.org/techniques/T1566/001",
+      "description": "Adversaries may send spearphishing emails with a malicious attachment in an attempt to gain access to victim systems. Spearphishing attachment is a specific variant of spearphishing. Spearphishing attachment is different from other forms of spearphishing in that it employs the use of malware attached to an email. All forms of spearphishing are electronically delivered social engineering targeted a",
+      "is_subtechnique": true,
+      "source": "attack",
+      "layer": "base",
+      "in_loader_scope": true,
+      "keep_reason": [
+        "attack-evidence",
+        "core-loader",
+        "report"
+      ]
+    },
+    {
+      "id": "T1566.002",
+      "type": "attack-pattern",
+      "name": "Spearphishing Link",
+      "external_id": "T1566.002",
+      "stix_id": "attack-pattern--2b742742-28c3-4e1b-bab7-8350d6300fa7",
+      "url": "https://attack.mitre.org/techniques/T1566/002",
+      "description": "Adversaries may send spearphishing emails with a malicious link in an attempt to gain access to victim systems. Spearphishing with a link is a specific variant of spearphishing. It is different from other forms of spearphishing in that it employs the use of links to download malware contained in email, instead of attaching malicious files to the email itself, to avoid defenses that may inspect ema",
+      "is_subtechnique": true,
+      "source": "attack",
+      "layer": "base",
+      "in_loader_scope": true,
+      "keep_reason": [
+        "attack-evidence",
+        "core-loader"
+      ]
+    },
+    {
+      "id": "T1566.004",
+      "type": "attack-pattern",
+      "name": "Spearphishing Voice",
+      "external_id": "T1566.004",
+      "stix_id": "attack-pattern--bb5e59c4-abe7-40c7-8196-e373cb1e5974",
+      "url": "https://attack.mitre.org/techniques/T1566/004",
+      "description": "Adversaries may use voice communications to ultimately gain access to victim systems. Spearphishing voice is a specific variant of spearphishing. It is different from other forms of spearphishing in that it employs the use of manipulating a user into providing access to systems through a phone call or other forms of voice communications. Spearphishing frequently involves social engineering techniq",
+      "is_subtechnique": true,
+      "source": "attack",
+      "layer": "base",
+      "in_loader_scope": true,
+      "keep_reason": [
+        "core-loader"
+      ]
+    },
+    {
+      "id": "T1568",
+      "type": "attack-pattern",
+      "name": "Dynamic Resolution",
+      "external_id": "T1568",
+      "stix_id": "attack-pattern--7bd9c723-2f78-4309-82c5-47cad406572b",
+      "url": "https://attack.mitre.org/techniques/T1568",
+      "description": "Adversaries may dynamically establish connections to command and control infrastructure to evade common detections and remediations. This may be achieved by using malware that shares a common algorithm with the infrastructure the adversary uses to receive the malware's communications. These calculations can be used to dynamically adjust parameters such as the domain name, IP address, or port numbe",
+      "is_subtechnique": false,
+      "source": "attack",
+      "layer": "base",
+      "in_loader_scope": true,
+      "keep_reason": [
+        "core-loader"
+      ]
+    },
+    {
+      "id": "T1568.002",
+      "type": "attack-pattern",
+      "name": "Domain Generation Algorithms",
+      "external_id": "T1568.002",
+      "stix_id": "attack-pattern--118f61a5-eb3e-4fb6-931f-2096647f4ecd",
+      "url": "https://attack.mitre.org/techniques/T1568/002",
+      "description": "Adversaries may make use of Domain Generation Algorithms (DGAs) to dynamically identify a destination domain for command and control traffic rather than relying on a list of static IP addresses or domains. This has the advantage of making it much harder for defenders to block, track, or take over the command and control channel, as there potentially could be thousands of domains that malware can c",
+      "is_subtechnique": true,
+      "source": "attack",
+      "layer": "base",
+      "in_loader_scope": true,
+      "keep_reason": [
+        "attack-evidence",
+        "core-loader"
+      ]
+    },
+    {
+      "id": "T1573",
+      "type": "attack-pattern",
+      "name": "Encrypted Channel",
+      "external_id": "T1573",
+      "stix_id": "attack-pattern--b8902400-e6c5-4ba2-95aa-2d35b442b118",
+      "url": "https://attack.mitre.org/techniques/T1573",
+      "description": "Adversaries may employ an encryption algorithm to conceal command and control traffic rather than relying on any inherent protections provided by a communication protocol. Despite the use of a secure algorithm, these implementations may be vulnerable to reverse engineering if secret keys are encoded and/or generated within malware samples/configuration files.",
+      "is_subtechnique": false,
+      "source": "attack",
+      "layer": "base",
+      "in_loader_scope": true,
+      "keep_reason": [
+        "attack-evidence",
+        "core-loader"
+      ]
+    },
+    {
+      "id": "T1573.001",
+      "type": "attack-pattern",
+      "name": "Symmetric Cryptography",
+      "external_id": "T1573.001",
+      "stix_id": "attack-pattern--24bfaeba-cb0d-4525-b3dc-507c77ecec41",
+      "url": "https://attack.mitre.org/techniques/T1573/001",
+      "description": "Adversaries may employ a known symmetric encryption algorithm to conceal command and control traffic rather than relying on any inherent protections provided by a communication protocol. Symmetric encryption algorithms use the same key for plaintext encryption and ciphertext decryption. Common symmetric encryption algorithms include AES, DES, 3DES, Blowfish, and RC4.",
+      "is_subtechnique": true,
+      "source": "attack",
+      "layer": "base",
+      "in_loader_scope": true,
+      "keep_reason": [
+        "attack-evidence"
+      ]
+    },
+    {
+      "id": "T1573.002",
+      "type": "attack-pattern",
+      "name": "Asymmetric Cryptography",
+      "external_id": "T1573.002",
+      "stix_id": "attack-pattern--bf176076-b789-408e-8cba-7275e81c0ada",
+      "url": "https://attack.mitre.org/techniques/T1573/002",
+      "description": "Adversaries may employ a known asymmetric encryption algorithm to conceal command and control traffic rather than relying on any inherent protections provided by a communication protocol. Asymmetric cryptography, also known as public key cryptography, uses a keypair per party: one public that can be freely distributed, and one private. Due to how the keys are generated, the sender encrypts data wi",
+      "is_subtechnique": true,
+      "source": "attack",
+      "layer": "base",
+      "in_loader_scope": true,
+      "keep_reason": [
+        "attack-evidence",
+        "core-loader"
+      ]
+    },
+    {
+      "id": "T1574",
+      "type": "attack-pattern",
+      "name": "Hijack Execution Flow",
+      "external_id": "T1574",
+      "stix_id": "attack-pattern--aedfca76-3b30-4866-b2aa-0f1d7fd1e4b6",
+      "url": "https://attack.mitre.org/techniques/T1574",
+      "description": "Adversaries may execute their own malicious payloads by hijacking the way operating systems run programs. Hijacking execution flow can be for the purposes of persistence, since this hijacked execution may reoccur over time. Adversaries may also use these mechanisms to elevate privileges or evade defenses, such as application control or other restrictions on execution.\n\nThere are many ways an adver",
+      "is_subtechnique": false,
+      "source": "attack",
+      "layer": "base",
+      "in_loader_scope": true,
+      "keep_reason": [
+        "core-loader"
+      ]
+    },
+    {
+      "id": "T1574.001",
+      "type": "attack-pattern",
+      "name": "DLL",
+      "external_id": "T1574.001",
+      "stix_id": "attack-pattern--2fee9321-3e71-4cf4-af24-d4d40d355b34",
+      "url": "https://attack.mitre.org/techniques/T1574/001",
+      "description": "Adversaries may abuse dynamic-link library files (DLLs) in order to achieve persistence, escalate privileges, and evade defenses. DLLs are libraries that contain code and data that can be simultaneously utilized by multiple programs. While DLLs are not malicious by nature, they can be abused through mechanisms such as side-loading, hijacking search order, and phantom DLL hijacking.(Citation: unit ",
+      "is_subtechnique": true,
+      "source": "attack",
+      "layer": "base",
+      "in_loader_scope": true,
+      "keep_reason": [
+        "attack-evidence",
+        "core-loader"
+      ]
+    },
+    {
+      "id": "T1574.008",
+      "type": "attack-pattern",
+      "name": "Path Interception by Search Order Hijacking",
+      "external_id": "T1574.008",
+      "stix_id": "attack-pattern--58af3705-8740-4c68-9329-ec015a7013c2",
+      "url": "https://attack.mitre.org/techniques/T1574/008",
+      "description": "Adversaries may execute their own malicious payloads by hijacking the search order used to load other programs. Because some programs do not call other programs using the full path, adversaries may place their own file in the directory where the calling program is located, causing the operating system to launch their malicious software at the request of the calling program.\n\nSearch order hijacking",
+      "is_subtechnique": true,
+      "source": "attack",
+      "layer": "base",
+      "in_loader_scope": true,
+      "keep_reason": [
+        "core-loader"
+      ]
+    },
+    {
+      "id": "T1574.014",
+      "type": "attack-pattern",
+      "name": "AppDomainManager",
+      "external_id": "T1574.014",
+      "stix_id": "attack-pattern--356662f7-e315-4759-86c9-6214e2a50ff8",
+      "url": "https://attack.mitre.org/techniques/T1574/014",
+      "description": "Adversaries may execute their own malicious payloads by hijacking how the .NET `AppDomainManager` loads assemblies. The .NET framework uses the `AppDomainManager` class to create and manage one or more isolated runtime environments (called application domains) inside a process to host the execution of .NET applications. Assemblies (`.exe` or `.dll` binaries compiled to run as .NET code) may be loa",
+      "is_subtechnique": true,
+      "source": "attack",
+      "layer": "base",
+      "in_loader_scope": true,
+      "keep_reason": [
+        "attack-evidence"
+      ]
+    },
+    {
+      "id": "T1583",
+      "type": "attack-pattern",
+      "name": "Acquire Infrastructure",
+      "external_id": "T1583",
+      "stix_id": "attack-pattern--0458aab9-ad42-4eac-9e22-706a95bafee2",
+      "url": "https://attack.mitre.org/techniques/T1583",
+      "description": "Adversaries may buy, lease, rent, or obtain infrastructure that can be used during targeting. A wide variety of infrastructure exists for hosting and orchestrating adversary operations. Infrastructure solutions include physical or cloud servers, domains, and third-party web services.(Citation: TrendmicroHideoutsLease) Some infrastructure providers offer free trial periods, enabling infrastructure ",
+      "is_subtechnique": false,
+      "source": "attack",
+      "layer": "base",
+      "in_loader_scope": true,
+      "keep_reason": [
+        "core-loader"
+      ]
+    },
+    {
+      "id": "T1583.001",
+      "type": "attack-pattern",
+      "name": "Domains",
+      "external_id": "T1583.001",
+      "stix_id": "attack-pattern--40f5caa0-4cb7-4117-89fc-d421bb493df3",
+      "url": "https://attack.mitre.org/techniques/T1583/001",
+      "description": "Adversaries may acquire domains that can be used during targeting. Domain names are the human readable names used to represent one or more IP addresses. They can be purchased or, in some cases, acquired for free.\n\nAdversaries may use acquired domains for a variety of purposes, including for [Phishing](https://attack.mitre.org/techniques/T1566), [Drive-by Compromise](https://attack.mitre.org/techni",
+      "is_subtechnique": true,
+      "source": "attack",
+      "layer": "base",
+      "in_loader_scope": true,
+      "keep_reason": [
+        "attack-evidence",
+        "core-loader",
+        "report"
+      ]
+    },
+    {
+      "id": "T1583.003",
+      "type": "attack-pattern",
+      "name": "Virtual Private Server",
+      "external_id": "T1583.003",
+      "stix_id": "attack-pattern--79da0971-3147-4af6-a4f5-e8cd447cd795",
+      "url": "https://attack.mitre.org/techniques/T1583/003",
+      "description": "Adversaries may rent Virtual Private Servers (VPSs) that can be used during targeting. There exist a variety of cloud service providers that will sell virtual machines/containers as a service. By utilizing a VPS, adversaries can make it difficult to physically tie back operations to them. The use of cloud infrastructure can also make it easier for adversaries to rapidly provision, modify, and shut",
+      "is_subtechnique": true,
+      "source": "attack",
+      "layer": "base",
+      "in_loader_scope": true,
+      "keep_reason": [
+        "core-loader"
+      ]
+    },
+    {
+      "id": "T1583.004",
+      "type": "attack-pattern",
+      "name": "Server",
+      "external_id": "T1583.004",
+      "stix_id": "attack-pattern--60c4b628-4807-4b0b-bbf5-fdac8643c337",
+      "url": "https://attack.mitre.org/techniques/T1583/004",
+      "description": "Adversaries may buy, lease, rent, or obtain physical servers that can be used during targeting. Use of servers allows an adversary to stage, launch, and execute an operation. During post-compromise activity, adversaries may utilize servers for various tasks, such as watering hole operations in [Drive-by Compromise](https://attack.mitre.org/techniques/T1189), enabling [Phishing](https://attack.mitr",
+      "is_subtechnique": true,
+      "source": "attack",
+      "layer": "base",
+      "in_loader_scope": true,
+      "keep_reason": [
+        "core-loader"
+      ]
+    },
+    {
+      "id": "T1583.006",
+      "type": "attack-pattern",
+      "name": "Web Services",
+      "external_id": "T1583.006",
+      "stix_id": "attack-pattern--88d31120-5bc7-4ce3-a9c0-7cf147be8e54",
+      "url": "https://attack.mitre.org/techniques/T1583/006",
+      "description": "Adversaries may register for web services that can be used during targeting. A variety of popular websites exist for adversaries to register for a web-based service that can be abused during later stages of the adversary lifecycle, such as during Command and Control ([Web Service](https://attack.mitre.org/techniques/T1102)), [Exfiltration Over Web Service](https://attack.mitre.org/techniques/T1567",
+      "is_subtechnique": true,
+      "source": "attack",
+      "layer": "base",
+      "in_loader_scope": true,
+      "keep_reason": [
+        "core-loader"
+      ]
+    },
+    {
+      "id": "T1584",
+      "type": "attack-pattern",
+      "name": "Compromise Infrastructure",
+      "external_id": "T1584",
+      "stix_id": "attack-pattern--7e3beebd-8bfe-4e7b-a892-e44ab06a75f9",
+      "url": "https://attack.mitre.org/techniques/T1584",
+      "description": "Adversaries may compromise third-party infrastructure that can be used during targeting. Infrastructure solutions include physical or cloud servers, domains, network devices, and third-party web and DNS services. Instead of buying, leasing, or renting infrastructure an adversary may compromise infrastructure and use it during other phases of the adversary lifecycle.(Citation: Mandiant APT1)(Citati",
+      "is_subtechnique": false,
+      "source": "attack",
+      "layer": "base",
+      "in_loader_scope": true,
+      "keep_reason": [
+        "core-loader"
+      ]
+    },
+    {
+      "id": "T1584.001",
+      "type": "attack-pattern",
+      "name": "Domains",
+      "external_id": "T1584.001",
+      "stix_id": "attack-pattern--f9cc4d06-775f-4ee1-b401-4e2cc0da30ba",
+      "url": "https://attack.mitre.org/techniques/T1584/001",
+      "description": "Adversaries may hijack domains and/or subdomains that can be used during targeting. Domain registration hijacking is the act of changing the registration of a domain name without the permission of the original registrant.(Citation: ICANNDomainNameHijacking) Adversaries may gain access to an email account for the person listed as the owner of the domain. The adversary can then claim that they forgo",
+      "is_subtechnique": true,
+      "source": "attack",
+      "layer": "base",
+      "in_loader_scope": true,
+      "keep_reason": [
+        "attack-evidence",
+        "core-loader"
+      ]
+    },
+    {
+      "id": "T1584.006",
+      "type": "attack-pattern",
+      "name": "Web Services",
+      "external_id": "T1584.006",
+      "stix_id": "attack-pattern--ae797531-3219-49a4-bccf-324ad7a4c7b2",
+      "url": "https://attack.mitre.org/techniques/T1584/006",
+      "description": "Adversaries may compromise access to third-party web services that can be used during targeting. A variety of popular websites exist for legitimate users to register for web-based services, such as GitHub, Twitter, Dropbox, Google, SendGrid, etc. Adversaries may try to take ownership of a legitimate user's access to a web service and use that web service as infrastructure in support of cyber opera",
+      "is_subtechnique": true,
+      "source": "attack",
+      "layer": "base",
+      "in_loader_scope": true,
+      "keep_reason": [
+        "attack-evidence"
+      ]
+    },
+    {
+      "id": "T1587",
+      "type": "attack-pattern",
+      "name": "Develop Capabilities",
+      "external_id": "T1587",
+      "stix_id": "attack-pattern--edadea33-549c-4ed1-9783-8f5a5853cbdf",
+      "url": "https://attack.mitre.org/techniques/T1587",
+      "description": "Adversaries may build capabilities that can be used during targeting. Rather than purchasing, freely downloading, or stealing capabilities, adversaries may develop their own capabilities in-house. This is the process of identifying development requirements and building solutions such as malware, exploits, and self-signed certificates. Adversaries may develop capabilities to support their operation",
+      "is_subtechnique": false,
+      "source": "attack",
+      "layer": "base",
+      "in_loader_scope": true,
+      "keep_reason": [
+        "core-loader"
+      ]
+    },
+    {
+      "id": "T1587.001",
+      "type": "attack-pattern",
+      "name": "Malware",
+      "external_id": "T1587.001",
+      "stix_id": "attack-pattern--212306d8-efa4-44c9-8c2d-ed3d2e224aa0",
+      "url": "https://attack.mitre.org/techniques/T1587/001",
+      "description": "Adversaries may develop malware and malware components that can be used during targeting. Building malicious software can include the development of payloads, droppers, post-compromise tools, backdoors (including backdoored images), packers, C2 protocols, and the creation of infected removable media. Adversaries may develop malware to support their operations, creating a means for maintaining cont",
+      "is_subtechnique": true,
+      "source": "attack",
+      "layer": "base",
+      "in_loader_scope": true,
+      "keep_reason": [
+        "core-loader"
+      ]
+    },
+    {
+      "id": "T1588",
+      "type": "attack-pattern",
+      "name": "Obtain Capabilities",
+      "external_id": "T1588",
+      "stix_id": "attack-pattern--ce0687a0-e692-4b77-964a-0784a8e54ff1",
+      "url": "https://attack.mitre.org/techniques/T1588",
+      "description": "Adversaries may buy and/or steal capabilities that can be used during targeting. Rather than developing their own capabilities in-house, adversaries may purchase, freely download, or steal them. Activities may include the acquisition of malware, software (including licenses), exploits, certificates, and information relating to vulnerabilities. Adversaries may obtain capabilities to support their o",
+      "is_subtechnique": false,
+      "source": "attack",
+      "layer": "base",
+      "in_loader_scope": true,
+      "keep_reason": [
+        "core-loader"
+      ]
+    },
+    {
+      "id": "T1588.001",
+      "type": "attack-pattern",
+      "name": "Malware",
+      "external_id": "T1588.001",
+      "stix_id": "attack-pattern--7807d3a4-a885-4639-a786-c1ed41484970",
+      "url": "https://attack.mitre.org/techniques/T1588/001",
+      "description": "Adversaries may buy, steal, or download malware that can be used during targeting. Malicious software can include payloads, droppers, post-compromise tools, backdoors, packers, and C2 protocols. Adversaries may acquire malware to support their operations, obtaining a means for maintaining control of remote machines, evading defenses, and executing post-compromise behaviors.\n\nIn addition to downloa",
+      "is_subtechnique": true,
+      "source": "attack",
+      "layer": "base",
+      "in_loader_scope": true,
+      "keep_reason": [
+        "core-loader"
+      ]
+    },
+    {
+      "id": "T1588.002",
+      "type": "attack-pattern",
+      "name": "Tool",
+      "external_id": "T1588.002",
+      "stix_id": "attack-pattern--a2fdce72-04b2-409a-ac10-cc1695f4fce0",
+      "url": "https://attack.mitre.org/techniques/T1588/002",
+      "description": "Adversaries may buy, steal, or download software tools that can be used during targeting. Tools can be open or closed source, free or commercial. A tool can be used for malicious purposes by an adversary, but (unlike malware) were not intended to be used for those purposes (ex: [PsExec](https://attack.mitre.org/software/S0029)). \n\nAdversaries may obtain tools to support their operations, including",
+      "is_subtechnique": true,
+      "source": "attack",
+      "layer": "base",
+      "in_loader_scope": true,
+      "keep_reason": [
+        "attack-evidence",
+        "core-loader"
+      ]
+    },
+    {
+      "id": "T1608",
+      "type": "attack-pattern",
+      "name": "Stage Capabilities",
+      "external_id": "T1608",
+      "stix_id": "attack-pattern--84771bc3-f6a0-403e-b144-01af70e5fda0",
+      "url": "https://attack.mitre.org/techniques/T1608",
+      "description": "Adversaries may upload, install, or otherwise set up capabilities that can be used during targeting. To support their operations, an adversary may need to take capabilities they developed ([Develop Capabilities](https://attack.mitre.org/techniques/T1587)) or obtained ([Obtain Capabilities](https://attack.mitre.org/techniques/T1588)) and stage them on infrastructure under their control. These capab",
+      "is_subtechnique": false,
+      "source": "attack",
+      "layer": "base",
+      "in_loader_scope": true,
+      "keep_reason": [
+        "core-loader"
+      ]
+    },
+    {
+      "id": "T1608.001",
+      "type": "attack-pattern",
+      "name": "Upload Malware",
+      "external_id": "T1608.001",
+      "stix_id": "attack-pattern--3ee16395-03f0-4690-a32e-69ce9ada0f9e",
+      "url": "https://attack.mitre.org/techniques/T1608/001",
+      "description": "Adversaries may upload malware to third-party or adversary controlled infrastructure to make it accessible during targeting. Malicious software can include payloads, droppers, post-compromise tools, backdoors, and a variety of other malicious content. Adversaries may upload malware to support their operations, such as making a payload available to a victim network to enable [Ingress Tool Transfer]",
+      "is_subtechnique": true,
+      "source": "attack",
+      "layer": "base",
+      "in_loader_scope": true,
+      "keep_reason": [
+        "core-loader"
+      ]
+    },
+    {
+      "id": "T1608.002",
+      "type": "attack-pattern",
+      "name": "Upload Tool",
+      "external_id": "T1608.002",
+      "stix_id": "attack-pattern--506f6f49-7045-4156-9007-7474cb44ad6d",
+      "url": "https://attack.mitre.org/techniques/T1608/002",
+      "description": "Adversaries may upload tools to third-party or adversary controlled infrastructure to make it accessible during targeting. Tools can be open or closed source, free or commercial. Tools can be used for malicious purposes by an adversary, but (unlike malware) were not intended to be used for those purposes (ex: [PsExec](https://attack.mitre.org/software/S0029)). Adversaries may upload tools to suppo",
+      "is_subtechnique": true,
+      "source": "attack",
+      "layer": "base",
+      "in_loader_scope": true,
+      "keep_reason": [
+        "core-loader"
+      ]
+    },
+    {
+      "id": "T1608.003",
+      "type": "attack-pattern",
+      "name": "Install Digital Certificate",
+      "external_id": "T1608.003",
+      "stix_id": "attack-pattern--c071d8c1-3b3a-4f22-9407-ca4e96921069",
+      "url": "https://attack.mitre.org/techniques/T1608/003",
+      "description": "Adversaries may install SSL/TLS certificates that can be used during targeting. SSL/TLS certificates are files that can be installed on servers to enable secure communications between systems. Digital certificates include information about the key, information about its owner's identity, and the digital signature of an entity that has verified the certificate's contents are correct. If the signatu",
+      "is_subtechnique": true,
+      "source": "attack",
+      "layer": "base",
+      "in_loader_scope": true,
+      "keep_reason": [
+        "core-loader"
+      ]
+    },
+    {
+      "id": "T1609",
+      "type": "attack-pattern",
+      "name": "Container Administration Command",
+      "external_id": "T1609",
+      "stix_id": "attack-pattern--7b50a1d3-4ca7-45d1-989d-a6503f04bfe1",
+      "url": "https://attack.mitre.org/techniques/T1609",
+      "description": "Adversaries may abuse a container administration service to execute commands within a container. A container administration service such as the Docker daemon, the Kubernetes API server, or the kubelet may allow remote management of containers within an environment.(Citation: Docker Daemon CLI)(Citation: Kubernetes API)(Citation: Kubernetes Kubelet)\n\nIn Docker, adversaries may specify an entrypoint",
+      "is_subtechnique": false,
+      "source": "attack",
+      "layer": "base",
+      "in_loader_scope": true,
+      "keep_reason": [
+        "core-loader"
+      ]
+    },
+    {
+      "id": "T1610",
+      "type": "attack-pattern",
+      "name": "Deploy Container",
+      "external_id": "T1610",
+      "stix_id": "attack-pattern--56e0d8b8-3e25-49dd-9050-3aa252f5aa92",
+      "url": "https://attack.mitre.org/techniques/T1610",
+      "description": "Adversaries may deploy a container into an environment to facilitate execution or evade defenses. In some cases, adversaries may deploy a new container to execute processes associated with a particular image or deployment, such as processes that execute or download malware. In others, an adversary may deploy a new container configured without network rules, user limitations, etc. to bypass existin",
+      "is_subtechnique": false,
+      "source": "attack",
+      "layer": "base",
+      "in_loader_scope": true,
+      "keep_reason": [
+        "core-loader"
+      ]
+    },
+    {
+      "id": "T1614",
+      "type": "attack-pattern",
+      "name": "System Location Discovery",
+      "external_id": "T1614",
+      "stix_id": "attack-pattern--c877e33f-1df6-40d6-b1e7-ce70f16f4979",
+      "url": "https://attack.mitre.org/techniques/T1614",
+      "description": "\nAdversaries may gather information in an attempt to calculate the geographical location of a victim host. Adversaries may use the information from [System Location Discovery](https://attack.mitre.org/techniques/T1614) during automated discovery to shape follow-on behaviors, including whether or not the adversary fully infects the target and/or attempts specific actions.\n\nAdversaries may attempt t",
+      "is_subtechnique": false,
+      "source": "attack",
+      "layer": "base",
+      "in_loader_scope": true,
+      "keep_reason": [
+        "attack-evidence"
+      ]
+    },
+    {
+      "id": "T1614.001",
+      "type": "attack-pattern",
+      "name": "System Language Discovery",
+      "external_id": "T1614.001",
+      "stix_id": "attack-pattern--c1b68a96-3c48-49ea-a6c0-9b27359f9c19",
+      "url": "https://attack.mitre.org/techniques/T1614/001",
+      "description": "Adversaries may attempt to gather information about the system language of a victim in order to infer the geographical location of that host. This information may be used to shape follow-on behaviors, including whether the adversary infects the target and/or attempts specific actions. This decision may be employed by malware developers and operators to reduce their risk of attracting the attention",
+      "is_subtechnique": true,
+      "source": "attack",
+      "layer": "base",
+      "in_loader_scope": true,
+      "keep_reason": [
+        "attack-evidence"
+      ]
+    },
+    {
+      "id": "T1620",
+      "type": "attack-pattern",
+      "name": "Reflective Code Loading",
+      "external_id": "T1620",
+      "stix_id": "attack-pattern--4933e63b-9b77-476e-ab29-761bc5b7d15a",
+      "url": "https://attack.mitre.org/techniques/T1620",
+      "description": "Adversaries may reflectively load code into a process in order to conceal the execution of malicious payloads. Reflective loading involves allocating then executing payloads directly within the memory of the process, vice creating a thread or process backed by a file path on disk (e.g., [Shared Modules](https://attack.mitre.org/techniques/T1129)).\n\nReflectively loaded payloads may be compiled bina",
+      "is_subtechnique": false,
+      "source": "attack",
+      "layer": "base",
+      "in_loader_scope": true,
+      "keep_reason": [
+        "attack-evidence",
+        "core-loader"
+      ]
+    },
+    {
+      "id": "T1622",
+      "type": "attack-pattern",
+      "name": "Debugger Evasion",
+      "external_id": "T1622",
+      "stix_id": "attack-pattern--e4dc8c01-417f-458d-9ee0-bb0617c1b391",
+      "url": "https://attack.mitre.org/techniques/T1622",
+      "description": "Adversaries may employ various means to detect and avoid debuggers. Debuggers are typically used by defenders to trace and/or analyze the execution of potential malware payloads.(Citation: ProcessHacker Github)\n\nDebugger evasion may include changing behaviors based on the results of the checks for the presence of artifacts indicative of a debugged environment. Similar to [Virtualization/Sandbox Ev",
+      "is_subtechnique": false,
+      "source": "attack",
+      "layer": "base",
+      "in_loader_scope": true,
+      "keep_reason": [
+        "attack-evidence"
+      ]
+    },
+    {
+      "id": "T1680",
+      "type": "attack-pattern",
+      "name": "Local Storage Discovery",
+      "external_id": "T1680",
+      "stix_id": "attack-pattern--f2514ae4-4e9b-4f26-a5ba-c4ae85fe93c3",
+      "url": "https://attack.mitre.org/techniques/T1680",
+      "description": "Adversaries may enumerate local drives, disks, and/or volumes and their attributes like total or free space and volume serial number. This can be done to prepare for ransomware-related encryption, to perform [Lateral Movement](https://attack.mitre.org/tactics/TA0109), or as a precursor to [Direct Volume Access](https://attack.mitre.org/techniques/T1006). \n\nOn ESXi systems, adversaries may use [Hyp",
+      "is_subtechnique": false,
+      "source": "attack",
+      "layer": "base",
+      "in_loader_scope": true,
+      "keep_reason": [
+        "attack-evidence"
+      ]
+    },
+    {
+      "id": "T1685",
+      "type": "attack-pattern",
+      "name": "Disable or Modify Tools",
+      "external_id": "T1685",
+      "stix_id": "attack-pattern--bbde9781-60aa-4b8a-a911-895b0c1b3872",
+      "url": "https://attack.mitre.org/techniques/T1685",
+      "description": "Adversaries may disable, degrade, or tamper with security tools or applications (e.g., endpoint detection and response (EDR) tools, intrusion detection systems (IDS), antivirus, logging agents, sensors, etc.) to impair or reduce visibility of defensive capabilities. This may include stopping specific services, killing processes, modifying or deleting tool configuration files and Registry keys, or ",
+      "is_subtechnique": false,
+      "source": "attack",
+      "layer": "base",
+      "in_loader_scope": true,
+      "keep_reason": [
+        "attack-evidence",
+        "core-loader"
+      ]
+    },
+    {
+      "id": "T1685.001",
+      "type": "attack-pattern",
+      "name": "Disable or Modify Windows Event Log",
+      "external_id": "T1685.001",
+      "stix_id": "attack-pattern--1411e6b8-80a6-4465-9909-54eaa9c67ce0",
+      "url": "https://attack.mitre.org/techniques/T1685/001",
+      "description": "Adversaries may disable or modify the Windows Event Log to limit data that can be leveraged for detections and audits. Windows Event Log records user and system activity such as login attempts and process creation.(Citation: EventLog_Core_Technologies) This data is used by security tools and analysts to generate detections. \n\nThe EventLog service maintains event logs from various system components",
+      "is_subtechnique": true,
+      "source": "attack",
+      "layer": "base",
+      "in_loader_scope": true,
+      "keep_reason": [
+        "core-loader"
+      ]
+    },
+    {
+      "id": "T1686",
+      "type": "attack-pattern",
+      "name": "Disable or Modify System Firewall",
+      "external_id": "T1686",
+      "stix_id": "attack-pattern--eec096b8-c207-43df-b6c1-11523861e452",
+      "url": "https://attack.mitre.org/techniques/T1686",
+      "description": "Adversaries may disable or modify host-based or network firewalls to impair defensive mechanisms and enable further action. Once an adversary has gathered sufficient privileges, they can tamper with firewall services, policies, or rule sets to remove restrictions on inbound or outbound traffic. For example, this may include turning off firewall profiles, altering existing rules to permit previousl",
+      "is_subtechnique": false,
+      "source": "attack",
+      "layer": "base",
+      "in_loader_scope": true,
+      "keep_reason": [
+        "core-loader"
+      ]
+    },
+    {
+      "id": "T1686.003",
+      "type": "attack-pattern",
+      "name": "Windows Host Firewall",
+      "external_id": "T1686.003",
+      "stix_id": "attack-pattern--291ede6c-1473-454c-b614-5ac5ea63c987",
+      "url": "https://attack.mitre.org/techniques/T1686/003",
+      "description": "Adversaries may disable or modify the Windows host firewall to bypass controls limiting network usage. This can include disabling the Windows host firewall entirely, suppressing specific profiles (domain, private, public), or adding, deleting, and modifying firewall rules to allow or restrict traffic.(Citation: Nearest Neighbor Volexity)\n\nAdversaries may perform these modifications through multipl",
+      "is_subtechnique": true,
+      "source": "attack",
+      "layer": "base",
+      "in_loader_scope": true,
+      "keep_reason": [
+        "core-loader"
+      ]
+    }
+  ],
+  "triples": [
+    {
+      "h": "T1008",
+      "r": "part_of",
+      "t": "TA0011",
+      "source": "attack",
+      "layer": "base"
+    },
+    {
+      "h": "T1012",
+      "r": "part_of",
+      "t": "TA0007",
+      "source": "attack",
+      "layer": "base"
+    },
+    {
+      "h": "T1016",
+      "r": "part_of",
+      "t": "TA0007",
+      "source": "attack",
+      "layer": "base"
+    },
+    {
+      "h": "T1016.001",
+      "r": "part_of",
+      "t": "TA0007",
+      "source": "attack",
+      "layer": "base"
+    },
+    {
+      "h": "T1018",
+      "r": "part_of",
+      "t": "TA0007",
+      "source": "attack",
+      "layer": "base"
+    },
+    {
+      "h": "T1027",
+      "r": "part_of",
+      "t": "TA0005",
+      "source": "attack",
+      "layer": "base"
+    },
+    {
+      "h": "T1027.001",
+      "r": "part_of",
+      "t": "TA0005",
+      "source": "attack",
+      "layer": "base"
+    },
+    {
+      "h": "T1027.002",
+      "r": "part_of",
+      "t": "TA0005",
+      "source": "attack",
+      "layer": "base"
+    },
+    {
+      "h": "T1027.004",
+      "r": "part_of",
+      "t": "TA0005",
+      "source": "attack",
+      "layer": "base"
+    },
+    {
+      "h": "T1027.007",
+      "r": "part_of",
+      "t": "TA0005",
+      "source": "attack",
+      "layer": "base"
+    },
+    {
+      "h": "T1027.008",
+      "r": "part_of",
+      "t": "TA0005",
+      "source": "attack",
+      "layer": "base"
+    },
+    {
+      "h": "T1027.009",
+      "r": "part_of",
+      "t": "TA0005",
+      "source": "attack",
+      "layer": "base"
+    },
+    {
+      "h": "T1027.010",
+      "r": "part_of",
+      "t": "TA0005",
+      "source": "attack",
+      "layer": "base"
+    },
+    {
+      "h": "T1027.013",
+      "r": "part_of",
+      "t": "TA0005",
+      "source": "attack",
+      "layer": "base"
+    },
+    {
+      "h": "T1033",
+      "r": "part_of",
+      "t": "TA0007",
+      "source": "attack",
+      "layer": "base"
+    },
+    {
+      "h": "T1036",
+      "r": "part_of",
+      "t": "TA0005",
+      "source": "attack",
+      "layer": "base"
+    },
+    {
+      "h": "T1036.001",
+      "r": "part_of",
+      "t": "TA0005",
+      "source": "attack",
+      "layer": "base"
+    },
+    {
+      "h": "T1036.002",
+      "r": "part_of",
+      "t": "TA0005",
+      "source": "attack",
+      "layer": "base"
+    },
+    {
+      "h": "T1036.003",
+      "r": "part_of",
+      "t": "TA0005",
+      "source": "attack",
+      "layer": "base"
+    },
+    {
+      "h": "T1036.004",
+      "r": "part_of",
+      "t": "TA0005",
+      "source": "attack",
+      "layer": "base"
+    },
+    {
+      "h": "T1036.005",
+      "r": "part_of",
+      "t": "TA0005",
+      "source": "attack",
+      "layer": "base"
+    },
+    {
+      "h": "T1036.006",
+      "r": "part_of",
+      "t": "TA0005",
+      "source": "attack",
+      "layer": "base"
+    },
+    {
+      "h": "T1036.007",
+      "r": "part_of",
+      "t": "TA0005",
+      "source": "attack",
+      "layer": "base"
+    },
+    {
+      "h": "T1037",
+      "r": "part_of",
+      "t": "TA0003",
+      "source": "attack",
+      "layer": "base"
+    },
+    {
+      "h": "T1037.001",
+      "r": "part_of",
+      "t": "TA0003",
+      "source": "attack",
+      "layer": "base"
+    },
+    {
+      "h": "T1037.004",
+      "r": "part_of",
+      "t": "TA0003",
+      "source": "attack",
+      "layer": "base"
+    },
+    {
+      "h": "T1047",
+      "r": "part_of",
+      "t": "TA0002",
+      "source": "attack",
+      "layer": "base"
+    },
+    {
+      "h": "T1049",
+      "r": "part_of",
+      "t": "TA0007",
+      "source": "attack",
+      "layer": "base"
+    },
+    {
+      "h": "T1053",
+      "r": "part_of",
+      "t": "TA0002",
+      "source": "attack",
+      "layer": "base"
+    },
+    {
+      "h": "T1053",
+      "r": "part_of",
+      "t": "TA0003",
+      "source": "attack",
+      "layer": "base"
+    },
+    {
+      "h": "T1053.005",
+      "r": "part_of",
+      "t": "TA0002",
+      "source": "attack",
+      "layer": "base"
+    },
+    {
+      "h": "T1053.005",
+      "r": "part_of",
+      "t": "TA0003",
+      "source": "attack",
+      "layer": "base"
+    },
+    {
+      "h": "T1055",
+      "r": "part_of",
+      "t": "TA0005",
+      "source": "attack",
+      "layer": "base"
+    },
+    {
+      "h": "T1055.001",
+      "r": "part_of",
+      "t": "TA0005",
+      "source": "attack",
+      "layer": "base"
+    },
+    {
+      "h": "T1055.002",
+      "r": "part_of",
+      "t": "TA0005",
+      "source": "attack",
+      "layer": "base"
+    },
+    {
+      "h": "T1055.003",
+      "r": "part_of",
+      "t": "TA0005",
+      "source": "attack",
+      "layer": "base"
+    },
+    {
+      "h": "T1055.004",
+      "r": "part_of",
+      "t": "TA0005",
+      "source": "attack",
+      "layer": "base"
+    },
+    {
+      "h": "T1055.005",
+      "r": "part_of",
+      "t": "TA0005",
+      "source": "attack",
+      "layer": "base"
+    },
+    {
+      "h": "T1055.011",
+      "r": "part_of",
+      "t": "TA0005",
+      "source": "attack",
+      "layer": "base"
+    },
+    {
+      "h": "T1055.012",
+      "r": "part_of",
+      "t": "TA0005",
+      "source": "attack",
+      "layer": "base"
+    },
+    {
+      "h": "T1055.013",
+      "r": "part_of",
+      "t": "TA0005",
+      "source": "attack",
+      "layer": "base"
+    },
+    {
+      "h": "T1057",
+      "r": "part_of",
+      "t": "TA0007",
+      "source": "attack",
+      "layer": "base"
+    },
+    {
+      "h": "T1059",
+      "r": "part_of",
+      "t": "TA0002",
+      "source": "attack",
+      "layer": "base"
+    },
+    {
+      "h": "T1059.001",
+      "r": "part_of",
+      "t": "TA0002",
+      "source": "attack",
+      "layer": "base"
+    },
+    {
+      "h": "T1059.003",
+      "r": "part_of",
+      "t": "TA0002",
+      "source": "attack",
+      "layer": "base"
+    },
+    {
+      "h": "T1059.005",
+      "r": "part_of",
+      "t": "TA0002",
+      "source": "attack",
+      "layer": "base"
+    },
+    {
+      "h": "T1059.006",
+      "r": "part_of",
+      "t": "TA0002",
+      "source": "attack",
+      "layer": "base"
+    },
+    {
+      "h": "T1059.007",
+      "r": "part_of",
+      "t": "TA0002",
+      "source": "attack",
+      "layer": "base"
+    },
+    {
+      "h": "T1059.009",
+      "r": "part_of",
+      "t": "TA0002",
+      "source": "attack",
+      "layer": "base"
+    },
+    {
+      "h": "T1059.010",
+      "r": "part_of",
+      "t": "TA0002",
+      "source": "attack",
+      "layer": "base"
+    },
+    {
+      "h": "T1069",
+      "r": "part_of",
+      "t": "TA0007",
+      "source": "attack",
+      "layer": "base"
+    },
+    {
+      "h": "T1069.002",
+      "r": "part_of",
+      "t": "TA0007",
+      "source": "attack",
+      "layer": "base"
+    },
+    {
+      "h": "T1070",
+      "r": "part_of",
+      "t": "TA0005",
+      "source": "attack",
+      "layer": "base"
+    },
+    {
+      "h": "T1070.004",
+      "r": "part_of",
+      "t": "TA0005",
+      "source": "attack",
+      "layer": "base"
+    },
+    {
+      "h": "T1070.006",
+      "r": "part_of",
+      "t": "TA0005",
+      "source": "attack",
+      "layer": "base"
+    },
+    {
+      "h": "T1070.009",
+      "r": "part_of",
+      "t": "TA0005",
+      "source": "attack",
+      "layer": "base"
+    },
+    {
+      "h": "T1071",
+      "r": "part_of",
+      "t": "TA0011",
+      "source": "attack",
+      "layer": "base"
+    },
+    {
+      "h": "T1071.001",
+      "r": "part_of",
+      "t": "TA0011",
+      "source": "attack",
+      "layer": "base"
+    },
+    {
+      "h": "T1071.003",
+      "r": "part_of",
+      "t": "TA0011",
+      "source": "attack",
+      "layer": "base"
+    },
+    {
+      "h": "T1071.004",
+      "r": "part_of",
+      "t": "TA0011",
+      "source": "attack",
+      "layer": "base"
+    },
+    {
+      "h": "T1082",
+      "r": "part_of",
+      "t": "TA0007",
+      "source": "attack",
+      "layer": "base"
+    },
+    {
+      "h": "T1083",
+      "r": "part_of",
+      "t": "TA0007",
+      "source": "attack",
+      "layer": "base"
+    },
+    {
+      "h": "T1087",
+      "r": "part_of",
+      "t": "TA0007",
+      "source": "attack",
+      "layer": "base"
+    },
+    {
+      "h": "T1087.001",
+      "r": "part_of",
+      "t": "TA0007",
+      "source": "attack",
+      "layer": "base"
+    },
+    {
+      "h": "T1087.002",
+      "r": "part_of",
+      "t": "TA0007",
+      "source": "attack",
+      "layer": "base"
+    },
+    {
+      "h": "T1087.003",
+      "r": "part_of",
+      "t": "TA0007",
+      "source": "attack",
+      "layer": "base"
+    },
+    {
+      "h": "T1090",
+      "r": "part_of",
+      "t": "TA0011",
+      "source": "attack",
+      "layer": "base"
+    },
+    {
+      "h": "T1090.002",
+      "r": "part_of",
+      "t": "TA0011",
+      "source": "attack",
+      "layer": "base"
+    },
+    {
+      "h": "T1090.003",
+      "r": "part_of",
+      "t": "TA0011",
+      "source": "attack",
+      "layer": "base"
+    },
+    {
+      "h": "T1095",
+      "r": "part_of",
+      "t": "TA0011",
+      "source": "attack",
+      "layer": "base"
+    },
+    {
+      "h": "T1102",
+      "r": "part_of",
+      "t": "TA0011",
+      "source": "attack",
+      "layer": "base"
+    },
+    {
+      "h": "T1104",
+      "r": "part_of",
+      "t": "TA0011",
+      "source": "attack",
+      "layer": "base"
+    },
+    {
+      "h": "T1105",
+      "r": "part_of",
+      "t": "TA0011",
+      "source": "attack",
+      "layer": "base"
+    },
+    {
+      "h": "T1106",
+      "r": "part_of",
+      "t": "TA0002",
+      "source": "attack",
+      "layer": "base"
+    },
+    {
+      "h": "T1112",
+      "r": "part_of",
+      "t": "TA0112",
+      "source": "attack",
+      "layer": "base"
+    },
+    {
+      "h": "T1112",
+      "r": "part_of",
+      "t": "TA0003",
+      "source": "attack",
+      "layer": "base"
+    },
+    {
+      "h": "T1124",
+      "r": "part_of",
+      "t": "TA0007",
+      "source": "attack",
+      "layer": "base"
+    },
+    {
+      "h": "T1129",
+      "r": "part_of",
+      "t": "TA0002",
+      "source": "attack",
+      "layer": "base"
+    },
+    {
+      "h": "T1132",
+      "r": "part_of",
+      "t": "TA0011",
+      "source": "attack",
+      "layer": "base"
+    },
+    {
+      "h": "T1132.001",
+      "r": "part_of",
+      "t": "TA0011",
+      "source": "attack",
+      "layer": "base"
+    },
+    {
+      "h": "T1132.002",
+      "r": "part_of",
+      "t": "TA0011",
+      "source": "attack",
+      "layer": "base"
+    },
+    {
+      "h": "T1134",
+      "r": "part_of",
+      "t": "TA0005",
+      "source": "attack",
+      "layer": "base"
+    },
+    {
+      "h": "T1134.001",
+      "r": "part_of",
+      "t": "TA0005",
+      "source": "attack",
+      "layer": "base"
+    },
+    {
+      "h": "T1135",
+      "r": "part_of",
+      "t": "TA0007",
+      "source": "attack",
+      "layer": "base"
+    },
+    {
+      "h": "T1136",
+      "r": "part_of",
+      "t": "TA0003",
+      "source": "attack",
+      "layer": "base"
+    },
+    {
+      "h": "T1136.001",
+      "r": "part_of",
+      "t": "TA0003",
+      "source": "attack",
+      "layer": "base"
+    },
+    {
+      "h": "T1137",
+      "r": "part_of",
+      "t": "TA0003",
+      "source": "attack",
+      "layer": "base"
+    },
+    {
+      "h": "T1137.006",
+      "r": "part_of",
+      "t": "TA0003",
+      "source": "attack",
+      "layer": "base"
+    },
+    {
+      "h": "T1140",
+      "r": "part_of",
+      "t": "TA0005",
+      "source": "attack",
+      "layer": "base"
+    },
+    {
+      "h": "T1189",
+      "r": "part_of",
+      "t": "TA0001",
+      "source": "attack",
+      "layer": "base"
+    },
+    {
+      "h": "T1190",
+      "r": "part_of",
+      "t": "TA0001",
+      "source": "attack",
+      "layer": "base"
+    },
+    {
+      "h": "T1195",
+      "r": "part_of",
+      "t": "TA0001",
+      "source": "attack",
+      "layer": "base"
+    },
+    {
+      "h": "T1195.002",
+      "r": "part_of",
+      "t": "TA0001",
+      "source": "attack",
+      "layer": "base"
+    },
+    {
+      "h": "T1197",
+      "r": "part_of",
+      "t": "TA0002",
+      "source": "attack",
+      "layer": "base"
+    },
+    {
+      "h": "T1197",
+      "r": "part_of",
+      "t": "TA0003",
+      "source": "attack",
+      "layer": "base"
+    },
+    {
+      "h": "T1197",
+      "r": "part_of",
+      "t": "TA0005",
+      "source": "attack",
+      "layer": "base"
+    },
+    {
+      "h": "T1203",
+      "r": "part_of",
+      "t": "TA0002",
+      "source": "attack",
+      "layer": "base"
+    },
+    {
+      "h": "T1204",
+      "r": "part_of",
+      "t": "TA0002",
+      "source": "attack",
+      "layer": "base"
+    },
+    {
+      "h": "T1204.001",
+      "r": "part_of",
+      "t": "TA0002",
+      "source": "attack",
+      "layer": "base"
+    },
+    {
+      "h": "T1204.002",
+      "r": "part_of",
+      "t": "TA0002",
+      "source": "attack",
+      "layer": "base"
+    },
+    {
+      "h": "T1217",
+      "r": "part_of",
+      "t": "TA0007",
+      "source": "attack",
+      "layer": "base"
+    },
+    {
+      "h": "T1218",
+      "r": "part_of",
+      "t": "TA0005",
+      "source": "attack",
+      "layer": "base"
+    },
+    {
+      "h": "T1218.001",
+      "r": "part_of",
+      "t": "TA0005",
+      "source": "attack",
+      "layer": "base"
+    },
+    {
+      "h": "T1218.002",
+      "r": "part_of",
+      "t": "TA0005",
+      "source": "attack",
+      "layer": "base"
+    },
+    {
+      "h": "T1218.005",
+      "r": "part_of",
+      "t": "TA0005",
+      "source": "attack",
+      "layer": "base"
+    },
+    {
+      "h": "T1218.008",
+      "r": "part_of",
+      "t": "TA0005",
+      "source": "attack",
+      "layer": "base"
+    },
+    {
+      "h": "T1218.010",
+      "r": "part_of",
+      "t": "TA0005",
+      "source": "attack",
+      "layer": "base"
+    },
+    {
+      "h": "T1218.011",
+      "r": "part_of",
+      "t": "TA0005",
+      "source": "attack",
+      "layer": "base"
+    },
+    {
+      "h": "T1219",
+      "r": "part_of",
+      "t": "TA0011",
+      "source": "attack",
+      "layer": "base"
+    },
+    {
+      "h": "T1222",
+      "r": "part_of",
+      "t": "TA0112",
+      "source": "attack",
+      "layer": "base"
+    },
+    {
+      "h": "T1480",
+      "r": "part_of",
+      "t": "TA0005",
+      "source": "attack",
+      "layer": "base"
+    },
+    {
+      "h": "T1480.002",
+      "r": "part_of",
+      "t": "TA0005",
+      "source": "attack",
+      "layer": "base"
+    },
+    {
+      "h": "T1482",
+      "r": "part_of",
+      "t": "TA0007",
+      "source": "attack",
+      "layer": "base"
+    },
+    {
+      "h": "T1497",
+      "r": "part_of",
+      "t": "TA0007",
+      "source": "attack",
+      "layer": "base"
+    },
+    {
+      "h": "T1497",
+      "r": "part_of",
+      "t": "TA0005",
+      "source": "attack",
+      "layer": "base"
+    },
+    {
+      "h": "T1497.001",
+      "r": "part_of",
+      "t": "TA0007",
+      "source": "attack",
+      "layer": "base"
+    },
+    {
+      "h": "T1497.001",
+      "r": "part_of",
+      "t": "TA0005",
+      "source": "attack",
+      "layer": "base"
+    },
+    {
+      "h": "T1497.003",
+      "r": "part_of",
+      "t": "TA0007",
+      "source": "attack",
+      "layer": "base"
+    },
+    {
+      "h": "T1497.003",
+      "r": "part_of",
+      "t": "TA0005",
+      "source": "attack",
+      "layer": "base"
+    },
+    {
+      "h": "T1518",
+      "r": "part_of",
+      "t": "TA0007",
+      "source": "attack",
+      "layer": "base"
+    },
+    {
+      "h": "T1518.001",
+      "r": "part_of",
+      "t": "TA0007",
+      "source": "attack",
+      "layer": "base"
+    },
+    {
+      "h": "T1543",
+      "r": "part_of",
+      "t": "TA0003",
+      "source": "attack",
+      "layer": "base"
+    },
+    {
+      "h": "T1543.003",
+      "r": "part_of",
+      "t": "TA0003",
+      "source": "attack",
+      "layer": "base"
+    },
+    {
+      "h": "T1546",
+      "r": "part_of",
+      "t": "TA0003",
+      "source": "attack",
+      "layer": "base"
+    },
+    {
+      "h": "T1546.003",
+      "r": "part_of",
+      "t": "TA0003",
+      "source": "attack",
+      "layer": "base"
+    },
+    {
+      "h": "T1546.015",
+      "r": "part_of",
+      "t": "TA0003",
+      "source": "attack",
+      "layer": "base"
+    },
+    {
+      "h": "T1547",
+      "r": "part_of",
+      "t": "TA0003",
+      "source": "attack",
+      "layer": "base"
+    },
+    {
+      "h": "T1547.001",
+      "r": "part_of",
+      "t": "TA0003",
+      "source": "attack",
+      "layer": "base"
+    },
+    {
+      "h": "T1547.004",
+      "r": "part_of",
+      "t": "TA0003",
+      "source": "attack",
+      "layer": "base"
+    },
+    {
+      "h": "T1547.009",
+      "r": "part_of",
+      "t": "TA0003",
+      "source": "attack",
+      "layer": "base"
+    },
+    {
+      "h": "T1553",
+      "r": "part_of",
+      "t": "TA0112",
+      "source": "attack",
+      "layer": "base"
+    },
+    {
+      "h": "T1553.002",
+      "r": "part_of",
+      "t": "TA0112",
+      "source": "attack",
+      "layer": "base"
+    },
+    {
+      "h": "T1559",
+      "r": "part_of",
+      "t": "TA0002",
+      "source": "attack",
+      "layer": "base"
+    },
+    {
+      "h": "T1559.001",
+      "r": "part_of",
+      "t": "TA0002",
+      "source": "attack",
+      "layer": "base"
+    },
+    {
+      "h": "T1559.002",
+      "r": "part_of",
+      "t": "TA0002",
+      "source": "attack",
+      "layer": "base"
+    },
+    {
+      "h": "T1564",
+      "r": "part_of",
+      "t": "TA0005",
+      "source": "attack",
+      "layer": "base"
+    },
+    {
+      "h": "T1564.001",
+      "r": "part_of",
+      "t": "TA0005",
+      "source": "attack",
+      "layer": "base"
+    },
+    {
+      "h": "T1564.003",
+      "r": "part_of",
+      "t": "TA0005",
+      "source": "attack",
+      "layer": "base"
+    },
+    {
+      "h": "T1566",
+      "r": "part_of",
+      "t": "TA0001",
+      "source": "attack",
+      "layer": "base"
+    },
+    {
+      "h": "T1566.001",
+      "r": "part_of",
+      "t": "TA0001",
+      "source": "attack",
+      "layer": "base"
+    },
+    {
+      "h": "T1566.002",
+      "r": "part_of",
+      "t": "TA0001",
+      "source": "attack",
+      "layer": "base"
+    },
+    {
+      "h": "T1566.004",
+      "r": "part_of",
+      "t": "TA0001",
+      "source": "attack",
+      "layer": "base"
+    },
+    {
+      "h": "T1568",
+      "r": "part_of",
+      "t": "TA0011",
+      "source": "attack",
+      "layer": "base"
+    },
+    {
+      "h": "T1568.002",
+      "r": "part_of",
+      "t": "TA0011",
+      "source": "attack",
+      "layer": "base"
+    },
+    {
+      "h": "T1573",
+      "r": "part_of",
+      "t": "TA0011",
+      "source": "attack",
+      "layer": "base"
+    },
+    {
+      "h": "T1573.001",
+      "r": "part_of",
+      "t": "TA0011",
+      "source": "attack",
+      "layer": "base"
+    },
+    {
+      "h": "T1573.002",
+      "r": "part_of",
+      "t": "TA0011",
+      "source": "attack",
+      "layer": "base"
+    },
+    {
+      "h": "T1574",
+      "r": "part_of",
+      "t": "TA0002",
+      "source": "attack",
+      "layer": "base"
+    },
+    {
+      "h": "T1574",
+      "r": "part_of",
+      "t": "TA0005",
+      "source": "attack",
+      "layer": "base"
+    },
+    {
+      "h": "T1574.001",
+      "r": "part_of",
+      "t": "TA0002",
+      "source": "attack",
+      "layer": "base"
+    },
+    {
+      "h": "T1574.001",
+      "r": "part_of",
+      "t": "TA0005",
+      "source": "attack",
+      "layer": "base"
+    },
+    {
+      "h": "T1574.008",
+      "r": "part_of",
+      "t": "TA0002",
+      "source": "attack",
+      "layer": "base"
+    },
+    {
+      "h": "T1574.008",
+      "r": "part_of",
+      "t": "TA0005",
+      "source": "attack",
+      "layer": "base"
+    },
+    {
+      "h": "T1574.014",
+      "r": "part_of",
+      "t": "TA0002",
+      "source": "attack",
+      "layer": "base"
+    },
+    {
+      "h": "T1574.014",
+      "r": "part_of",
+      "t": "TA0005",
+      "source": "attack",
+      "layer": "base"
+    },
+    {
+      "h": "T1583",
+      "r": "part_of",
+      "t": "TA0042",
+      "source": "attack",
+      "layer": "base"
+    },
+    {
+      "h": "T1583.001",
+      "r": "part_of",
+      "t": "TA0042",
+      "source": "attack",
+      "layer": "base"
+    },
+    {
+      "h": "T1583.003",
+      "r": "part_of",
+      "t": "TA0042",
+      "source": "attack",
+      "layer": "base"
+    },
+    {
+      "h": "T1583.004",
+      "r": "part_of",
+      "t": "TA0042",
+      "source": "attack",
+      "layer": "base"
+    },
+    {
+      "h": "T1583.006",
+      "r": "part_of",
+      "t": "TA0042",
+      "source": "attack",
+      "layer": "base"
+    },
+    {
+      "h": "T1584",
+      "r": "part_of",
+      "t": "TA0042",
+      "source": "attack",
+      "layer": "base"
+    },
+    {
+      "h": "T1584.001",
+      "r": "part_of",
+      "t": "TA0042",
+      "source": "attack",
+      "layer": "base"
+    },
+    {
+      "h": "T1584.006",
+      "r": "part_of",
+      "t": "TA0042",
+      "source": "attack",
+      "layer": "base"
+    },
+    {
+      "h": "T1587",
+      "r": "part_of",
+      "t": "TA0042",
+      "source": "attack",
+      "layer": "base"
+    },
+    {
+      "h": "T1587.001",
+      "r": "part_of",
+      "t": "TA0042",
+      "source": "attack",
+      "layer": "base"
+    },
+    {
+      "h": "T1588",
+      "r": "part_of",
+      "t": "TA0042",
+      "source": "attack",
+      "layer": "base"
+    },
+    {
+      "h": "T1588.001",
+      "r": "part_of",
+      "t": "TA0042",
+      "source": "attack",
+      "layer": "base"
+    },
+    {
+      "h": "T1588.002",
+      "r": "part_of",
+      "t": "TA0042",
+      "source": "attack",
+      "layer": "base"
+    },
+    {
+      "h": "T1608",
+      "r": "part_of",
+      "t": "TA0042",
+      "source": "attack",
+      "layer": "base"
+    },
+    {
+      "h": "T1608.001",
+      "r": "part_of",
+      "t": "TA0042",
+      "source": "attack",
+      "layer": "base"
+    },
+    {
+      "h": "T1608.002",
+      "r": "part_of",
+      "t": "TA0042",
+      "source": "attack",
+      "layer": "base"
+    },
+    {
+      "h": "T1608.003",
+      "r": "part_of",
+      "t": "TA0042",
+      "source": "attack",
+      "layer": "base"
+    },
+    {
+      "h": "T1609",
+      "r": "part_of",
+      "t": "TA0002",
+      "source": "attack",
+      "layer": "base"
+    },
+    {
+      "h": "T1610",
+      "r": "part_of",
+      "t": "TA0002",
+      "source": "attack",
+      "layer": "base"
+    },
+    {
+      "h": "T1614",
+      "r": "part_of",
+      "t": "TA0007",
+      "source": "attack",
+      "layer": "base"
+    },
+    {
+      "h": "T1614.001",
+      "r": "part_of",
+      "t": "TA0007",
+      "source": "attack",
+      "layer": "base"
+    },
+    {
+      "h": "T1620",
+      "r": "part_of",
+      "t": "TA0005",
+      "source": "attack",
+      "layer": "base"
+    },
+    {
+      "h": "T1622",
+      "r": "part_of",
+      "t": "TA0007",
+      "source": "attack",
+      "layer": "base"
+    },
+    {
+      "h": "T1622",
+      "r": "part_of",
+      "t": "TA0005",
+      "source": "attack",
+      "layer": "base"
+    },
+    {
+      "h": "T1680",
+      "r": "part_of",
+      "t": "TA0007",
+      "source": "attack",
+      "layer": "base"
+    },
+    {
+      "h": "T1685",
+      "r": "part_of",
+      "t": "TA0112",
+      "source": "attack",
+      "layer": "base"
+    },
+    {
+      "h": "T1685.001",
+      "r": "part_of",
+      "t": "TA0112",
+      "source": "attack",
+      "layer": "base"
+    },
+    {
+      "h": "T1686",
+      "r": "part_of",
+      "t": "TA0112",
+      "source": "attack",
+      "layer": "base"
+    },
+    {
+      "h": "T1686.003",
+      "r": "part_of",
+      "t": "TA0112",
+      "source": "attack",
+      "layer": "base"
+    },
+    {
+      "h": "T1016.001",
+      "r": "subtechnique_of",
+      "t": "T1016",
+      "source": "attack",
+      "layer": "base"
+    },
+    {
+      "h": "T1027.001",
+      "r": "subtechnique_of",
+      "t": "T1027",
+      "source": "attack",
+      "layer": "base"
+    },
+    {
+      "h": "T1027.002",
+      "r": "subtechnique_of",
+      "t": "T1027",
+      "source": "attack",
+      "layer": "base"
+    },
+    {
+      "h": "T1027.004",
+      "r": "subtechnique_of",
+      "t": "T1027",
+      "source": "attack",
+      "layer": "base"
+    },
+    {
+      "h": "T1027.007",
+      "r": "subtechnique_of",
+      "t": "T1027",
+      "source": "attack",
+      "layer": "base"
+    },
+    {
+      "h": "T1027.008",
+      "r": "subtechnique_of",
+      "t": "T1027",
+      "source": "attack",
+      "layer": "base"
+    },
+    {
+      "h": "T1027.009",
+      "r": "subtechnique_of",
+      "t": "T1027",
+      "source": "attack",
+      "layer": "base"
+    },
+    {
+      "h": "T1027.010",
+      "r": "subtechnique_of",
+      "t": "T1027",
+      "source": "attack",
+      "layer": "base"
+    },
+    {
+      "h": "T1027.013",
+      "r": "subtechnique_of",
+      "t": "T1027",
+      "source": "attack",
+      "layer": "base"
+    },
+    {
+      "h": "T1036.001",
+      "r": "subtechnique_of",
+      "t": "T1036",
+      "source": "attack",
+      "layer": "base"
+    },
+    {
+      "h": "T1036.002",
+      "r": "subtechnique_of",
+      "t": "T1036",
+      "source": "attack",
+      "layer": "base"
+    },
+    {
+      "h": "T1036.003",
+      "r": "subtechnique_of",
+      "t": "T1036",
+      "source": "attack",
+      "layer": "base"
+    },
+    {
+      "h": "T1036.004",
+      "r": "subtechnique_of",
+      "t": "T1036",
+      "source": "attack",
+      "layer": "base"
+    },
+    {
+      "h": "T1036.005",
+      "r": "subtechnique_of",
+      "t": "T1036",
+      "source": "attack",
+      "layer": "base"
+    },
+    {
+      "h": "T1036.006",
+      "r": "subtechnique_of",
+      "t": "T1036",
+      "source": "attack",
+      "layer": "base"
+    },
+    {
+      "h": "T1036.007",
+      "r": "subtechnique_of",
+      "t": "T1036",
+      "source": "attack",
+      "layer": "base"
+    },
+    {
+      "h": "T1037.001",
+      "r": "subtechnique_of",
+      "t": "T1037",
+      "source": "attack",
+      "layer": "base"
+    },
+    {
+      "h": "T1037.004",
+      "r": "subtechnique_of",
+      "t": "T1037",
+      "source": "attack",
+      "layer": "base"
+    },
+    {
+      "h": "T1053.005",
+      "r": "subtechnique_of",
+      "t": "T1053",
+      "source": "attack",
+      "layer": "base"
+    },
+    {
+      "h": "T1055.001",
+      "r": "subtechnique_of",
+      "t": "T1055",
+      "source": "attack",
+      "layer": "base"
+    },
+    {
+      "h": "T1055.002",
+      "r": "subtechnique_of",
+      "t": "T1055",
+      "source": "attack",
+      "layer": "base"
+    },
+    {
+      "h": "T1055.003",
+      "r": "subtechnique_of",
+      "t": "T1055",
+      "source": "attack",
+      "layer": "base"
+    },
+    {
+      "h": "T1055.004",
+      "r": "subtechnique_of",
+      "t": "T1055",
+      "source": "attack",
+      "layer": "base"
+    },
+    {
+      "h": "T1055.005",
+      "r": "subtechnique_of",
+      "t": "T1055",
+      "source": "attack",
+      "layer": "base"
+    },
+    {
+      "h": "T1055.011",
+      "r": "subtechnique_of",
+      "t": "T1055",
+      "source": "attack",
+      "layer": "base"
+    },
+    {
+      "h": "T1055.012",
+      "r": "subtechnique_of",
+      "t": "T1055",
+      "source": "attack",
+      "layer": "base"
+    },
+    {
+      "h": "T1055.013",
+      "r": "subtechnique_of",
+      "t": "T1055",
+      "source": "attack",
+      "layer": "base"
+    },
+    {
+      "h": "T1059.001",
+      "r": "subtechnique_of",
+      "t": "T1059",
+      "source": "attack",
+      "layer": "base"
+    },
+    {
+      "h": "T1059.003",
+      "r": "subtechnique_of",
+      "t": "T1059",
+      "source": "attack",
+      "layer": "base"
+    },
+    {
+      "h": "T1059.005",
+      "r": "subtechnique_of",
+      "t": "T1059",
+      "source": "attack",
+      "layer": "base"
+    },
+    {
+      "h": "T1059.006",
+      "r": "subtechnique_of",
+      "t": "T1059",
+      "source": "attack",
+      "layer": "base"
+    },
+    {
+      "h": "T1059.007",
+      "r": "subtechnique_of",
+      "t": "T1059",
+      "source": "attack",
+      "layer": "base"
+    },
+    {
+      "h": "T1059.009",
+      "r": "subtechnique_of",
+      "t": "T1059",
+      "source": "attack",
+      "layer": "base"
+    },
+    {
+      "h": "T1059.010",
+      "r": "subtechnique_of",
+      "t": "T1059",
+      "source": "attack",
+      "layer": "base"
+    },
+    {
+      "h": "T1069.002",
+      "r": "subtechnique_of",
+      "t": "T1069",
+      "source": "attack",
+      "layer": "base"
+    },
+    {
+      "h": "T1070.004",
+      "r": "subtechnique_of",
+      "t": "T1070",
+      "source": "attack",
+      "layer": "base"
+    },
+    {
+      "h": "T1070.006",
+      "r": "subtechnique_of",
+      "t": "T1070",
+      "source": "attack",
+      "layer": "base"
+    },
+    {
+      "h": "T1070.009",
+      "r": "subtechnique_of",
+      "t": "T1070",
+      "source": "attack",
+      "layer": "base"
+    },
+    {
+      "h": "T1071.001",
+      "r": "subtechnique_of",
+      "t": "T1071",
+      "source": "attack",
+      "layer": "base"
+    },
+    {
+      "h": "T1071.003",
+      "r": "subtechnique_of",
+      "t": "T1071",
+      "source": "attack",
+      "layer": "base"
+    },
+    {
+      "h": "T1071.004",
+      "r": "subtechnique_of",
+      "t": "T1071",
+      "source": "attack",
+      "layer": "base"
+    },
+    {
+      "h": "T1087.001",
+      "r": "subtechnique_of",
+      "t": "T1087",
+      "source": "attack",
+      "layer": "base"
+    },
+    {
+      "h": "T1087.002",
+      "r": "subtechnique_of",
+      "t": "T1087",
+      "source": "attack",
+      "layer": "base"
+    },
+    {
+      "h": "T1087.003",
+      "r": "subtechnique_of",
+      "t": "T1087",
+      "source": "attack",
+      "layer": "base"
+    },
+    {
+      "h": "T1090.002",
+      "r": "subtechnique_of",
+      "t": "T1090",
+      "source": "attack",
+      "layer": "base"
+    },
+    {
+      "h": "T1090.003",
+      "r": "subtechnique_of",
+      "t": "T1090",
+      "source": "attack",
+      "layer": "base"
+    },
+    {
+      "h": "T1132.001",
+      "r": "subtechnique_of",
+      "t": "T1132",
+      "source": "attack",
+      "layer": "base"
+    },
+    {
+      "h": "T1132.002",
+      "r": "subtechnique_of",
+      "t": "T1132",
+      "source": "attack",
+      "layer": "base"
+    },
+    {
+      "h": "T1134.001",
+      "r": "subtechnique_of",
+      "t": "T1134",
+      "source": "attack",
+      "layer": "base"
+    },
+    {
+      "h": "T1136.001",
+      "r": "subtechnique_of",
+      "t": "T1136",
+      "source": "attack",
+      "layer": "base"
+    },
+    {
+      "h": "T1137.006",
+      "r": "subtechnique_of",
+      "t": "T1137",
+      "source": "attack",
+      "layer": "base"
+    },
+    {
+      "h": "T1195.002",
+      "r": "subtechnique_of",
+      "t": "T1195",
+      "source": "attack",
+      "layer": "base"
+    },
+    {
+      "h": "T1204.001",
+      "r": "subtechnique_of",
+      "t": "T1204",
+      "source": "attack",
+      "layer": "base"
+    },
+    {
+      "h": "T1204.002",
+      "r": "subtechnique_of",
+      "t": "T1204",
+      "source": "attack",
+      "layer": "base"
+    },
+    {
+      "h": "T1218.001",
+      "r": "subtechnique_of",
+      "t": "T1218",
+      "source": "attack",
+      "layer": "base"
+    },
+    {
+      "h": "T1218.002",
+      "r": "subtechnique_of",
+      "t": "T1218",
+      "source": "attack",
+      "layer": "base"
+    },
+    {
+      "h": "T1218.005",
+      "r": "subtechnique_of",
+      "t": "T1218",
+      "source": "attack",
+      "layer": "base"
+    },
+    {
+      "h": "T1218.008",
+      "r": "subtechnique_of",
+      "t": "T1218",
+      "source": "attack",
+      "layer": "base"
+    },
+    {
+      "h": "T1218.010",
+      "r": "subtechnique_of",
+      "t": "T1218",
+      "source": "attack",
+      "layer": "base"
+    },
+    {
+      "h": "T1218.011",
+      "r": "subtechnique_of",
+      "t": "T1218",
+      "source": "attack",
+      "layer": "base"
+    },
+    {
+      "h": "T1480.002",
+      "r": "subtechnique_of",
+      "t": "T1480",
+      "source": "attack",
+      "layer": "base"
+    },
+    {
+      "h": "T1497.001",
+      "r": "subtechnique_of",
+      "t": "T1497",
+      "source": "attack",
+      "layer": "base"
+    },
+    {
+      "h": "T1497.003",
+      "r": "subtechnique_of",
+      "t": "T1497",
+      "source": "attack",
+      "layer": "base"
+    },
+    {
+      "h": "T1518.001",
+      "r": "subtechnique_of",
+      "t": "T1518",
+      "source": "attack",
+      "layer": "base"
+    },
+    {
+      "h": "T1543.003",
+      "r": "subtechnique_of",
+      "t": "T1543",
+      "source": "attack",
+      "layer": "base"
+    },
+    {
+      "h": "T1546.003",
+      "r": "subtechnique_of",
+      "t": "T1546",
+      "source": "attack",
+      "layer": "base"
+    },
+    {
+      "h": "T1546.015",
+      "r": "subtechnique_of",
+      "t": "T1546",
+      "source": "attack",
+      "layer": "base"
+    },
+    {
+      "h": "T1547.001",
+      "r": "subtechnique_of",
+      "t": "T1547",
+      "source": "attack",
+      "layer": "base"
+    },
+    {
+      "h": "T1547.004",
+      "r": "subtechnique_of",
+      "t": "T1547",
+      "source": "attack",
+      "layer": "base"
+    },
+    {
+      "h": "T1547.009",
+      "r": "subtechnique_of",
+      "t": "T1547",
+      "source": "attack",
+      "layer": "base"
+    },
+    {
+      "h": "T1553.002",
+      "r": "subtechnique_of",
+      "t": "T1553",
+      "source": "attack",
+      "layer": "base"
+    },
+    {
+      "h": "T1559.001",
+      "r": "subtechnique_of",
+      "t": "T1559",
+      "source": "attack",
+      "layer": "base"
+    },
+    {
+      "h": "T1559.002",
+      "r": "subtechnique_of",
+      "t": "T1559",
+      "source": "attack",
+      "layer": "base"
+    },
+    {
+      "h": "T1564.001",
+      "r": "subtechnique_of",
+      "t": "T1564",
+      "source": "attack",
+      "layer": "base"
+    },
+    {
+      "h": "T1564.003",
+      "r": "subtechnique_of",
+      "t": "T1564",
+      "source": "attack",
+      "layer": "base"
+    },
+    {
+      "h": "T1566.001",
+      "r": "subtechnique_of",
+      "t": "T1566",
+      "source": "attack",
+      "layer": "base"
+    },
+    {
+      "h": "T1566.002",
+      "r": "subtechnique_of",
+      "t": "T1566",
+      "source": "attack",
+      "layer": "base"
+    },
+    {
+      "h": "T1566.004",
+      "r": "subtechnique_of",
+      "t": "T1566",
+      "source": "attack",
+      "layer": "base"
+    },
+    {
+      "h": "T1568.002",
+      "r": "subtechnique_of",
+      "t": "T1568",
+      "source": "attack",
+      "layer": "base"
+    },
+    {
+      "h": "T1573.001",
+      "r": "subtechnique_of",
+      "t": "T1573",
+      "source": "attack",
+      "layer": "base"
+    },
+    {
+      "h": "T1573.002",
+      "r": "subtechnique_of",
+      "t": "T1573",
+      "source": "attack",
+      "layer": "base"
+    },
+    {
+      "h": "T1574.001",
+      "r": "subtechnique_of",
+      "t": "T1574",
+      "source": "attack",
+      "layer": "base"
+    },
+    {
+      "h": "T1574.008",
+      "r": "subtechnique_of",
+      "t": "T1574",
+      "source": "attack",
+      "layer": "base"
+    },
+    {
+      "h": "T1574.014",
+      "r": "subtechnique_of",
+      "t": "T1574",
+      "source": "attack",
+      "layer": "base"
+    },
+    {
+      "h": "T1583.001",
+      "r": "subtechnique_of",
+      "t": "T1583",
+      "source": "attack",
+      "layer": "base"
+    },
+    {
+      "h": "T1583.003",
+      "r": "subtechnique_of",
+      "t": "T1583",
+      "source": "attack",
+      "layer": "base"
+    },
+    {
+      "h": "T1583.004",
+      "r": "subtechnique_of",
+      "t": "T1583",
+      "source": "attack",
+      "layer": "base"
+    },
+    {
+      "h": "T1583.006",
+      "r": "subtechnique_of",
+      "t": "T1583",
+      "source": "attack",
+      "layer": "base"
+    },
+    {
+      "h": "T1584.001",
+      "r": "subtechnique_of",
+      "t": "T1584",
+      "source": "attack",
+      "layer": "base"
+    },
+    {
+      "h": "T1584.006",
+      "r": "subtechnique_of",
+      "t": "T1584",
+      "source": "attack",
+      "layer": "base"
+    },
+    {
+      "h": "T1587.001",
+      "r": "subtechnique_of",
+      "t": "T1587",
+      "source": "attack",
+      "layer": "base"
+    },
+    {
+      "h": "T1588.001",
+      "r": "subtechnique_of",
+      "t": "T1588",
+      "source": "attack",
+      "layer": "base"
+    },
+    {
+      "h": "T1588.002",
+      "r": "subtechnique_of",
+      "t": "T1588",
+      "source": "attack",
+      "layer": "base"
+    },
+    {
+      "h": "T1608.001",
+      "r": "subtechnique_of",
+      "t": "T1608",
+      "source": "attack",
+      "layer": "base"
+    },
+    {
+      "h": "T1608.002",
+      "r": "subtechnique_of",
+      "t": "T1608",
+      "source": "attack",
+      "layer": "base"
+    },
+    {
+      "h": "T1608.003",
+      "r": "subtechnique_of",
+      "t": "T1608",
+      "source": "attack",
+      "layer": "base"
+    },
+    {
+      "h": "T1614.001",
+      "r": "subtechnique_of",
+      "t": "T1614",
+      "source": "attack",
+      "layer": "base"
+    },
+    {
+      "h": "T1685.001",
+      "r": "subtechnique_of",
+      "t": "T1685",
+      "source": "attack",
+      "layer": "base"
+    },
+    {
+      "h": "T1686.003",
+      "r": "subtechnique_of",
+      "t": "T1686",
+      "source": "attack",
+      "layer": "base"
+    }
+  ]
+}
