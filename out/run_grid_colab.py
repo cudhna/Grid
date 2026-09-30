@@ -51,7 +51,9 @@ def install_dependencies():
         # (0.8.x-0.10.x không cài được trên Python 3.13; 0.30.x dùng torch 2.13/cu130
         #  không chạy được trên T4)
         "vllm==0.11.0",
-        "transformers>=4.48.0",
+        # transformers 5.x đã bỏ `all_special_tokens_extended` mà vLLM 0.11.0
+        # dùng → AttributeError lúc khởi động. Giới hạn <5 (>=4.55.2 theo yêu cầu vLLM).
+        "transformers>=4.55.2,<5.0.0",
         "accelerate>=0.34.0",
         "safetensors>=0.4.3",
     ]
@@ -345,11 +347,15 @@ def main():
     finally:
         # Cleanup
         print("Stopping vLLM server...")
-        if os.name != "nt":
-            os.killpg(os.getpgid(vllm_process.pid), signal.SIGTERM)
-        else:
-            vllm_process.terminate()
-        vllm_process.wait()
+        try:
+            if os.name != "nt":
+                os.killpg(os.getpgid(vllm_process.pid), signal.SIGTERM)
+            else:
+                vllm_process.terminate()
+            vllm_process.wait()
+        except (ProcessLookupError, OSError):
+            # Server đã tự chết trước đó
+            print("vLLM process already stopped.")
         print("vLLM server stopped.")
 
 

@@ -50,7 +50,7 @@ Sau khi chạy xong, kết quả được lưu trong `out/grid_output/`:
 ### Lỗi "vLLM server failed to start"
 - Kiểm tra log: `!cat out/vllm_server.log`
 - Đảm bảo đã chọn GPU ở bước 2
-- Script đã pin `vllm==0.11.0` (hỗ trợ Python 3.13 + T4/CUDA 12). Lưu ý: vLLM 0.8.x–0.10.x không cài được trên Python 3.13; bản mới nhất (0.30.x, torch 2.13/cu130) không chạy được trên T4
+- Script đã pin `vllm==0.11.0` (hỗ trợ Python 3.13 + T4/CUDA 12) và `transformers<5` (transformers 5.x bỏ `all_special_tokens_extended` mà vLLM 0.11.0 dùng → `AttributeError` khi khởi động server). Lưu ý: vLLM 0.8.x–0.10.x không cài được trên Python 3.13; bản mới nhất (0.30.x, torch 2.13/cu130) không chạy được trên T4
 - Nếu vLLM cũ treo từ lần chạy trước: `!pkill -f vllm` hoặc **Runtime → Restart runtime**
 
 ### Lỗi "No module named 'xxx'"
