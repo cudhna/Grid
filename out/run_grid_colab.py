@@ -42,6 +42,10 @@ sys.path.insert(0, str(OUT_DIR))
 REPO_ROOT = OUT_DIR.parent
 sys.path.insert(0, str(REPO_ROOT / "src" / "grid"))
 
+# tools.py mặc định được nạp từ ~/Dropbox (không tồn tại trên Colab)
+# → trỏ sang bản mock trong out/
+os.environ.setdefault("GRID_TOOLS_FILE", str(OUT_DIR / "tools.py"))
+
 
 def install_dependencies():
     """Install required packages."""

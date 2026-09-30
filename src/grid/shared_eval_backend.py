@@ -24,16 +24,23 @@ DROPBOX_PATH = Path(os.path.expanduser("~/Dropbox"))
 if str(DROPBOX_PATH) not in os.sys.path:
     os.sys.path.insert(0, str(DROPBOX_PATH))
 
-TOOLS_FILE = str(DROPBOX_PATH / "tools.py")
-loaded_tools = os.sys.modules.get("tools")
-if loaded_tools is None or os.path.abspath(getattr(loaded_tools, "__file__", "")) != TOOLS_FILE:
-    spec = importlib.util.spec_from_file_location("tools", TOOLS_FILE)
-    if spec is None or spec.loader is None:
-        raise ImportError(f"❌ 无法加载 Dropbox tools.py: {TOOLS_FILE}")
-    loaded_tools = importlib.util.module_from_spec(spec)
-    os.sys.modules["tools"] = loaded_tools
-    spec.loader.exec_module(loaded_tools)
-tools = loaded_tools
+TOOLS_FILE = os.path.abspath(
+    os.environ.get("GRID_TOOLS_FILE") or str(DROPBOX_PATH / "tools.py")
+)
+if os.path.isfile(TOOLS_FILE):
+    loaded_tools = os.sys.modules.get("tools")
+    if loaded_tools is None or os.path.abspath(getattr(loaded_tools, "__file__", "")) != TOOLS_FILE:
+        spec = importlib.util.spec_from_file_location("tools", TOOLS_FILE)
+        if spec is None or spec.loader is None:
+            raise ImportError(f"❌ 无法加载 tools.py: {TOOLS_FILE}")
+        loaded_tools = importlib.util.module_from_spec(spec)
+        os.sys.modules["tools"] = loaded_tools
+        spec.loader.exec_module(loaded_tools)
+    tools = loaded_tools
+else:
+    # Không có tools.py ở đường dẫn trên (ví dụ chạy trên Colab): dùng module
+    # `tools` đã nằm trong sys.path.
+    import tools
 from vllm_environment_setup import SERVERS, VLLMEnvironmentManager
 
 HOSTNAME_SHORT = socket.gethostname().split(".", 1)[0]
