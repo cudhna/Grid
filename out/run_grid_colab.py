@@ -46,7 +46,9 @@ def install_dependencies():
         "openai>=1.30.0",
         "pandas>=2.0.0",
         "pyarrow>=14.0.0",
-        "vllm>=0.6.0",
+        # Pin bản vLLM tương thích Colab T4 (CUDA 12). Bản mới nhất kéo
+        # wheels CUDA 13 → khởi tạo CUDA fail trên Colab free (T4, CUDA 12).
+        "vllm==0.8.5.post1",
         "transformers>=4.48.0",
         "accelerate>=0.34.0",
         "safetensors>=0.4.3",
@@ -110,16 +112,55 @@ def start_vllm_server(model_path: str):
     return process
 
 
-def wait_for_vllm_ready(timeout: int = 300):
+def print_log_tail(lines: int = 50):
+    """In cuối file log vLLM để debug khi server không lên."""
+    log_path = OUT_DIR / "vllm_server.log"
+    if not log_path.exists():
+        print(f"(log file not found: {log_path})")
+        return
+    try:
+        with open(log_path, "r", encoding="utf-8", errors="replace") as f:
+            content = f.readlines()
+        print(f"----- vLLM log (last {lines} lines) -----")
+        print("".join(content[-lines:]))
+        print("----- end of log -----")
+    except Exception as e:
+        print(f"Could not read log: {e}")
+
+
+def check_gpu():
+    """Kiểm tra GPU (trên Colab: Runtime -> Change runtime type -> GPU)."""
+    print("=" * 60)
+    print("Step 0: Checking GPU...")
+    print("=" * 60)
+    try:
+        import torch
+        if torch.cuda.is_available():
+            print(f"GPU detected: {torch.cuda.get_device_name(0)}")
+            print(f"CUDA version: {torch.version.cuda}")
+        else:
+            print("WARNING: No GPU detected!")
+            print("On Colab, enable GPU first: Runtime -> Change runtime type -> Hardware accelerator -> GPU")
+    except Exception:
+        subprocess.call(["nvidia-smi"])
+
+
+def wait_for_vllm_ready(process, timeout: int = 600):
     """Wait for vLLM server to be ready."""
     print("=" * 60)
     print("Step 4: Waiting for vLLM server...")
     print("=" * 60)
-    
+
     import requests
-    
+
     start_time = time.time()
     while time.time() - start_time < timeout:
+        # Process đã chết sớm → dừng ngay và in log thay vì chờ hết timeout
+        if process.poll() is not None:
+            print(f"vLLM process exited early (exit code {process.returncode})")
+            print_log_tail()
+            return False
+
         try:
             resp = requests.get(f"http://localhost:{VLLM_PORT}/v1/models", timeout=5)
             if resp.status_code == 200:
@@ -127,12 +168,13 @@ def wait_for_vllm_ready(timeout: int = 300):
                 return True
         except Exception:
             pass
-        
+
         elapsed = time.time() - start_time
         print(f"Waiting... ({elapsed:.0f}s)")
         time.sleep(5)
-    
+
     print(f"Timeout after {timeout}s")
+    print_log_tail()
     return False
 
 
@@ -265,6 +307,9 @@ def main():
     print("GRID Pipeline on Google Colab")
     print("=" * 60)
     
+    # Step 0: Check GPU
+    check_gpu()
+
     # Step 1: Install dependencies
     install_dependencies()
     
@@ -276,7 +321,7 @@ def main():
     
     try:
         # Step 4: Wait for vLLM ready
-        if not wait_for_vllm_ready(timeout=300):
+        if not wait_for_vllm_ready(vllm_process, timeout=600):
             print("ERROR: vLLM server failed to start")
             return
         

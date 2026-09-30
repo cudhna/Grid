@@ -50,6 +50,8 @@ Sau khi chạy xong, kết quả được lưu trong `out/grid_output/`:
 ### Lỗi "vLLM server failed to start"
 - Kiểm tra log: `!cat out/vllm_server.log`
 - Đảm bảo đã chọn GPU ở bước 2
+- Script đã pin `vllm==0.8.5.post1` (tương thích Colab T4 / CUDA 12). Nếu tự `pip install vllm` bằng tay, bản mới nhất kéo wheels CUDA 13 → không chạy được trên Colab free
+- Nếu vLLM cũ treo từ lần chạy trước: `!pkill -f vllm` hoặc **Runtime → Restart runtime**
 
 ### Lỗi "No module named 'xxx'"
 - Chạy: `!pip install <package_name>`
