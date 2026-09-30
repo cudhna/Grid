@@ -46,9 +46,11 @@ def install_dependencies():
         "openai>=1.30.0",
         "pandas>=2.0.0",
         "pyarrow>=14.0.0",
-        # Pin bản vLLM tương thích Colab T4 (CUDA 12). Bản mới nhất kéo
-        # wheels CUDA 13 → khởi tạo CUDA fail trên Colab free (T4, CUDA 12).
-        "vllm==0.8.5.post1",
+        # Colab dùng Python 3.13 → cần vLLM >= 0.11. Pin 0.11.0: hỗ trợ
+        # Python 3.13 + sm_75 (T4) + torch 2.8/cu128, chạy ổn định trên Colab free.
+        # (0.8.x-0.10.x không cài được trên Python 3.13; 0.30.x dùng torch 2.13/cu130
+        #  không chạy được trên T4)
+        "vllm==0.11.0",
         "transformers>=4.48.0",
         "accelerate>=0.34.0",
         "safetensors>=0.4.3",
