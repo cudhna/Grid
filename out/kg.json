@@ -1,0 +1,322 @@
+{
+  "nodes": [
+    {
+      "id": "T1059.001",
+      "type": "attack-pattern",
+      "name": "PowerShell",
+      "external_id": "T1059.001",
+      "source": "attack"
+    },
+    {
+      "id": "TA0002",
+      "type": "x-mitre-tactic",
+      "name": "Execution",
+      "external_id": "TA0002",
+      "source": "attack"
+    },
+    {
+      "id": "T1486",
+      "type": "attack-pattern",
+      "name": "Data Encrypted for Impact",
+      "external_id": "T1486",
+      "source": "attack"
+    },
+    {
+      "id": "TA0040",
+      "type": "x-mitre-tactic",
+      "name": "Impact",
+      "external_id": "TA0040",
+      "source": "attack"
+    },
+    {
+      "id": "T1491",
+      "type": "attack-pattern",
+      "name": "Defacement",
+      "external_id": "T1491",
+      "source": "attack"
+    },
+    {
+      "id": "T1583.008",
+      "type": "attack-pattern",
+      "name": "Malvertising",
+      "external_id": "T1583.008",
+      "source": "attack"
+    },
+    {
+      "id": "TA0042",
+      "type": "x-mitre-tactic",
+      "name": "Resource Development",
+      "external_id": "TA0042",
+      "source": "attack"
+    },
+    {
+      "id": "T1583.001",
+      "type": "attack-pattern",
+      "name": "Domains",
+      "external_id": "T1583.001",
+      "source": "attack"
+    },
+    {
+      "id": "T1071.003",
+      "type": "attack-pattern",
+      "name": "Mail Protocols",
+      "external_id": "T1071.003",
+      "source": "attack"
+    },
+    {
+      "id": "TA0011",
+      "type": "x-mitre-tactic",
+      "name": "Command and Control",
+      "external_id": "TA0011",
+      "source": "attack"
+    },
+    {
+      "id": "T1027.009",
+      "type": "attack-pattern",
+      "name": "Embedded Payloads",
+      "external_id": "T1027.009",
+      "source": "attack"
+    },
+    {
+      "id": "TA0005",
+      "type": "x-mitre-tactic",
+      "name": "Stealth",
+      "external_id": "TA0005",
+      "source": "attack"
+    },
+    {
+      "id": "T1027",
+      "type": "attack-pattern",
+      "name": "Obfuscated Files or Information",
+      "external_id": "T1027",
+      "source": "attack"
+    },
+    {
+      "id": "T1059",
+      "type": "attack-pattern",
+      "name": "Command and Scripting Interpreter",
+      "external_id": "T1059",
+      "source": "attack"
+    },
+    {
+      "id": "T1005",
+      "type": "attack-pattern",
+      "name": "Data from Local System",
+      "external_id": "T1005",
+      "source": "attack"
+    },
+    {
+      "id": "TA0009",
+      "type": "x-mitre-tactic",
+      "name": "Collection",
+      "external_id": "TA0009",
+      "source": "attack"
+    },
+    {
+      "id": "T1112",
+      "type": "attack-pattern",
+      "name": "Modify Registry",
+      "external_id": "T1112",
+      "source": "attack"
+    },
+    {
+      "id": "TA0112",
+      "type": "x-mitre-tactic",
+      "name": "Defense Impairment",
+      "external_id": "TA0112",
+      "source": "attack"
+    },
+    {
+      "id": "TA0003",
+      "type": "x-mitre-tactic",
+      "name": "Persistence",
+      "external_id": "TA0003",
+      "source": "attack"
+    },
+    {
+      "id": "T1561",
+      "type": "attack-pattern",
+      "name": "Disk Wipe",
+      "external_id": "T1561",
+      "source": "attack"
+    },
+    {
+      "id": "T1070.004",
+      "type": "attack-pattern",
+      "name": "File Deletion",
+      "external_id": "T1070.004",
+      "source": "attack"
+    },
+    {
+      "id": "T1485",
+      "type": "attack-pattern",
+      "name": "Data Destruction",
+      "external_id": "T1485",
+      "source": "attack"
+    },
+    {
+      "id": "T1036.001",
+      "type": "attack-pattern",
+      "name": "Invalid Code Signature",
+      "external_id": "T1036.001",
+      "source": "attack"
+    },
+    {
+      "id": "T1204",
+      "type": "attack-pattern",
+      "name": "User Execution",
+      "external_id": "T1204",
+      "source": "attack"
+    },
+    {
+      "id": "T1490",
+      "type": "attack-pattern",
+      "name": "Inhibit System Recovery",
+      "external_id": "T1490",
+      "source": "attack"
+    },
+    {
+      "id": "T1059.003",
+      "type": "attack-pattern",
+      "name": "Windows Command Shell",
+      "external_id": "T1059.003",
+      "source": "attack"
+    },
+    {
+      "id": "T1566.001",
+      "type": "attack-pattern",
+      "name": "Spearphishing Attachment",
+      "external_id": "T1566.001",
+      "source": "attack"
+    },
+    {
+      "id": "TA0001",
+      "type": "x-mitre-tactic",
+      "name": "Initial Access",
+      "external_id": "TA0001",
+      "source": "attack"
+    }
+  ],
+  "triples": [
+    {
+      "h": "T1059.001",
+      "r": "part_of",
+      "t": "TA0002",
+      "source": "attack"
+    },
+    {
+      "h": "T1486",
+      "r": "part_of",
+      "t": "TA0040",
+      "source": "attack"
+    },
+    {
+      "h": "T1491",
+      "r": "part_of",
+      "t": "TA0040",
+      "source": "attack"
+    },
+    {
+      "h": "T1583.008",
+      "r": "part_of",
+      "t": "TA0042",
+      "source": "attack"
+    },
+    {
+      "h": "T1583.001",
+      "r": "part_of",
+      "t": "TA0042",
+      "source": "attack"
+    },
+    {
+      "h": "T1071.003",
+      "r": "part_of",
+      "t": "TA0011",
+      "source": "attack"
+    },
+    {
+      "h": "T1027.009",
+      "r": "part_of",
+      "t": "TA0005",
+      "source": "attack"
+    },
+    {
+      "h": "T1027",
+      "r": "part_of",
+      "t": "TA0005",
+      "source": "attack"
+    },
+    {
+      "h": "T1059",
+      "r": "part_of",
+      "t": "TA0002",
+      "source": "attack"
+    },
+    {
+      "h": "T1005",
+      "r": "part_of",
+      "t": "TA0009",
+      "source": "attack"
+    },
+    {
+      "h": "T1112",
+      "r": "part_of",
+      "t": "TA0112",
+      "source": "attack"
+    },
+    {
+      "h": "T1112",
+      "r": "part_of",
+      "t": "TA0003",
+      "source": "attack"
+    },
+    {
+      "h": "T1561",
+      "r": "part_of",
+      "t": "TA0040",
+      "source": "attack"
+    },
+    {
+      "h": "T1070.004",
+      "r": "part_of",
+      "t": "TA0005",
+      "source": "attack"
+    },
+    {
+      "h": "T1485",
+      "r": "part_of",
+      "t": "TA0040",
+      "source": "attack"
+    },
+    {
+      "h": "T1036.001",
+      "r": "part_of",
+      "t": "TA0005",
+      "source": "attack"
+    },
+    {
+      "h": "T1204",
+      "r": "part_of",
+      "t": "TA0002",
+      "source": "attack"
+    },
+    {
+      "h": "T1490",
+      "r": "part_of",
+      "t": "TA0040",
+      "source": "attack"
+    },
+    {
+      "h": "T1059.003",
+      "r": "part_of",
+      "t": "TA0002",
+      "source": "attack"
+    },
+    {
+      "h": "T1566.001",
+      "r": "part_of",
+      "t": "TA0001",
+      "source": "attack"
+    }
+  ]
+}
